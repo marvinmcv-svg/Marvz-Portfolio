@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Marvz Studio · Websites & apps built to perform</title>
+<meta name="description" content="Marvz Studio designs and builds websites, web apps and digital products: schools, restaurants, SaaS, e-commerce and personal portfolios.">
+<meta name="theme-color" content="#181616">
+<meta property="og:title" content="Marvz Studio">
+<meta property="og:description" content="A bird's-eye view of the websites and apps I've designed and built.">
+<meta property="og:image" content="/assets/work/haras-la-alhambra.webp">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23181616'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-style='italic' font-size='40' text-anchor='middle' fill='%23FFFDDB'%3Em%3C/text%3E%3Ccircle cx='50' cy='16' r='5' fill='%23FF3831'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Roboto+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">Marvz <em>Studio</em></div>
+  <div class="loader__count mono"><span id="loaderNum">00</span></div>
+</div>
+
+<header class="top">
+  <a class="brand" href="#" aria-label="Marvz Studio, home">Marvz <em>Studio</em></a>
+  <div class="top__coords mono" id="coords" aria-hidden="true">17.7833° S&nbsp;&nbsp;63.1821° W</div>
+  <nav class="top__nav mono" aria-label="Main">
+    <button class="link" type="button" data-toggle-index>Index</button>
+    <button class="link" type="button" data-view-toggle aria-pressed="false">List view</button>
+    <button class="link" type="button" data-open="about">About</button>
+    <button class="btn btn--red" type="button" data-open="contact">Start a project</button>
+  </nav>
+</header>
+
+<aside class="index" id="index" aria-label="Project index">
+  <div class="index__head mono"><span>Projects</span><span id="indexCount"></span></div>
+  <div class="index__body" id="indexBody"></div>
+</aside>
+
+<main class="stage" id="stage" aria-label="Project canvas. Drag or scroll to explore, click a project to open it.">
+  <div class="world" id="world"></div>
+</main>
+
+<section class="hero" aria-label="Introduction">
+  <p class="mono hero__eyebrow"><span class="dot"></span>Web + Product + Brand</p>
+  <h1 class="hero__title">Websites &amp; apps<br><em>built to perform.</em></h1>
+  <div class="hero__actions">
+    <button class="btn btn--red" type="button" data-open="contact">Start a project</button>
+    <span class="mono hero__hint">Drag to explore ↔</span>
+  </div>
+</section>
+
+<section class="list" id="list" aria-label="All projects" hidden>
+  <div class="list__inner">
+    <header class="list__head">
+      <p class="mono"><span class="dot"></span>Selected work</p>
+      <h2>Every project, <em>at a glance.</em></h2>
+    </header>
+    <div class="list__grid" id="listGrid"></div>
+  </div>
+</section>
+
+<footer class="ticker mono" aria-label="News">
+  <div class="ticker__track" id="ticker"></div>
+</footer>
+
+<!-- Project drawer -->
+<div class="scrim" id="scrim" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Project details" aria-hidden="true" tabindex="-1">
+  <div class="drawer__bar mono">
+    <span id="dIndex">01 / 17</span>
+    <div class="drawer__nav">
+      <button class="link" type="button" data-step="-1" aria-label="Previous project">← Prev</button>
+      <button class="link" type="button" data-step="1" aria-label="Next project">Next →</button>
+      <button class="close" type="button" data-close aria-label="Close">✕</button>
+    </div>
+  </div>
+  <div class="drawer__scroll">
+    <a class="drawer__shot" id="dShot" target="_blank" rel="noopener">
+      <img id="dImg" alt="" width="1440" height="900">
+      <span class="drawer__visit mono">Visit live ↗</span>
+    </a>
+    <p class="mono drawer__sector" id="dSector"></p>
+    <h2 class="drawer__title" id="dTitle"></h2>
+    <p class="drawer__tagline" id="dTagline"></p>
+    <p class="drawer__desc" id="dDesc"></p>
+    <dl class="drawer__meta mono" id="dMeta"></dl>
+    <ul class="tags mono" id="dTags"></ul>
+    <a class="btn btn--cream" id="dLink" target="_blank" rel="noopener">Visit the live site ↗</a>
+  </div>
+</aside>
+
+<!-- About -->
+<section class="overlay" id="about" aria-label="About" aria-hidden="true">
+  <button class="close overlay__close" type="button" data-close aria-label="Close">✕</button>
+  <div class="overlay__inner about">
+    <p class="mono"><span class="dot"></span>About</p>
+    <h2 class="about__title">Hi, I'm Marvz. <em>I build things for the web</em> that people actually use.</h2>
+    <div class="about__cols">
+      <p>This is a bird's-eye view of my work: websites, web apps and digital products for schools, restaurants, startups, family businesses and students telling their own story. Drag the canvas, open any project, and click through to the live site.</p>
+      <p>I work with people who have something worth building, from a first product to an established brand that's ready for its next chapter. I take projects from first idea to launch: strategy, design, development, content and the details that make a site feel alive.</p>
+    </div>
+    <div class="services">
+      <div>
+        <h3 class="mono">Web</h3>
+        <ul><li>Web Design</li><li>Web Development</li><li>Landing Pages</li><li>Multilingual Sites</li><li>SEO &amp; Performance</li><li>CMS &amp; Content</li></ul>
+      </div>
+      <div>
+        <h3 class="mono">Product</h3>
+        <ul><li>Web Apps &amp; PWAs</li><li>SaaS Dashboards</li><li>E-commerce</li><li>AI Assistants</li><li>School Systems</li><li>User Experience</li></ul>
+      </div>
+      <div>
+        <h3 class="mono">Brand &amp; Motion</h3>
+        <ul><li>Brand Identity</li><li>Art Direction</li><li>Copywriting</li><li>Scroll Storytelling</li><li>Motion Design</li><li>Video &amp; Film</li></ul>
+      </div>
+    </div>
+    <div class="about__cta">
+      <h3>Big idea? <em>Let's build it.</em></h3>
+      <button class="btn btn--red" type="button" data-open="contact">Start a project</button>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="overlay" id="contact" aria-label="Start a project" aria-hidden="true">
+  <button class="close overlay__close" type="button" data-close aria-label="Close">✕</button>
+  <div class="overlay__inner contact">
+    <div class="contact__intro">
+      <p class="mono"><span class="dot"></span>Start a project</p>
+      <h2>For <em>ambitious</em> brands<br>ready to grow.</h2>
+      <p>Tell me a little about what you're building. I'll get back to you with next steps and a plan.</p>
+      <div class="contact__links mono" id="contactLinks"></div>
+    </div>
+    <form class="form" id="form" novalidate>
+      <label><span class="mono">Name *</span><input name="name" required autocomplete="name"></label>
+      <label><span class="mono">Email *</span><input name="email" type="email" required autocomplete="email"></label>
+      <label><span class="mono">Company</span><input name="company" autocomplete="organization"></label>
+      <label><span class="mono">Phone</span><input name="phone" type="tel" autocomplete="tel"></label>
+      <label class="form__full"><span class="mono">Budget *</span>
+        <select name="budget" required>
+          <option value="" selected disabled>Select a range</option>
+          <option>Under $2k</option><option>$2k – $5k</option><option>$5k – $10k</option><option>$10k+</option>
+        </select>
+      </label>
+      <label class="form__full"><span class="mono">Project</span><textarea name="message" rows="4" placeholder="A brief description of your project is always best :)"></textarea></label>
+      <div class="form__foot form__full">
+        <button class="btn btn--red" type="submit">Let's connect →</button>
+        <p class="form__status mono" id="formStatus" role="status"></p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<div class="cursor" id="cursor" aria-hidden="true"><span>Open</span></div>
+
+<script src="/app.js"></script>
+</body>
+</html>
