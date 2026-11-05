@@ -29,7 +29,7 @@
   <div class="top__coords mono" id="coords" aria-hidden="true">17.7833° S&nbsp;&nbsp;63.1821° W</div>
   <nav class="top__nav mono" aria-label="Main">
     <button class="link" type="button" data-toggle-index>Index</button>
-    <button class="link" type="button" data-view-toggle aria-pressed="false">List view</button>
+    <button class="link" type="button" data-view-toggle aria-pressed="false"><span class="hide-sm">List view</span><span class="show-sm">List</span></button>
     <button class="link" type="button" data-open="about">About</button>
     <button class="btn btn--red" type="button" data-open="contact">Start a project</button>
   </nav>
@@ -49,7 +49,7 @@
   <h1 class="hero__title">Websites &amp; apps<br><em>built to perform.</em></h1>
   <div class="hero__actions">
     <button class="btn btn--red" type="button" data-open="contact">Start a project</button>
-    <span class="mono hero__hint">Drag to explore ↔</span>
+    <span class="mono hero__hint" id="heroHint">Drag to explore ↔</span>
   </div>
 </section>
 
@@ -60,6 +60,10 @@
       <h2>Every project, <em>at a glance.</em></h2>
     </header>
     <div class="list__grid" id="listGrid"></div>
+    <div class="about__cta list__cta">
+      <h3>Your project <em>could be next.</em></h3>
+      <button class="btn btn--red" type="button" data-open="contact">Start a project</button>
+    </div>
   </div>
 </section>
 
@@ -98,27 +102,49 @@
   <button class="close overlay__close" type="button" data-close aria-label="Close">✕</button>
   <div class="overlay__inner about">
     <p class="mono"><span class="dot"></span>About</p>
-    <h2 class="about__title">Hi, I'm Marvz. <em>I build things for the web</em> that people actually use.</h2>
+    <h2 class="about__title">Hi, I'm Marvz. I design and build websites and apps <em>that earn their keep.</em></h2>
     <div class="about__cols">
-      <p>This is a bird's-eye view of my work: websites, web apps and digital products for schools, restaurants, startups, family businesses and students telling their own story. Drag the canvas, open any project, and click through to the live site.</p>
-      <p>I work with people who have something worth building, from a first product to an established brand that's ready for its next chapter. I take projects from first idea to launch: strategy, design, development, content and the details that make a site feel alive.</p>
+      <p class="about__lead">I'm an independent designer and developer in Santa Cruz, Bolivia. I take each project from the first call to launch day and do the strategy, design, code and copy myself, so nothing gets lost in a handoff.</p>
+      <p>So far that's <span data-count></span> live projects: a corporate site for a helicopter operator, a point-of-sale system that runs a restaurant from the waiters' phones, a student information system for a K–12 school, an online shop for a premium beef brand, and cinematic portfolios for student-athletes applying to college.</p>
     </div>
+
+    <dl class="stats">
+      <div><dt class="mono">Live projects</dt><dd data-count></dd></div>
+      <div><dt class="mono">Languages on one site</dt><dd>6</dd></div>
+      <div><dt class="mono">Industries</dt><dd>10+</dd></div>
+      <div><dt class="mono">Person, brief to launch</dt><dd>1</dd></div>
+    </dl>
+
+    <div class="principles">
+      <h3 class="mono">How I work</h3>
+      <ol>
+        <li><strong>You talk to the person building it.</strong> No account managers and no game of telephone. The person on the call is the one who designs and codes it.</li>
+        <li><strong>Phone first.</strong> Your customers will find you on a phone, so I design for one first. That means WhatsApp ordering and booking, apps that install from the browser, and pages that load fast on mobile data.</li>
+        <li><strong>Every language your customers speak.</strong> Most of my sites launch in English and Spanish, and some run in six. Language switching is planned from day one, not bolted on at the end.</li>
+      </ol>
+    </div>
+
     <div class="services">
+      <h3 class="mono services__title">What I do</h3>
       <div>
-        <h3 class="mono">Web</h3>
-        <ul><li>Web Design</li><li>Web Development</li><li>Landing Pages</li><li>Multilingual Sites</li><li>SEO &amp; Performance</li><li>CMS &amp; Content</li></ul>
+        <h4 class="mono">Websites</h4>
+        <ul><li>Web design</li><li>Web development</li><li>Landing pages</li><li>Multilingual sites</li><li>SEO &amp; performance</li><li>CMS &amp; content</li></ul>
       </div>
       <div>
-        <h3 class="mono">Product</h3>
-        <ul><li>Web Apps &amp; PWAs</li><li>SaaS Dashboards</li><li>E-commerce</li><li>AI Assistants</li><li>School Systems</li><li>User Experience</li></ul>
+        <h4 class="mono">Products</h4>
+        <ul><li>Web apps &amp; PWAs</li><li>SaaS &amp; dashboards</li><li>E-commerce</li><li>AI assistants</li><li>School systems</li><li>UX design</li></ul>
       </div>
       <div>
-        <h3 class="mono">Brand &amp; Motion</h3>
-        <ul><li>Brand Identity</li><li>Art Direction</li><li>Copywriting</li><li>Scroll Storytelling</li><li>Motion Design</li><li>Video &amp; Film</li></ul>
+        <h4 class="mono">Brand &amp; story</h4>
+        <ul><li>Brand identity</li><li>Art direction</li><li>Copywriting</li><li>Scroll storytelling</li><li>Motion design</li><li>Video &amp; film</li></ul>
       </div>
     </div>
+
     <div class="about__cta">
-      <h3>Big idea? <em>Let's build it.</em></h3>
+      <div>
+        <h3>Have a project in mind? <em>Let's talk.</em></h3>
+        <p>Tell me what you're working on. I'll reply with next steps and a rough plan.</p>
+      </div>
       <button class="btn btn--red" type="button" data-open="contact">Start a project</button>
     </div>
   </div>
@@ -130,8 +156,8 @@
   <div class="overlay__inner contact">
     <div class="contact__intro">
       <p class="mono"><span class="dot"></span>Start a project</p>
-      <h2>For <em>ambitious</em> brands<br>ready to grow.</h2>
-      <p>Tell me a little about what you're building. I'll get back to you with next steps and a plan.</p>
+      <h2>Tell me what<br><em>you're building.</em></h2>
+      <p>A few lines are enough to start. I'll get back to you with questions, next steps and a rough plan.</p>
       <div class="contact__links mono" id="contactLinks"></div>
     </div>
     <form class="form" id="form" novalidate>

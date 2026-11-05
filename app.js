@@ -472,7 +472,10 @@ viewBtn.addEventListener("click", () => {
   document.body.classList.toggle("is-list", on);
   $("#list").hidden = !on;
   viewBtn.setAttribute("aria-pressed", on);
-  viewBtn.textContent = on ? "Canvas view" : "List view";
+  viewBtn.innerHTML = on
+    ? '<span class="hide-sm">Canvas view</span><span class="show-sm">Canvas</span>'
+    : '<span class="hide-sm">List view</span><span class="show-sm">List</span>';
+  document.body.classList.remove("index-open");
   scrollTo(0, 0);
 });
 
@@ -509,6 +512,9 @@ $("#form").addEventListener("submit", (e) => {
 });
 
 /* ---------- Boot ---------- */
+$$("[data-count]").forEach((el) => (el.textContent = PROJECTS.length));
+if (matchMedia("(hover: none)").matches) $("#heroHint").textContent = "Swipe to explore";
+stage.addEventListener("pointerdown", () => document.body.classList.remove("index-open"));
 buildIndex();
 buildList();
 buildTicker();
@@ -518,7 +524,16 @@ off.x = -L.cw * 0.4; off.y = -L.rh * 0.15;
 requestAnimationFrame(loop);
 
 let rt;
-addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(layout, 120); });
+addEventListener("resize", () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => {
+    // Mobile browsers fire resize when the URL bar shows or hides. Only rebuild
+    // the canvas when the width changes or the height needs more tile copies.
+    const ny = Math.ceil((innerHeight + 2 * L.rh) / L.H);
+    if (innerWidth !== L.vw || ny > L.ny) layout();
+    else { L.vh = innerHeight; needs = true; }
+  }, 120);
+});
 
 // Loader count-up, then reveal
 (function boot() {
