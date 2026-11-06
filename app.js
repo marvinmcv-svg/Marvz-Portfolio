@@ -4,10 +4,9 @@
    ========================================================================== */
 
 const CONFIG = {
-  // Where "Start a project" submissions go (opens the visitor's mail app).
-  // Leave empty to hide email until you're ready.
-  email: "",
-  whatsapp: "",            // e.g. "59170000000" (digits only, with country code)
+  // The "Start a project" funnel sends to this WhatsApp number (digits only, with country code).
+  whatsapp: "59177165787",
+  email: "",               // optional, shown as a link next to the funnel
   instagram: "",           // e.g. "https://instagram.com/yourhandle"
   linkedin: "",            // e.g. "https://linkedin.com/in/yourhandle"
   github: "https://github.com/marvinmcv-svg",
@@ -133,6 +132,22 @@ const PROJECTS = [
     desc: "A college portfolio for a competitive athlete, stage performer and young entrepreneur from La Paz: three sports, community projects, commercial sales work, and music with a live band.",
     langs: "English", tags: ["Portfolio", "Personal brand", "Media library", "College application"],
   },
+];
+
+// "Start a project" funnel: step 01 services and step 02 extras.
+const SERVICES = [
+  { id: "website", name: "Website", note: "Brand, business or corporate site" },
+  { id: "landing", name: "Landing page", note: "One page built to convert" },
+  { id: "shop", name: "Online shop", note: "Catalog, cart, WhatsApp or online orders" },
+  { id: "app", name: "Web app · PWA", note: "Installs from the browser, works offline" },
+  { id: "saas", name: "SaaS & dashboards", note: "POS, booking, school or internal systems" },
+  { id: "ai", name: "AI assistant", note: "A chatbot trained on your business" },
+  { id: "portfolio", name: "Portfolio", note: "Personal brand or college application" },
+  { id: "brand", name: "Brand & story", note: "Identity, copy, motion and video" },
+];
+const EXTRAS = [
+  "WhatsApp ordering & booking", "AI assistant", "Online payments", "Bookings & calendar",
+  "CMS to edit content", "SEO & performance", "Copywriting", "Logo & brand identity", "Motion & video",
 ];
 
 const TICKER = [
@@ -296,7 +311,7 @@ function loop() {
 }
 
 /* Pointer: drag with inertia, click to open */
-let down = null, last = null, moved = 0;
+let down = null, last = null, moved = 0, tapped = null;
 stage.addEventListener("pointerdown", (e) => {
   if (e.button !== 0) return;
   tween = null;
@@ -321,10 +336,10 @@ function endDrag(e) {
   dragging = false;
   stage.classList.remove("is-dragging");
   if (performance.now() - last.t > 80) vel.x = vel.y = 0;
-  if (moved < 6 && down && down.tile && e.type === "pointerup") {
-    vel.x = vel.y = 0;
-    activateTile(down.tile);
-  }
+  // A tap: open on the click that follows. Opening on pointerup let a touch's
+  // synthetic click land on the freshly shown scrim and close the drawer again.
+  tapped = moved < 6 && down && down.tile && e.type === "pointerup" ? down.tile : null;
+  if (tapped) vel.x = vel.y = 0;
   down = null;
 }
 stage.addEventListener("pointerup", endDrag);
@@ -337,8 +352,10 @@ stage.addEventListener("wheel", (e) => {
   vel.x = vel.y = 0; needs = true;
   heroTuck();
 }, { passive: false });
-stage.addEventListener("click", (e) => { // keyboard activation (Enter/Space on a focused tile)
-  if (e.detail === 0) { const t = e.target.closest(".tile"); if (t) activateTile(t); }
+stage.addEventListener("click", (e) => {
+  const t = e.detail === 0 ? e.target.closest(".tile") : tapped; // detail 0: Enter/Space on a focused tile
+  tapped = null;
+  if (t) activateTile(t);
 });
 stage.addEventListener("keydown", (e) => {
   const step = 120, map = { ArrowLeft: [step, 0], ArrowRight: [-step, 0], ArrowUp: [0, step], ArrowDown: [0, -step] };
@@ -444,7 +461,7 @@ function openOverlay(id) {
   o.classList.add("is-open");
   o.setAttribute("aria-hidden", "false");
   o.scrollTop = 0;
-  setTimeout(() => (id === "contact" ? $("#form input") : o.querySelector(".close")).focus({ preventScroll: true }), 300);
+  setTimeout(() => (id === "contact" && $(".step.is-on input") || o.querySelector(".close")).focus({ preventScroll: true }), 300);
 }
 function closeOverlay(o) {
   o.classList.remove("is-open");
@@ -479,37 +496,131 @@ viewBtn.addEventListener("click", () => {
   scrollTo(0, 0);
 });
 
-/* ---------- Contact ---------- */
+/* ---------- Contact: WhatsApp funnel ---------- */
+const funnel = $("#funnel");
+const F = { step: 0, service: null, extras: new Set(), langs: 1 };
+const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+
+function buildFunnel() {
+  $("#services").innerHTML = SERVICES.map((s) => `
+    <label class="choice"><input type="radio" name="service" value="${s.id}">
+      <span class="choice__name">${s.name}</span><span class="choice__note">${s.note}</span></label>`).join("");
+  $("#extras").innerHTML = EXTRAS.map((x) => `
+    <label class="chip"><input type="checkbox" name="extra" value="${esc(x)}"><span>${x}</span></label>`).join("");
+  funnel.addEventListener("input", onFunnelInput);
+  funnel.addEventListener("change", onFunnelInput);
+  $$("[data-lang]").forEach((b) => b.addEventListener("click", () => {
+    F.langs = Math.max(1, Math.min(6, F.langs + +b.dataset.lang));
+    $("#langs").textContent = F.langs;
+    renderMessage();
+  }));
+  $$("[data-goto]").forEach((b) => b.addEventListener("click", () => goStep(+b.dataset.goto)));
+  $("#fBack").addEventListener("click", () => goStep(F.step - 1));
+  funnel.addEventListener("submit", (e) => { e.preventDefault(); if (F.step < 3) goStep(F.step + 1); });
+  $("#waSend").addEventListener("click", () => { $("#fStatus").textContent = "Opening WhatsApp…"; });
+  goStep(0);
+}
+
+function onFunnelInput(e) {
+  const t = e.target;
+  if (t.name === "service") F.service = SERVICES.find((s) => s.id === t.value);
+  if (t.name === "extra") t.checked ? F.extras.add(t.value) : F.extras.delete(t.value);
+  if (t.name === "name" && t.value.trim()) t.removeAttribute("aria-invalid");
+  $("#fStatus").textContent = "";
+  renderMessage();
+  syncSteps();
+}
+
+// Returns [stepToFallBackTo, message] when step n can't be reached yet.
+function stepError(n) {
+  if (n >= 1 && !F.service) return [0, "Pick a service to continue."];
+  if (n >= 3 && !funnel.elements.name.value.trim()) return [2, "Add your name so I know who's writing."];
+  return null;
+}
+
+function syncSteps() {
+  $$("#steps li").forEach((li, k) => {
+    li.classList.toggle("is-on", k <= F.step);
+    li.classList.toggle("is-current", k === F.step);
+    li.querySelector("button").disabled = k > F.step && !!stepError(k);
+  });
+}
+
+function goStep(n) {
+  n = Math.max(0, Math.min(3, n));
+  const err = n > F.step ? stepError(n) : null;
+  const nameEl = funnel.elements.name;
+  if (err) {
+    n = Math.min(err[0], n);
+    $("#fStatus").textContent = err[1];
+    if (err[0] === 2) nameEl.setAttribute("aria-invalid", "true");
+  } else $("#fStatus").textContent = "";
+  F.step = n;
+  $$("[data-step-panel]").forEach((p) => p.classList.toggle("is-on", +p.dataset.stepPanel === n));
+  syncSteps();
+  $("#fBack").style.visibility = n === 0 ? "hidden" : "visible";
+  $("#fNext").hidden = n === 3;
+  $("#contact").classList.toggle("is-final", n === 3);
+  renderMessage();
+  if (err && err[0] === 2) nameEl.focus({ preventScroll: true });
+  // On phones, bring the top of the funnel back into view when the step changes.
+  if (innerWidth <= 860) {
+    const o = $("#contact"), top = $("#steps").offsetTop - 70;
+    if (o.scrollTop > top) o.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
+  }
+}
+
+function funnelData() {
+  const d = Object.fromEntries(new FormData(funnel));
+  return {
+    service: F.service ? F.service.name : "",
+    start: d.start || "", timeline: d.timeline || "", budget: d.budget || "",
+    extras: [...F.extras], langs: F.langs,
+    name: (d.name || "").trim(), company: (d.company || "").trim(),
+    link: (d.link || "").trim(), message: (d.message || "").trim(),
+  };
+}
+
+function messageLines(d) {
+  const L = ["Hi Marvz! 👋", "*I'd like to start a project*", ""];
+  if (d.service) L.push(`🧩 *Service:* ${d.service} (${d.start.toLowerCase()})`);
+  if (d.extras.length) L.push(`✨ *Extras:* ${d.extras.join(", ")}`);
+  if (d.langs > 1) L.push(`🌎 *Languages:* ${d.langs}`);
+  L.push(`📅 *Timeline:* ${d.timeline}`, `💰 *Budget:* ${d.budget}`);
+  if (d.name || d.company || d.link) L.push("");
+  if (d.name) L.push(`🙋 *Name:* ${d.name}${d.company ? ` · ${d.company}` : ""}`);
+  else if (d.company) L.push(`🏢 *Business:* ${d.company}`);
+  if (d.link) L.push(`🔗 ${d.link}`);
+  if (d.message) L.push("", d.message);
+  L.push("", "Thanks!");
+  return L;
+}
+
+function renderMessage() {
+  const d = funnelData();
+  const text = messageLines(d).join("\n");
+  // WhatsApp-style *bold* in the preview.
+  $("#chatOut").innerHTML = esc(text).replace(/\*([^*\n]+)\*/g, "<strong>$1</strong>").replace(/\n/g, "<br>") +
+    `<time>09:42 <span class="ticks">✓✓</span></time>`;
+  const chat = $("#chat"); chat.scrollTop = chat.scrollHeight;
+  $("#waSend").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
+  $("#summary").innerHTML = [
+    ["Service", d.service ? `${d.service} · ${d.start}` : "-"],
+    ["Extras", d.extras.join(", ") || "None"],
+    ["Languages", d.langs], ["Timeline", d.timeline], ["Budget", d.budget],
+    ["From", [d.name, d.company].filter(Boolean).join(" · ") || "-"],
+  ].map(([k, v]) => `<div><dt class="mono">${k}</dt><dd>${esc(v)}</dd></div>`).join("");
+}
+
 function buildContactLinks() {
   const links = [];
+  if (CONFIG.whatsapp) links.push(`<a href="https://wa.me/${CONFIG.whatsapp}" target="_blank" rel="noopener">WhatsApp +${CONFIG.whatsapp.replace(/^(\d{3})(\d+)$/, "$1 $2")} ↗</a>`);
   if (CONFIG.email) links.push(`<a href="mailto:${CONFIG.email}">${CONFIG.email}</a>`);
-  if (CONFIG.whatsapp) links.push(`<a href="https://wa.me/${CONFIG.whatsapp}" target="_blank" rel="noopener">WhatsApp ↗</a>`);
   if (CONFIG.instagram) links.push(`<a href="${CONFIG.instagram}" target="_blank" rel="noopener">Instagram ↗</a>`);
   if (CONFIG.linkedin) links.push(`<a href="${CONFIG.linkedin}" target="_blank" rel="noopener">LinkedIn ↗</a>`);
   if (CONFIG.github) links.push(`<a href="${CONFIG.github}" target="_blank" rel="noopener">GitHub ↗</a>`);
   $("#contactLinks").innerHTML = links.join("");
 }
-$("#form").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const f = e.target, status = $("#formStatus");
-  let ok = true;
-  $$("[required]", f).forEach((el) => {
-    const bad = !el.value.trim() || (el.type === "email" && !/^\S+@\S+\.\S+$/.test(el.value));
-    el.setAttribute("aria-invalid", bad); if (bad) ok = false;
-  });
-  if (!ok) { status.textContent = "Please fill in the required fields."; return; }
-  const d = Object.fromEntries(new FormData(f));
-  const body = `Name: ${d.name}\nEmail: ${d.email}\nCompany: ${d.company || "-"}\nPhone: ${d.phone || "-"}\nBudget: ${d.budget}\n\n${d.message || ""}`;
-  if (CONFIG.email) {
-    location.href = `mailto:${CONFIG.email}?subject=${encodeURIComponent("New project · " + (d.company || d.name))}&body=${encodeURIComponent(body)}`;
-    status.textContent = "Opening your email app…";
-  } else if (CONFIG.whatsapp) {
-    open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(body)}`, "_blank", "noopener");
-    status.textContent = "Opening WhatsApp…";
-  } else {
-    status.textContent = "Thanks! Contact details are coming soon.";
-  }
-});
 
 /* ---------- Boot ---------- */
 $$("[data-count]").forEach((el) => (el.textContent = PROJECTS.length));
@@ -519,9 +630,16 @@ buildIndex();
 buildList();
 buildTicker();
 buildContactLinks();
+buildFunnel();
 layout();
 off.x = -L.cw * 0.4; off.y = -L.rh * 0.15;
 requestAnimationFrame(loop);
+
+// Open a project when the hash changes (e.g. a shared /#helibol link on the open page).
+addEventListener("hashchange", () => {
+  const p = PROJECTS.find((x) => x.slug === location.hash.slice(1));
+  if (p && !(drawerOpen() && current === p.i)) focusTile(p.i);
+});
 
 let rt;
 addEventListener("resize", () => {
