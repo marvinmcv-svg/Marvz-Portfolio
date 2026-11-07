@@ -121,7 +121,7 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
   padding: 5px 10px; border-radius: 8px; font-size: 15px; letter-spacing: -.01em;
   transition: background .2s, color .2s;
 }
-.index__item small { font-family: var(--mono); font-size: 10px; color: var(--cream-30); }
+.index__item small { font-family: var(--mono); font-size: 10px; color: var(--cream-60); }
 .index__item:hover, .index__item.is-active { background: var(--cream); color: var(--ink); }
 .index__item:hover small, .index__item.is-active small { color: var(--ink); }
 body.is-list .index { opacity: 0; pointer-events: none; transform: translateX(-20px); }

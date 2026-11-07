@@ -167,7 +167,7 @@ const $$ = (s, el = document) => [...el.querySelectorAll(s)];
 const pad = (n) => String(n).padStart(2, "0");
 const mod = (a, n) => ((a % n) + n) % n;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const img = (p, size = "sm") => `/assets/work/${p.slug}${size === "sm" ? "-sm" : ""}.webp`;
+const img = (p, size = "sm") => `/assets/work/${p.slug}${size === "lg" ? "" : "-" + size}.webp`;
 
 
 /* ---------- Index (grouped by sector) ---------- */
@@ -263,12 +263,10 @@ function layout() {
         if (!primary) { el.tabIndex = -1; el.setAttribute("aria-hidden", "true"); }
         if (s.p) {
           el.dataset.i = s.p.i;
-          el.setAttribute("aria-label", `${s.p.name}, ${s.p.type}. Open project`);
-          el.innerHTML = `<div class="tile__img"><img src="${img(s.p)}" alt="" loading="lazy" decoding="async" width="800" height="500" draggable="false"></div>
+          el.innerHTML = `<div class="tile__img"><img src="${img(s.p)}" srcset="${img(s.p, "xs")} 480w, ${img(s.p)} 800w" sizes="${tw}px" alt="" loading="lazy" decoding="async" width="800" height="500" draggable="false"></div>
             <div class="tile__label"><span class="tile__name">${s.p.name}</span><span class="tile__meta mono">${pad(s.p.i + 1)} · ${s.p.type}</span></div>`;
         } else {
           el.dataset.cta = "1";
-          el.setAttribute("aria-label", "Start a project");
           el.innerHTML = `<div class="tile__img"><span>Your project<br><em>could be here.</em></span></div>
             <div class="tile__label"><span class="tile__name">Start a project</span><span class="tile__meta mono">${pad(PROJECTS.length + 1)} · Open</span></div>`;
         }
@@ -276,6 +274,16 @@ function layout() {
         tiles.push({ el, s, ci, cj });
       });
   world.appendChild(frag);
+  // Load the tiles that start on screen right away (the rest stay lazy), so the
+  // first paint isn't waiting on lazy-load discovery.
+  place();
+  let first = 0;
+  for (const t of tiles) {
+    const im = t.el.querySelector("img");
+    if (!im || t.x > vw + cw * 0.5 || t.y > vh || t.x < -tw || t.y < -th) continue;
+    im.loading = "eager";
+    if (first++ < 4) im.fetchPriority = "high";
+  }
   needs = true;
 }
 

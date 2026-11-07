@@ -21,7 +21,13 @@ Everything lives at the top of `app.js`:
 - `PROJECTS`: one entry per project (name, sector, type, url, tagline, description, languages, tags).
 - `TICKER`: the scrolling news line at the bottom.
 
-Screenshots are in `assets/work/<slug>.webp` (1440×900, used in the drawer) and `<slug>-sm.webp` (800×500, used on the canvas). To add a project, add the two images and a `PROJECTS` entry with the same `slug`.
+Screenshots are in `assets/work/`: `<slug>.webp` (1440×900, used in the drawer), plus `<slug>-sm.webp` (800×500) and `<slug>-xs.webp` (480×300) for the canvas, where phones and high-density screens pick the right size. To add a project, add the three images and a `PROJECTS` entry with the same `slug`, then run:
+
+```bash
+node scripts/seo.js
+```
+
+This rewrites the structured data and the crawlable project list in `index.html`, and updates `sitemap.xml`.
 
 ## Features
 
@@ -31,6 +37,14 @@ Screenshots are in `assets/work/<slug>.webp` (1440×900, used in the drawer) and
 - A four-step "Start a project" funnel (what you need, details, about you, send). A phone mock-up previews the WhatsApp message live, and the last step opens WhatsApp with the message ready to send. A floating WhatsApp button opens the funnel too.
 - An About overlay, a news ticker, and a List view.
 - Responsive layout. Animations are reduced when the visitor has `prefers-reduced-motion` turned on.
+
+## SEO and sharing
+
+- `assets/og.jpg` is the 1200×630 preview image shown when the link is shared on WhatsApp, iMessage, LinkedIn or X.
+- `index.html` has a canonical URL, Open Graph and Twitter tags, and JSON-LD (the studio plus every project). It also has a `<noscript>` list of all projects, which search engines and visitors without JavaScript see.
+- `robots.txt`, `sitemap.xml` and `site.webmanifest` (home-screen icons) are in the root.
+- `vercel.json` caches `/assets` for a week and adds basic security headers.
+- If you move to a custom domain, replace `marvz-portfolio.vercel.app` in `index.html`, `robots.txt` and `scripts/seo.js`, then run `node scripts/seo.js`.
 
 ## Test
 
