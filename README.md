@@ -17,9 +17,10 @@ Then open http://localhost:4173.
 Everything lives at the top of `app.js`:
 
 - `CONFIG`: the WhatsApp number the "Start a project" funnel sends to (currently +591 77165787), plus optional email, Instagram, LinkedIn and GitHub links.
-- `SERVICES` and `EXTRAS`: the choices in steps 01 and 02 of the funnel.
-- `PROJECTS`: one entry per project (name, sector, type, url, tagline, description, languages, tags).
-- `TICKER`: the scrolling news line at the bottom.
+- `SERVICES` and `EXTRAS`: the choices in steps 01 and 02 of the funnel, in English and Spanish.
+- `PROJECTS`: one entry per project (name, sector, type, url, tagline, description, languages, tags), with the Spanish version of the text in its `es` block.
+- `TICKER`: the scrolling news line at the bottom, in English and Spanish.
+- `UI`: other interface text that the script writes, including the WhatsApp message wording.
 
 Screenshots are in `assets/work/`: `<slug>.webp` (1440×900, used in the drawer), plus `<slug>-sm.webp` (800×500) and `<slug>-xs.webp` (480×300) for the canvas, where phones and high-density screens pick the right size. To add a project, add the three images and a `PROJECTS` entry with the same `slug`, then run:
 
@@ -38,6 +39,15 @@ This rewrites the structured data and the crawlable project list in `index.html`
 - An About overlay, a news ticker, and a List view.
 - Responsive layout. Animations are reduced when the visitor has `prefers-reduced-motion` turned on.
 
+## English and Spanish
+
+The whole site, including the WhatsApp message, is in English and Spanish. Visitors whose browser is set to Spanish get Spanish automatically. Anyone can switch with the EN/ES button in the header, and the site remembers their choice.
+
+- Share `https://marvz-portfolio.vercel.app/?lang=es` to open the Spanish version directly.
+- Static page text is English in `index.html`. Elements opt in with `data-i18n="key"` (or `data-i18n-attr` for labels and placeholders), and the Spanish text for each key is in `i18n.js`.
+- Project text and other script-written text are in `app.js`, as described above.
+- If you change some English text in `index.html`, update the matching key in `i18n.js` too.
+
 ## SEO and sharing
 
 - `assets/og.jpg` is the 1200×630 preview image shown when the link is shared on WhatsApp, iMessage, LinkedIn or X.
@@ -48,7 +58,7 @@ This rewrites the structured data and the crawlable project list in `index.html`
 
 ## Test
 
-An end-to-end Playwright check runs the canvas, drawer, index, list view, About and the whole WhatsApp funnel on desktop, laptop, tablet and three phones:
+An end-to-end Playwright check runs the canvas, drawer, index, list view, About and the whole WhatsApp funnel on desktop, laptop, tablet and three phones. It then repeats the key flows in Spanish and switches between the two languages:
 
 ```bash
 python3 -m http.server 4173 &

@@ -102,6 +102,10 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; letter-spa
 .brand em { font-size: 1.08em; }
 .top__coords { position: absolute; left: 50%; transform: translateX(-50%); color: var(--cream-60); font-variant-numeric: tabular-nums; }
 .top__nav { display: flex; align-items: center; gap: 22px; }
+.lang { display: flex; align-items: center; gap: 2px; padding: 2px; border: 1px solid var(--cream-15); border-radius: 999px; }
+.lang button { min-width: 34px; height: 30px; padding: 0 8px; border-radius: 999px; font-family: var(--mono); font-size: 11px; letter-spacing: .06em; color: var(--cream-60); transition: background .2s, color .2s; }
+.lang button:hover { color: var(--cream); }
+.lang button[aria-pressed="true"] { background: var(--cream); color: var(--ink); }
 [data-toggle-index] { display: none; }
 
 /* Index */
@@ -309,10 +313,15 @@ body.is-list .stage { visibility: hidden; }
   [data-toggle-index] { display: inline; }
   body.is-list [data-toggle-index] { display: none; }
   .top__nav { gap: 4px; margin-right: -10px; }
-  .top__nav .link { padding: 12px 10px; }
-  .top__nav .link::after { left: 10px; right: 10px; bottom: 8px; }
+  .top__nav .link { padding: 12px 8px; white-space: nowrap; }
+  .top__nav .link::after { left: 8px; right: 8px; bottom: 8px; }
   .top__nav .btn { display: none; }
+  /* Phones: one button that switches to the other language. */
+  .lang { margin-left: 4px; padding: 0; border: 0; }
+  .lang button { min-width: 36px; height: 32px; padding: 0 6px; border: 1px solid var(--cream-30); color: var(--cream); }
+  .lang button[aria-pressed="true"] { display: none; }
   .brand { font-size: 21px; padding: 8px 0; }
+  @media (max-width: 380px) { .brand { font-size: 19px; } .top__nav .link { padding: 12px 6px; } .top__nav .link::after { left: 6px; right: 6px; } }
 
   .index { left: 10px; right: 10px; width: auto; top: calc(var(--top) + var(--safe-t) + 4px); bottom: calc(var(--tick) + var(--safe-b) + 10px); opacity: 0; pointer-events: none; transform: translateY(-10px); z-index: 35; }
   body.index-open .index { opacity: 1; pointer-events: auto; transform: none; }

@@ -209,10 +209,75 @@ async function run(browser, [dev, opts]) {
   await ctx.close();
 }
 
+// Spanish: a Spanish-language browser gets the Spanish site, and switching works both ways.
+async function runSpanish(browser, [dev, opts]) {
+  const d = `${dev} · es`;
+  console.log(`\n${d}`);
+  const ctx = await browser.newContext({ ...opts, locale: "es-BO", reducedMotion: "reduce" });
+  const page = await ctx.newPage();
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
+  const touch = !!opts.hasTouch;
+  const tap = (loc) => (touch ? loc.tap() : loc.click());
+  const vw = page.viewportSize().width;
+
+  await page.goto(BASE, { waitUntil: "networkidle" });
+  await page.waitForFunction(() => document.body.classList.contains("is-ready"), null, { timeout: 5000 });
+  check(d, "browser language picks Spanish", (await page.evaluate(() => document.documentElement.lang)) === "es");
+  check(d, "hero and title in Spanish", /hechos para rendir/.test(await page.locator(".hero__title").textContent()) && /Sitios web/.test(await page.title()));
+  const overflowX = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+  check(d, "no horizontal page overflow", overflowX <= 0, `${overflowX}px`);
+  const body = await page.evaluate(() => document.body.innerText);
+  const leftovers = ["Start a project", "Drag to explore", "Swipe to explore", "List view", "Your project"].filter((w) => body.includes(w));
+  check(d, "no English left on the page", leftovers.length === 0, leftovers.join(", "));
+  await page.screenshot({ path: `${SHOTS}/${dev}-es-1-canvas.png` });
+
+  // Project drawer in Spanish.
+  await page.evaluate(() => { location.hash = "#helibol"; });
+  await page.waitForTimeout(1600);
+  check(d, "drawer in Spanish", (await page.locator("#dSector").textContent()) === "Aviación" && /Tipo/.test(await page.locator("#dMeta").textContent()));
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(200);
+
+  // Funnel builds a Spanish WhatsApp message.
+  await tap(page.locator(".hero .btn"));
+  await page.waitForTimeout(350);
+  await tap(page.locator(".choice", { hasText: "Tienda online" }));
+  await tap(page.locator("#fNext"));
+  await tap(page.locator(".chip", { hasText: "Pagos online" }));
+  await tap(page.locator("#fNext"));
+  await page.locator("input[name=name]").fill("Ana");
+  await tap(page.locator("#fNext"));
+  const es = new URL(await page.locator("#waSend").getAttribute("href")).searchParams.get("text") || "";
+  check(d, "WhatsApp message in Spanish",
+    ["¡Hola Marvz!", "*Servicio:* Tienda online (desde cero)", "*Extras:* Pagos online", "*Plazo:* 1–2 meses", "*Nombre:* Ana", "¡Gracias!"].every((x) => es.includes(x)));
+  await page.screenshot({ path: `${SHOTS}/${dev}-es-2-funnel.png` });
+  await tap(page.locator("#contact .overlay__close"));
+  await page.waitForTimeout(250);
+
+  // Switch to English: answers carry over, the choice sticks after a reload.
+  await tap(page.locator("[data-setlang='en']"));
+  await page.waitForTimeout(200);
+  const en = new URL(await page.locator("#waSend").getAttribute("href")).searchParams.get("text") || "";
+  check(d, "switching to English translates the page", (await page.evaluate(() => document.documentElement.lang)) === "en" && /built to perform/.test(await page.locator(".hero__title").textContent()));
+  check(d, "funnel answers carry over to English", ["*Service:* Online shop (brand new)", "Online payments", "*Name:* Ana"].every((x) => en.includes(x)));
+  await page.reload({ waitUntil: "networkidle" });
+  check(d, "language choice sticks after reload", (await page.evaluate(() => document.documentElement.lang)) === "en");
+  await tap(page.locator("[data-setlang='es']"));
+  check(d, "?lang=es link for sharing", new URL(page.url()).searchParams.get("lang") === "es");
+  const overflowEn = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
+  check(d, "header fits in both languages", overflowEn <= 0 && vw > 0, `${overflowEn}px`);
+
+  check(d, "no console errors", errors.length === 0, errors.slice(0, 3).join(" | "));
+  await ctx.close();
+}
+
 (async () => {
   const browser = await chromium.launch();
   for (const p of PROFILES) {
     try { await run(browser, p); } catch (e) { check(p[0], "run completed", false, e.message.split("\n")[0]); }
+    try { await runSpanish(browser, p); } catch (e) { check(`${p[0]} · es`, "run completed", false, e.message.split("\n")[0]); }
   }
   await browser.close();
   const failed = results.filter((r) => !r.ok);

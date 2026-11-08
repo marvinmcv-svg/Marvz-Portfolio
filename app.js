@@ -19,6 +19,12 @@ const PROJECTS = [
     tagline: "Raised with patience. Selected with rigor.",
     desc: "A cinematic, bilingual site for a breeder of Purebred Arabian and Pura Raza Española horses in Santa Cruz, founded in 1993. The film plays through the cut-out letters of ALHAMBRA, then the site moves through bloodlines, the estate, evening events, the riding school and services, with “Spirit”, an AI assistant that answers visitors' questions.",
     langs: "Spanish · English", tags: ["Art direction", "Scroll storytelling", "AI assistant", "Bilingual", "Motion"],
+    es: {
+      sector: "Ecuestre", type: "Sitio web",
+      tagline: "Criados con paciencia. Seleccionados con rigor.",
+      desc: "Un sitio cinematográfico y bilingüe para un criadero de caballos Pura Sangre Árabe y Pura Raza Española en Santa Cruz, fundado en 1993. El video se ve a través de las letras recortadas de ALHAMBRA y luego el sitio recorre los linajes, el haras, las noches de eventos, la escuela de equitación y los servicios, con “Spirit”, un asistente con IA que responde las preguntas de los visitantes.",
+      langs: "Español · Inglés", tags: ["Dirección de arte", "Storytelling con scroll", "Asistente con IA", "Bilingüe", "Animación"],
+    },
   },
   {
     slug: "fuerzaflow", name: "FuerzaFlow", sector: "Fitness · AI", type: "Web app · PWA",
@@ -26,6 +32,12 @@ const PROJECTS = [
     tagline: "Strength that flows with you.",
     desc: "An AI strength coach that builds your training program around your days and equipment, adjusts every workout to how you feel, and tracks macros from a photo. It installs from the browser, works offline and runs in six languages.",
     langs: "EN · ES · PT · FR · DE · IT", tags: ["Product design", "PWA", "AI coach", "6 languages", "Themes"],
+    es: {
+      sector: "Fitness · IA", type: "App web · PWA",
+      tagline: "Fuerza que fluye contigo.",
+      desc: "Un coach de fuerza con IA que arma tu programa según tus días y tu equipo, ajusta cada entrenamiento a cómo te sientes y calcula tus macros con una foto. Se instala desde el navegador, funciona sin conexión y está en seis idiomas.",
+      langs: "EN · ES · PT · FR · DE · IT", tags: ["Diseño de producto", "PWA", "Coach con IA", "6 idiomas", "Temas"],
+    },
   },
   {
     slug: "restobar-os", name: "RestoBar OS", sector: "Restaurants · SaaS", type: "SaaS",
@@ -33,6 +45,12 @@ const PROJECTS = [
     tagline: "Your restaurant, under control. From your phone.",
     desc: "A restaurant operating system for bars and restaurants in Bolivia. Waiters take orders on their own phones, each ticket goes to its kitchen station with a timer, staff get role-based permissions, invoicing is built in, and the day's close is sent to the owner on WhatsApp.",
     langs: "Spanish", tags: ["SaaS", "POS", "Kitchen display", "Roles & permissions", "WhatsApp"],
+    es: {
+      sector: "Restaurantes · SaaS", type: "SaaS",
+      tagline: "Tu restaurante, bajo control. Desde tu celular.",
+      desc: "Un sistema operativo para restaurantes y bares de Bolivia. Los meseros toman pedidos desde su propio celular, cada comanda llega a su estación de cocina con reloj, el personal tiene permisos por rol, la facturación viene incluida y el cierre del día le llega al dueño por WhatsApp.",
+      langs: "Español", tags: ["SaaS", "Punto de venta", "Pantalla de cocina", "Roles y permisos", "WhatsApp"],
+    },
   },
   {
     slug: "fogo-de-chao", name: "Fogo de Chão Ventura Sur", sector: "Hospitality", type: "Website",
@@ -40,6 +58,12 @@ const PROJECTS = [
     tagline: "From the fire to your table.",
     desc: "A warm, editorial site for a gaúcho churrascaria in Mall Ventura Sur, Santa Cruz: menu, cuts, the Market Table, weekly specials and events, with WhatsApp reservations, in six languages.",
     langs: "ES · EN · PT · FR · DE · ZH", tags: ["Restaurant", "Reservations", "6 languages", "CMS", "Art direction"],
+    es: {
+      sector: "Gastronomía", type: "Sitio web",
+      tagline: "Del fuego a tu mesa.",
+      desc: "Un sitio cálido y editorial para una churrasquería gaúcha en el Mall Ventura Sur de Santa Cruz: carta, cortes, la Mesa del Mercado, la Semana Fogo y eventos, con reservas por WhatsApp en seis idiomas.",
+      langs: "ES · EN · PT · FR · DE · ZH", tags: ["Restaurante", "Reservas", "6 idiomas", "CMS", "Dirección de arte"],
+    },
   },
   {
     slug: "don-corte-fino", name: "Don Corte Fino", sector: "Food · E-commerce", type: "Website + Shop",
@@ -47,6 +71,12 @@ const PROJECTS = [
     tagline: "It's not just beef… it's Wangus.",
     desc: "Brand site and online shop for Wangus beef (Wagyu × Angus), finished in a Santa Cruz feedlot and cut by hand. It includes an interactive cut guide, signature boxes, and WhatsApp ordering with delivery across Santa Cruz de la Sierra.",
     langs: "Spanish · English", tags: ["E-commerce", "Brand storytelling", "Cut guide", "WhatsApp ordering"],
+    es: {
+      sector: "Alimentos · E-commerce", type: "Sitio web + tienda",
+      tagline: "No es solo carne… es Wangus.",
+      desc: "Sitio de marca y tienda online para la carne Wangus (Wagyu × Angus), terminada en un feedlot de Santa Cruz y cortada a mano. Incluye una guía de cortes interactiva, cajas especiales y pedidos por WhatsApp con delivery en toda Santa Cruz de la Sierra.",
+      langs: "Español · Inglés", tags: ["E-commerce", "Storytelling de marca", "Guía de cortes", "Pedidos por WhatsApp"],
+    },
   },
   {
     slug: "helibol", name: "Helibol", sector: "Aviation", type: "Website",
@@ -54,6 +84,12 @@ const PROJECTS = [
     tagline: "Where the roads end, we begin.",
     desc: "A site for a family-run helicopter operator flying in Bolivia since 1988: energy and mining, rescue and MEDEVAC, firefighting, cargo, VIP and scenic flights. It presents the fleet and safety culture and gives a 24/7 emergency line.",
     langs: "Spanish · English", tags: ["Corporate", "Fleet showcase", "Bilingual", "Lead generation"],
+    es: {
+      sector: "Aviación", type: "Sitio web",
+      tagline: "Donde terminan los caminos, empezamos nosotros.",
+      desc: "Un sitio para un operador familiar de helicópteros que vuela en Bolivia desde 1988: energía y minería, rescate y MEDEVAC, combate de incendios, carga, vuelos VIP y panorámicos. Presenta la flota y la cultura de seguridad, con una línea de emergencias 24/7.",
+      langs: "Español · Inglés", tags: ["Corporativo", "Presentación de flota", "Bilingüe", "Captación de clientes"],
+    },
   },
   {
     slug: "spc", name: "SPC Impresores", sector: "Manufacturing", type: "Website",
@@ -61,6 +97,12 @@ const PROJECTS = [
     tagline: "Printing the best of Bolivia.",
     desc: "A site for a leader in Bolivia's printing industry since 2001: food and pharmaceutical packaging, commercial printing, books, magazines and on-demand digital print. It has a services catalog, a step-by-step process and WhatsApp quotes with an on-site assistant.",
     langs: "Spanish · English", tags: ["B2B", "Industrial", "Quoting flow", "AI assistant"],
+    es: {
+      sector: "Industria", type: "Sitio web",
+      tagline: "Imprimiendo lo mejor de Bolivia.",
+      desc: "Un sitio para un líder de la industria gráfica boliviana desde 2001: packaging para alimentos y farmacia, impresión comercial, libros, revistas e impresión digital bajo demanda. Tiene catálogo de servicios, el proceso paso a paso y cotizaciones por WhatsApp con un asistente en el sitio.",
+      langs: "Español · Inglés", tags: ["B2B", "Industrial", "Flujo de cotización", "Asistente con IA"],
+    },
   },
   {
     slug: "firuwalk", name: "FiruWalk", sector: "Pets · Marketplace", type: "Web app",
@@ -68,6 +110,12 @@ const PROJECTS = [
     tagline: "Happy walks, calm owners.",
     desc: "A family dog-walking service in Santa Cruz. Owners book recurring walks with verified walkers, follow each walk on live GPS, get photo reports when it ends and pay by QR. Walkers get their own sign-up and dashboard.",
     langs: "Spanish · English", tags: ["Marketplace", "Booking", "Live GPS", "QR payments"],
+    es: {
+      sector: "Mascotas · Marketplace", type: "App web",
+      tagline: "Paseos felices, dueños tranquilos.",
+      desc: "Un servicio familiar de paseo de perros en Santa Cruz. Los dueños reservan paseos recurrentes con paseadores verificados, siguen cada paseo por GPS en vivo, reciben un reporte con fotos al terminar y pagan con QR. Los paseadores tienen su propio registro y panel.",
+      langs: "Español · Inglés", tags: ["Marketplace", "Reservas", "GPS en vivo", "Pagos con QR"],
+    },
   },
   {
     slug: "bloom", name: "Bloom", sector: "Wellness", type: "App",
@@ -75,6 +123,12 @@ const PROJECTS = [
     tagline: "Small habits. Big change.",
     desc: "A friendly habit tracker. You build routines in a few minutes a day, and a little companion grows every time you show up. It's built as a cross-platform app with Expo and React Native and runs in the browser.",
     langs: "English", tags: ["Mobile app", "React Native", "Gamification", "Character design"],
+    es: {
+      sector: "Bienestar", type: "App",
+      tagline: "Pequeños hábitos. Grandes cambios.",
+      desc: "Un tracker de hábitos amigable. Armas rutinas en pocos minutos al día y un pequeño compañero crece cada vez que cumples. Es una app multiplataforma hecha con Expo y React Native que también funciona en el navegador.",
+      langs: "Inglés", tags: ["App móvil", "React Native", "Gamificación", "Diseño de personaje"],
+    },
   },
   {
     slug: "sccs-website", name: "Santa Cruz Cooperative School", sector: "Education", type: "Website",
@@ -82,6 +136,12 @@ const PROJECTS = [
     tagline: "Two diplomas. One unrivaled future.",
     desc: "The main website for a PK–12 American international school in Bolivia, home of the Jaguars. It covers admissions, the dual U.S. and Bolivian diploma, campus and facilities, safety and student life, with site-wide search and a full navigation system.",
     langs: "English · Spanish", tags: ["Education", "Information architecture", "Search", "Admissions"],
+    es: {
+      sector: "Educación", type: "Sitio web",
+      tagline: "Dos diplomas. Un futuro sin igual.",
+      desc: "El sitio principal de un colegio internacional americano de PK a 12.º grado en Bolivia, hogar de los Jaguars. Cubre admisiones, el doble diploma estadounidense y boliviano, el campus, la seguridad y la vida estudiantil, con buscador en todo el sitio y un sistema de navegación completo.",
+      langs: "Inglés · Español", tags: ["Educación", "Arquitectura de información", "Buscador", "Admisiones"],
+    },
   },
   {
     slug: "sccs-sis", name: "SCCS SIS", sector: "Education · SaaS", type: "Web app · PWA",
@@ -89,6 +149,12 @@ const PROJECTS = [
     tagline: "Every student. One place.",
     desc: "A student information system that holds records, grades, Google Classroom and family communication for both the U.S. diploma and the Bolivian Bachillerato. It works in English and Spanish, installs on any phone, and search returns in under 72 ms.",
     langs: "English · Spanish", tags: ["SIS", "Gradebook", "Google Classroom", "PWA", "Role-based"],
+    es: {
+      sector: "Educación · SaaS", type: "App web · PWA",
+      tagline: "Cada estudiante. Un solo lugar.",
+      desc: "Un sistema de información estudiantil que reúne registros, notas, Google Classroom y la comunicación con las familias, tanto para el diploma estadounidense como para el Bachillerato boliviano. Funciona en inglés y español, se instala en cualquier celular y la búsqueda responde en menos de 72 ms.",
+      langs: "Inglés · Español", tags: ["SIS", "Libreta de notas", "Google Classroom", "PWA", "Por roles"],
+    },
   },
   {
     slug: "sccs-student-os", name: "SCCS Student OS", sector: "Education · SaaS", type: "Web app",
@@ -96,6 +162,12 @@ const PROJECTS = [
     tagline: "Every student, seen clearly.",
     desc: "One calm, bilingual workspace for school staff covering discipline, learning support and positive behavior. Accommodations travel with the student, and a referral can go from the morning dashboard to a compliant record in under a minute.",
     langs: "English · Spanish", tags: ["Dashboard", "Learning support", "Behavior", "Bilingual"],
+    es: {
+      sector: "Educación · SaaS", type: "App web",
+      tagline: "Cada estudiante, visto con claridad.",
+      desc: "Un espacio de trabajo tranquilo y bilingüe para el personal del colegio que reúne disciplina, apoyo al aprendizaje y conducta positiva. Las adecuaciones acompañan al estudiante, y un reporte pasa del panel de la mañana a un registro en regla en menos de un minuto.",
+      langs: "Inglés · Español", tags: ["Panel", "Apoyo al aprendizaje", "Conducta", "Bilingüe"],
+    },
   },
   {
     slug: "sccs-store", name: "SCCS Store", sector: "Education · E-commerce", type: "E-commerce",
@@ -103,6 +175,12 @@ const PROJECTS = [
     tagline: "Back to school, Jaguars.",
     desc: "The official school store for uniforms, sportswear, backpacks and keepsakes. Families shop by grade level, buy discounted kits, and pick up their orders at school.",
     langs: "Spanish · English", tags: ["E-commerce", "Catalog", "Kits", "Pickup"],
+    es: {
+      sector: "Educación · E-commerce", type: "E-commerce",
+      tagline: "Vuelta a clases, Jaguars.",
+      desc: "La tienda oficial del colegio para uniformes, ropa deportiva, mochilas y recuerdos. Las familias compran por nivel, aprovechan kits con descuento y recogen sus pedidos en el colegio.",
+      langs: "Español · Inglés", tags: ["E-commerce", "Catálogo", "Kits", "Recojo en el colegio"],
+    },
   },
   {
     slug: "acs-calvert", name: "ACS Calvert", sector: "Education", type: "Website",
@@ -110,6 +188,12 @@ const PROJECTS = [
     tagline: "Bolivia's American school since 1955.",
     desc: "A website for a U.S.-accredited, English-language school in La Paz that teaches from KG3 to Grade 12 and awards both U.S. and Bolivian diplomas. It covers admissions, learning, student life and community, with quick links to the school's own tools.",
     langs: "English · Spanish", tags: ["Education", "Admissions", "Bilingual", "Editorial"],
+    es: {
+      sector: "Educación", type: "Sitio web",
+      tagline: "El colegio americano de Bolivia desde 1955.",
+      desc: "Un sitio para un colegio de La Paz acreditado en EE. UU. y con enseñanza en inglés, de KG3 a 12.º grado, que otorga los diplomas estadounidense y boliviano. Cubre admisiones, aprendizaje, vida estudiantil y comunidad, con accesos rápidos a las herramientas del colegio.",
+      langs: "Inglés · Español", tags: ["Educación", "Admisiones", "Bilingüe", "Editorial"],
+    },
   },
   {
     slug: "fabrizio-saunero", name: "Fabrizio Saunero · No. 19", sector: "Personal brand", type: "Portfolio",
@@ -117,6 +201,12 @@ const PROJECTS = [
     tagline: "Built by experience. Driven by purpose.",
     desc: "A cinematic college-application portfolio told in four chapters: athletics, service, work and independence. It uses match footage, animated stats, a division-climb ladder, horizontal galleries and scroll-driven storytelling.",
     langs: "English", tags: ["Storytelling", "Video", "GSAP motion", "College application"],
+    es: {
+      sector: "Marca personal", type: "Portafolio",
+      tagline: "Forjado por la experiencia. Impulsado por un propósito.",
+      desc: "Un portafolio cinematográfico para postular a la universidad, contado en cuatro capítulos: deporte, servicio, trabajo e independencia. Usa videos de partidos, estadísticas animadas, una escalera de ascenso de división, galerías horizontales y storytelling con scroll.",
+      langs: "Inglés", tags: ["Storytelling", "Video", "Animación GSAP", "Postulación universitaria"],
+    },
   },
   {
     slug: "fabrizios", name: "Fabrizio Saunero", sector: "Personal brand", type: "Portfolio",
@@ -124,6 +214,12 @@ const PROJECTS = [
     tagline: "A life built on chances taken.",
     desc: "A second, editorial edition of a student-athlete's portfolio, built around highlights and a gallery: from Bolivia's 4th Division to Primera A, state titles, varsity captaincy and fundraising for Operation Smile.",
     langs: "English", tags: ["Portfolio", "Editorial", "Gallery", "College application"],
+    es: {
+      sector: "Marca personal", type: "Portafolio",
+      tagline: "Una vida hecha de oportunidades aprovechadas.",
+      desc: "Una segunda edición, más editorial, del portafolio de un estudiante-deportista, centrada en logros y una galería: de la 4.ª División de Bolivia a la Primera A, títulos estatales, la capitanía del equipo del colegio y la recaudación de fondos para Operation Smile.",
+      langs: "Inglés", tags: ["Portafolio", "Editorial", "Galería", "Postulación universitaria"],
+    },
   },
   {
     slug: "iker-torrico", name: "Iker Torrico", sector: "Personal brand", type: "Portfolio",
@@ -131,34 +227,73 @@ const PROJECTS = [
     tagline: "Athlete. Performer. Builder.",
     desc: "A college portfolio for a competitive athlete, stage performer and young entrepreneur from La Paz: three sports, community projects, commercial sales work, and music with a live band.",
     langs: "English", tags: ["Portfolio", "Personal brand", "Media library", "College application"],
+    es: {
+      sector: "Marca personal", type: "Portafolio",
+      tagline: "Deportista. Artista. Emprendedor.",
+      desc: "Un portafolio universitario para un deportista competitivo, artista de escenario y joven emprendedor de La Paz: tres deportes, proyectos comunitarios, ventas comerciales y música con una banda en vivo.",
+      langs: "Inglés", tags: ["Portafolio", "Marca personal", "Biblioteca de medios", "Postulación universitaria"],
+    },
   },
 ];
 
 // "Start a project" funnel: step 01 services and step 02 extras.
 const SERVICES = [
-  { id: "website", name: "Website", note: "Brand, business or corporate site" },
-  { id: "landing", name: "Landing page", note: "One page built to convert" },
-  { id: "shop", name: "Online shop", note: "Catalog, cart, WhatsApp or online orders" },
-  { id: "app", name: "Web app · PWA", note: "Installs from the browser, works offline" },
-  { id: "saas", name: "SaaS & dashboards", note: "POS, booking, school or internal systems" },
-  { id: "ai", name: "AI assistant", note: "A chatbot trained on your business" },
-  { id: "portfolio", name: "Portfolio", note: "Personal brand or college application" },
-  { id: "brand", name: "Brand & story", note: "Identity, copy, motion and video" },
+  { id: "website", en: ["Website", "Brand, business or corporate site"], es: ["Sitio web", "Sitio de marca, negocio o corporativo"] },
+  { id: "landing", en: ["Landing page", "One page built to convert"], es: ["Landing page", "Una página hecha para convertir"] },
+  { id: "shop", en: ["Online shop", "Catalog, cart, WhatsApp or online orders"], es: ["Tienda online", "Catálogo, carrito, pedidos por WhatsApp u online"] },
+  { id: "app", en: ["Web app · PWA", "Installs from the browser, works offline"], es: ["App web · PWA", "Se instala desde el navegador y funciona sin conexión"] },
+  { id: "saas", en: ["SaaS & dashboards", "POS, booking, school or internal systems"], es: ["SaaS y paneles", "Punto de venta, reservas, colegios o sistemas internos"] },
+  { id: "ai", en: ["AI assistant", "A chatbot trained on your business"], es: ["Asistente con IA", "Un chatbot entrenado con tu negocio"] },
+  { id: "portfolio", en: ["Portfolio", "Personal brand or college application"], es: ["Portafolio", "Marca personal o postulación universitaria"] },
+  { id: "brand", en: ["Brand & story", "Identity, copy, motion and video"], es: ["Marca e historia", "Identidad, textos, animación y video"] },
 ];
 const EXTRAS = [
-  "WhatsApp ordering & booking", "AI assistant", "Online payments", "Bookings & calendar",
-  "CMS to edit content", "SEO & performance", "Copywriting", "Logo & brand identity", "Motion & video",
+  { en: "WhatsApp ordering & booking", es: "Pedidos y reservas por WhatsApp" },
+  { en: "AI assistant", es: "Asistente con IA" },
+  { en: "Online payments", es: "Pagos online" },
+  { en: "Bookings & calendar", es: "Reservas y calendario" },
+  { en: "CMS to edit content", es: "CMS para editar contenido" },
+  { en: "SEO & performance", es: "SEO y rendimiento" },
+  { en: "Copywriting", es: "Redacción de textos" },
+  { en: "Logo & brand identity", es: "Logo e identidad de marca" },
+  { en: "Motion & video", es: "Animación y video" },
 ];
 
 const TICKER = [
-  `${PROJECTS.length} projects live and counting`,
-  "Now booking projects for the new year",
-  "FuerzaFlow ships in 6 languages",
-  "SCCS SIS search answers in under 72 ms",
-  "Fogo de Chão Ventura Sur takes reservations in 6 languages",
-  "RestoBar OS sends the day's close to WhatsApp",
-  "Haras La Alhambra welcomes Spirit, its AI assistant",
+  { en: `${PROJECTS.length} projects live and counting`, es: `${PROJECTS.length} proyectos en línea y contando` },
+  { en: "Now booking projects for the new year", es: "Agenda abierta para proyectos del nuevo año" },
+  { en: "FuerzaFlow ships in 6 languages", es: "FuerzaFlow está disponible en 6 idiomas" },
+  { en: "SCCS SIS search answers in under 72 ms", es: "La búsqueda de SCCS SIS responde en menos de 72 ms" },
+  { en: "Fogo de Chão Ventura Sur takes reservations in 6 languages", es: "Fogo de Chão Ventura Sur recibe reservas en 6 idiomas" },
+  { en: "RestoBar OS sends the day's close to WhatsApp", es: "RestoBar OS envía el cierre del día por WhatsApp" },
+  { en: "Haras La Alhambra welcomes Spirit, its AI assistant", es: "Haras La Alhambra da la bienvenida a Spirit, su asistente con IA" },
 ];
+
+// Interface text generated by this script. Static page text is in i18n.js.
+const UI = {
+  en: {
+    groups: { "Apps & SaaS": "Apps & SaaS", Education: "Education", "Food & Hospitality": "Food & Hospitality", "Brands & Business": "Brands & Business", Portfolios: "Portfolios" },
+    ctaTile: "Your project<br><em>could be here.</em>", start: "Start a project", open: "Open",
+    cardAlt: (n) => `${n} website`, shotAlt: (n) => `Screenshot of the ${n} website`,
+    type: "Type", sector: "Sector", languages: "Languages", liveAt: "Live at",
+    canvasView: ["Canvas view", "Canvas"], listView: ["List view", "List"],
+    drag: "Drag to explore ↔", swipe: "Swipe to explore",
+    opening: "Opening WhatsApp…", needService: "Pick a service to continue.", needName: "Add your name so I know who's writing.",
+    hi: "Hi Marvz! 👋", want: "*I'd like to start a project*", service: "Service", extras: "Extras", timeline: "Timeline",
+    budget: "Budget", name: "Name", business: "Business", thanks: "Thanks!", from: "From", none: "None",
+  },
+  es: {
+    groups: { "Apps & SaaS": "Apps y SaaS", Education: "Educación", "Food & Hospitality": "Gastronomía", "Brands & Business": "Marcas y empresas", Portfolios: "Portafolios" },
+    ctaTile: "Tu proyecto<br><em>podría estar aquí.</em>", start: "Empezar un proyecto", open: "Abierto",
+    cardAlt: (n) => `Sitio web de ${n}`, shotAlt: (n) => `Captura del sitio web de ${n}`,
+    type: "Tipo", sector: "Sector", languages: "Idiomas", liveAt: "En línea en",
+    canvasView: ["Vista lienzo", "Lienzo"], listView: ["Vista lista", "Lista"],
+    drag: "Arrastra para explorar ↔", swipe: "Desliza para explorar",
+    opening: "Abriendo WhatsApp…", needService: "Elige un servicio para continuar.", needName: "Agrega tu nombre para saber quién escribe.",
+    hi: "¡Hola Marvz! 👋", want: "*Quiero empezar un proyecto*", service: "Servicio", extras: "Extras", timeline: "Plazo",
+    budget: "Presupuesto", name: "Nombre", business: "Negocio", thanks: "¡Gracias!", from: "De", none: "Ninguno",
+  },
+};
 
 /* ========================================================================== */
 
@@ -168,6 +303,11 @@ const pad = (n) => String(n).padStart(2, "0");
 const mod = (a, n) => ((a % n) + n) % n;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const img = (p, size = "sm") => `/assets/work/${p.slug}${size === "lg" ? "" : "-" + size}.webp`;
+
+// Language: "en" or "es". t() reads interface text, loc() a project in the current language.
+let lang = "en";
+const t = (k) => UI[lang][k];
+const loc = (p) => (lang === "es" && p.es ? { ...p, ...p.es } : p);
 
 
 /* ---------- Index (grouped by sector) ---------- */
@@ -192,7 +332,7 @@ function buildIndex() {
   PROJECTS.forEach((p) => (groups[groupKey(p)] ||= []).push(p));
   body.innerHTML = GROUP_ORDER.filter((g) => groups[g]).map((g) => `
     <div class="index__group">
-      <h3 class="mono">${g}</h3>
+      <h3 class="mono">${t("groups")[g]}</h3>
       ${groups[g].map((p) => `<button class="index__item" type="button" data-i="${p.i}"><small>${pad(p.i + 1)}</small><span>${p.name}</span></button>`).join("")}
     </div>`).join("");
   $$(".index__item", body).forEach((b) => {
@@ -207,9 +347,9 @@ function buildIndex() {
 
 /* ---------- List view ---------- */
 function buildList() {
-  $("#listGrid").innerHTML = PROJECTS.map((p) => `
+  $("#listGrid").innerHTML = PROJECTS.map(loc).map((p) => `
     <button class="card" type="button" data-i="${p.i}">
-      <div class="tile__img"><img src="${img(p)}" alt="${p.name} website" loading="lazy" width="800" height="500"></div>
+      <div class="tile__img"><img src="${img(p)}" alt="${t("cardAlt")(p.name)}" loading="lazy" width="800" height="500"></div>
       <div class="tile__label"><span class="tile__name">${p.name}</span><span class="tile__meta mono">${p.type}</span></div>
       <p>${p.tagline}</p>
     </button>`).join("");
@@ -218,7 +358,7 @@ function buildList() {
 
 /* ---------- Ticker ---------- */
 function buildTicker() {
-  const row = TICKER.map((t) => `<span>${t}</span><i>●</i>`).join("");
+  const row = TICKER.map((x) => `<span>${x[lang]}</span><i>●</i>`).join("");
   $("#ticker").innerHTML = row + row;
 }
 
@@ -264,11 +404,11 @@ function layout() {
         if (s.p) {
           el.dataset.i = s.p.i;
           el.innerHTML = `<div class="tile__img"><img src="${img(s.p)}" srcset="${img(s.p, "xs")} 480w, ${img(s.p)} 800w" sizes="${tw}px" alt="" loading="lazy" decoding="async" width="800" height="500" draggable="false"></div>
-            <div class="tile__label"><span class="tile__name">${s.p.name}</span><span class="tile__meta mono">${pad(s.p.i + 1)} · ${s.p.type}</span></div>`;
+            <div class="tile__label"><span class="tile__name">${s.p.name}</span><span class="tile__meta mono">${pad(s.p.i + 1)} · ${loc(s.p).type}</span></div>`;
         } else {
           el.dataset.cta = "1";
-          el.innerHTML = `<div class="tile__img"><span>Your project<br><em>could be here.</em></span></div>
-            <div class="tile__label"><span class="tile__name">Start a project</span><span class="tile__meta mono">${pad(PROJECTS.length + 1)} · Open</span></div>`;
+          el.innerHTML = `<div class="tile__img"><span>${t("ctaTile")}</span></div>
+            <div class="tile__label"><span class="tile__name">${t("start")}</span><span class="tile__meta mono">${pad(PROJECTS.length + 1)} · ${t("open")}</span></div>`;
         }
         frag.appendChild(el);
         tiles.push({ el, s, ci, cj });
@@ -424,20 +564,20 @@ let current = -1, lastFocus = null;
 const drawerOpen = () => drawer.classList.contains("is-open");
 
 function openProject(i) {
-  const p = PROJECTS[mod(i, PROJECTS.length)];
+  const p = loc(PROJECTS[mod(i, PROJECTS.length)]);
   current = p.i;
   if (!drawerOpen()) lastFocus = document.activeElement;
   cursor.classList.remove("is-on");
   $("#dIndex").textContent = `${pad(p.i + 1)} / ${pad(PROJECTS.length)}`;
   const im = $("#dImg");
-  im.src = img(p, "lg"); im.alt = `Screenshot of the ${p.name} website`;
+  im.src = img(p, "lg"); im.alt = t("shotAlt")(p.name);
   $("#dShot").href = p.url;
   $("#dSector").textContent = p.sector;
   $("#dTitle").textContent = p.name;
   $("#dTagline").textContent = p.tagline;
   $("#dDesc").textContent = p.desc;
   $("#dMeta").innerHTML = [
-    ["Type", p.type], ["Sector", p.sector], ["Languages", p.langs], ["Live at", new URL(p.url).host],
+    [t("type"), p.type], [t("sector"), p.sector], [t("languages"), p.langs], [t("liveAt"), new URL(p.url).host],
   ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
   $("#dTags").innerHTML = p.tags.map((t) => `<li>${t}</li>`).join("");
   $("#dLink").href = p.url;
@@ -453,7 +593,7 @@ function closeProject() {
   drawer.classList.remove("is-open");
   drawer.setAttribute("aria-hidden", "true");
   scrim.hidden = true;
-  history.replaceState(null, "", location.pathname);
+  history.replaceState(null, "", location.pathname + location.search);
   lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
 }
 $$("[data-step]").forEach((b) => b.addEventListener("click", () => openProject(current + +b.dataset.step)));
@@ -497,9 +637,7 @@ viewBtn.addEventListener("click", () => {
   document.body.classList.toggle("is-list", on);
   $("#list").hidden = !on;
   viewBtn.setAttribute("aria-pressed", on);
-  viewBtn.innerHTML = on
-    ? '<span class="hide-sm">Canvas view</span><span class="show-sm">Canvas</span>'
-    : '<span class="hide-sm">List view</span><span class="show-sm">List</span>';
+  renderViewBtn();
   document.body.classList.remove("index-open");
   scrollTo(0, 0);
 });
@@ -510,11 +648,7 @@ const F = { step: 0, service: null, extras: new Set(), langs: 1 };
 const esc = (t) => String(t).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 function buildFunnel() {
-  $("#services").innerHTML = SERVICES.map((s) => `
-    <label class="choice"><input type="radio" name="service" value="${s.id}">
-      <span class="choice__name">${s.name}</span><span class="choice__note">${s.note}</span></label>`).join("");
-  $("#extras").innerHTML = EXTRAS.map((x) => `
-    <label class="chip"><input type="checkbox" name="extra" value="${esc(x)}"><span>${x}</span></label>`).join("");
+  renderFunnelOptions();
   funnel.addEventListener("input", onFunnelInput);
   funnel.addEventListener("change", onFunnelInput);
   $$("[data-lang]").forEach((b) => b.addEventListener("click", () => {
@@ -525,15 +659,15 @@ function buildFunnel() {
   $$("[data-goto]").forEach((b) => b.addEventListener("click", () => goStep(+b.dataset.goto)));
   $("#fBack").addEventListener("click", () => goStep(F.step - 1));
   funnel.addEventListener("submit", (e) => { e.preventDefault(); if (F.step < 3) goStep(F.step + 1); });
-  $("#waSend").addEventListener("click", () => { $("#fStatus").textContent = "Opening WhatsApp…"; });
+  $("#waSend").addEventListener("click", () => { $("#fStatus").textContent = t("opening"); });
   goStep(0);
 }
 
 function onFunnelInput(e) {
-  const t = e.target;
-  if (t.name === "service") F.service = SERVICES.find((s) => s.id === t.value);
-  if (t.name === "extra") t.checked ? F.extras.add(t.value) : F.extras.delete(t.value);
-  if (t.name === "name" && t.value.trim()) t.removeAttribute("aria-invalid");
+  const el = e.target;
+  if (el.name === "service") F.service = SERVICES.find((s) => s.id === el.value);
+  if (el.name === "extra") el.checked ? F.extras.add(+el.value) : F.extras.delete(+el.value);
+  if (el.name === "name" && el.value.trim()) el.removeAttribute("aria-invalid");
   $("#fStatus").textContent = "";
   renderMessage();
   syncSteps();
@@ -541,8 +675,8 @@ function onFunnelInput(e) {
 
 // Returns [stepToFallBackTo, message] when step n can't be reached yet.
 function stepError(n) {
-  if (n >= 1 && !F.service) return [0, "Pick a service to continue."];
-  if (n >= 3 && !funnel.elements.name.value.trim()) return [2, "Add your name so I know who's writing."];
+  if (n >= 1 && !F.service) return [0, t("needService")];
+  if (n >= 3 && !funnel.elements.name.value.trim()) return [2, t("needName")];
   return null;
 }
 
@@ -581,26 +715,26 @@ function goStep(n) {
 function funnelData() {
   const d = Object.fromEntries(new FormData(funnel));
   return {
-    service: F.service ? F.service.name : "",
+    service: F.service ? F.service[lang][0] : "",
     start: d.start || "", timeline: d.timeline || "", budget: d.budget || "",
-    extras: [...F.extras], langs: F.langs,
+    extras: [...F.extras].sort((a, b) => a - b).map((k) => EXTRAS[k][lang]), langs: F.langs,
     name: (d.name || "").trim(), company: (d.company || "").trim(),
     link: (d.link || "").trim(), message: (d.message || "").trim(),
   };
 }
 
 function messageLines(d) {
-  const L = ["Hi Marvz! 👋", "*I'd like to start a project*", ""];
-  if (d.service) L.push(`🧩 *Service:* ${d.service} (${d.start.toLowerCase()})`);
-  if (d.extras.length) L.push(`✨ *Extras:* ${d.extras.join(", ")}`);
-  if (d.langs > 1) L.push(`🌎 *Languages:* ${d.langs}`);
-  L.push(`📅 *Timeline:* ${d.timeline}`, `💰 *Budget:* ${d.budget}`);
+  const L = [t("hi"), t("want"), ""];
+  if (d.service) L.push(`🧩 *${t("service")}:* ${d.service} (${d.start.toLowerCase()})`);
+  if (d.extras.length) L.push(`✨ *${t("extras")}:* ${d.extras.join(", ")}`);
+  if (d.langs > 1) L.push(`🌎 *${t("languages")}:* ${d.langs}`);
+  L.push(`📅 *${t("timeline")}:* ${d.timeline}`, `💰 *${t("budget")}:* ${d.budget}`);
   if (d.name || d.company || d.link) L.push("");
-  if (d.name) L.push(`🙋 *Name:* ${d.name}${d.company ? ` · ${d.company}` : ""}`);
-  else if (d.company) L.push(`🏢 *Business:* ${d.company}`);
+  if (d.name) L.push(`🙋 *${t("name")}:* ${d.name}${d.company ? ` · ${d.company}` : ""}`);
+  else if (d.company) L.push(`🏢 *${t("business")}:* ${d.company}`);
   if (d.link) L.push(`🔗 ${d.link}`);
   if (d.message) L.push("", d.message);
-  L.push("", "Thanks!");
+  L.push("", t("thanks"));
   return L;
 }
 
@@ -613,10 +747,10 @@ function renderMessage() {
   const chat = $("#chat"); chat.scrollTop = chat.scrollHeight;
   $("#waSend").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
   $("#summary").innerHTML = [
-    ["Service", d.service ? `${d.service} · ${d.start}` : "-"],
-    ["Extras", d.extras.join(", ") || "None"],
-    ["Languages", d.langs], ["Timeline", d.timeline], ["Budget", d.budget],
-    ["From", [d.name, d.company].filter(Boolean).join(" · ") || "-"],
+    [t("service"), d.service ? `${d.service} · ${d.start}` : "-"],
+    [t("extras"), d.extras.join(", ") || t("none")],
+    [t("languages"), d.langs], [t("timeline"), d.timeline], [t("budget"), d.budget],
+    [t("from"), [d.name, d.company].filter(Boolean).join(" · ") || "-"],
   ].map(([k, v]) => `<div><dt class="mono">${k}</dt><dd>${esc(v)}</dd></div>`).join("");
 }
 
@@ -630,9 +764,59 @@ function buildContactLinks() {
   $("#contactLinks").innerHTML = links.join("");
 }
 
+/* ---------- Language (EN / ES) ---------- */
+// Order: ?lang= in the URL, then the visitor's last choice, then the browser language.
+function initialLang() {
+  const q = new URLSearchParams(location.search).get("lang");
+  if (q === "en" || q === "es") return q;
+  try { const saved = localStorage.getItem("lang"); if (saved === "en" || saved === "es") return saved; } catch (e) {}
+  return /^es\b/i.test(navigator.language || "") ? "es" : "en";
+}
+
+function renderViewBtn() {
+  const [long, short] = t(document.body.classList.contains("is-list") ? "canvasView" : "listView");
+  viewBtn.innerHTML = `<span class="hide-sm">${long}</span><span class="show-sm">${short}</span>`;
+}
+
+function renderFunnelOptions() {
+  $("#services").innerHTML = SERVICES.map((s) => `
+    <label class="choice"><input type="radio" name="service" value="${s.id}"${F.service && F.service.id === s.id ? " checked" : ""}>
+      <span class="choice__name">${s[lang][0]}</span><span class="choice__note">${s[lang][1]}</span></label>`).join("");
+  $("#extras").innerHTML = EXTRAS.map((x, k) => `
+    <label class="chip"><input type="checkbox" name="extra" value="${k}"${F.extras.has(k) ? " checked" : ""}><span>${x[lang]}</span></label>`).join("");
+}
+
+function setLang(next, { boot = false } = {}) {
+  lang = next === "es" ? "es" : "en";
+  document.documentElement.lang = lang;
+  applyStaticText(lang); // i18n.js: page text, labels, placeholders, title and meta
+  $$("[data-count]").forEach((el) => (el.textContent = PROJECTS.length));
+  $("#heroHint").textContent = t(matchMedia("(hover: none)").matches ? "swipe" : "drag");
+  $$("[data-setlang]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.setlang === lang)));
+  renderViewBtn();
+  const canonical = $('link[rel="canonical"]');
+  if (canonical) canonical.href = `${location.origin}/${lang === "es" ? "?lang=es" : ""}`;
+  if (boot) return;
+
+  try { localStorage.setItem("lang", lang); } catch (e) {}
+  const u = new URL(location.href);
+  if (lang === "es") u.searchParams.set("lang", "es"); else u.searchParams.delete("lang");
+  history.replaceState(null, "", u);
+
+  buildIndex();
+  buildList();
+  buildTicker();
+  renderFunnelOptions();
+  $("#fStatus").textContent = "";
+  renderMessage();
+  syncSteps();
+  layout();
+  if (drawerOpen()) openProject(current);
+}
+$$("[data-setlang]").forEach((b) => b.addEventListener("click", () => b.dataset.setlang !== lang && setLang(b.dataset.setlang)));
+
 /* ---------- Boot ---------- */
-$$("[data-count]").forEach((el) => (el.textContent = PROJECTS.length));
-if (matchMedia("(hover: none)").matches) $("#heroHint").textContent = "Swipe to explore";
+setLang(initialLang(), { boot: true });
 stage.addEventListener("pointerdown", () => document.body.classList.remove("index-open"));
 buildIndex();
 buildList();
