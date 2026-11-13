@@ -22,12 +22,16 @@ Everything lives at the top of `app.js`:
 - `TICKER`: the scrolling news line at the bottom, in English and Spanish.
 - `UI`: other interface text that the script writes, including the WhatsApp message wording.
 
-Prices live at the top of `pricing.js`:
+The Pricing page is built by `pricing.js` (styles in `pricing.css`). Everything you'd edit is at the top of that file:
 
 - `PRICING`: the base-site price (Bs 3,500) and the exchange rate used for the US$ view. Update the rate every few months.
-- `ADDONS`: every build-your-own add-on, with its price in bolivianos (`monthly` for recurring fees, `qty` for ones that can be added more than once), in English and Spanish.
+- `PACKAGES`: the three packages (Presence, Growth, Flagship): price, delivery time, what's included, the four or five highlights shown on each card, and which case study each one links to.
+- `ADDONS`: every build-your-own add-on, with its price in bolivianos (`monthly` for recurring fees, `qty` for ones that can be added more than once) and one line that sells it. `popular: true` puts it on the "Popular" tab the list opens on.
 - `CARE`: the monthly care plans.
-- `PACKAGES`: the three packages (Presence, Growth, Flagship), what each includes, and their payment terms. The "Value separately" price and the savings percentage are worked out from the add-on prices, so they stay correct when you change a price.
+- `CLIENTS`: the names in the "Trusted by" strip.
+- `PT`: every other line of text on the page (headline, how it works, promises, FAQ), in English and Spanish.
+
+The "bought separately" price and the savings percentage are worked out from the add-on prices, so they stay correct when you change a price.
 
 Screenshots are in `assets/work/`: `<slug>.webp` (1440×900, used in the drawer), plus `<slug>-sm.webp` (800×500) and `<slug>-xs.webp` (480×300) for the canvas, where phones and high-density screens pick the right size. To add a project, add the three images and a `PROJECTS` entry with the same `slug`, then run:
 
@@ -43,7 +47,7 @@ This rewrites the structured data and the crawlable project list in `index.html`
 - A project index grouped by sector. Hovering a project highlights its tile, and clicking flies the canvas to it.
 - A project drawer with prev/next buttons and deep links (`/#helibol`).
 - A four-step "Start a project" funnel (what you need, details, about you, send). A phone mock-up previews the WhatsApp message live, and the last step opens WhatsApp with the message ready to send. A floating WhatsApp button opens the funnel too.
-- A Pricing overlay (also at `/#pricing`) with three packages, a build-your-own list of add-ons, monthly care plans, and a live quote in Bs or US$. The quote has rush delivery and payment-plan options, and sends the full breakdown to WhatsApp.
+- A Pricing page (also at `/#pricing`) built to sell: a headline and proof, three packages with the recommended one highlighted, how it works, a build-your-own list of add-ons with monthly care plans, a live quote in Bs or US$ that goes to WhatsApp, an FAQ, and a "help me choose" button.
 - An About overlay, a news ticker, and a List view.
 - Responsive layout. Animations are reduced when the visitor has `prefers-reduced-motion` turned on.
 

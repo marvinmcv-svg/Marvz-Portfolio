@@ -138,6 +138,9 @@ async function run(browser, [dev, opts]) {
   check(dev, "choosing Growth loads it into the quote", (await total()) === "Bs 9,900" && (await page.locator("[data-ptog='booking']").count()) === 0);
   await page.locator("[data-ptog='qr']").scrollIntoViewIfNeeded();
   await tap(page.locator("[data-ptog='qr']"));
+  await page.locator(".addons__more").scrollIntoViewIfNeeded();
+  await tap(page.locator(".addons__more"));
+  await page.locator("[data-pinc='lang']").scrollIntoViewIfNeeded();
   await tap(page.locator("[data-pinc='lang']"));
   check(dev, "add-ons add to the total", (await total()) === "Bs 12,500");
   await page.locator("#qRush").scrollIntoViewIfNeeded();
@@ -147,7 +150,7 @@ async function run(browser, [dev, opts]) {
   check(dev, "care plan sets the monthly", /Bs 1,290/.test(await page.locator("#qMo").textContent()));
   const qtext = new URL(await page.locator("#qWa").getAttribute("href")).searchParams.get("text") || "";
   check(dev, "quote goes to WhatsApp with every line",
-    ["Growth package", "Online bookings & calendar", "QR Simple & card payments — Bs 1,900", "Extra language — Bs 700", "Rush delivery +25%", "Digital Partner", "*One-time:* Bs 15,625", "50% upfront"].every((x) => qtext.includes(x)) &&
+    ["Growth package", "Online booking", "QR & card payments — Bs 1,900", "Extra language — Bs 700", "Rush delivery +25%", "Digital Partner", "*One-time:* Bs 15,625", "50% upfront"].every((x) => qtext.includes(x)) &&
     (await page.locator("#qWa").getAttribute("href")).startsWith(`https://wa.me/${PHONE}?`), qtext.slice(0, 60));
   await tap(page.locator("[data-pcur='USD']"));
   check(dev, "US$ view", (await total()) === "US$ 1,341" && /US\$ 850/.test(await page.locator(".pkg--featured .pkg__price").textContent()));
@@ -352,7 +355,7 @@ async function runSpanish(browser, [dev, opts]) {
   await page.waitForTimeout(350);
   await tap(page.locator("[data-pkg='presence']"));
   const pes = new URL(await page.locator("#qWa").getAttribute("href")).searchParams.get("text") || "";
-  check(d, "pricing in Spanish", /Precios claros/.test(await page.locator("#pricing h2").textContent()) &&
+  check(d, "pricing in Spanish", /ya te está buscando/.test(await page.locator("#pricing h2").textContent()) &&
     ["*Quiero cotizar este proyecto:*", "Paquete Presencia — Bs 4.900", "*Pago único:* Bs 4.900"].every((x) => pes.includes(x)), pes.slice(0, 80));
   const pBody = await page.locator("#pricing").evaluate((e) => e.innerText);
   const pLeft = ["Your quote", "Build your own", "Packages", "One-time", "Add"].filter((w) => new RegExp(`\\b${w}\\b`).test(pBody));

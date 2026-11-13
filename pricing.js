@@ -1,148 +1,243 @@
 /* ==========================================================================
    Marvz Studio · Pricing overlay
-   Packages, build-your-own add-ons, monthly care plans and a live quote
-   that opens WhatsApp. All prices are in bolivianos (Bs). Edit them below.
-   Loaded after app.js and uses its globals: lang, CONFIG, $, $$, esc.
+   A sales page: promise, proof, three packages, how it works, build your own,
+   monthly care, a live quote that opens WhatsApp, and an FAQ.
+   All prices are in bolivianos (Bs). Edit prices and text below.
+   Loaded after app.js and uses its globals: lang, CONFIG, $, $$, esc, track, reduced.
    ========================================================================== */
 
 const PRICING = {
   fx: 11.65, // Bs per US$, used only for the US$ view. Check it every few months.
-  base: 3500, // Base site: up to 5 sections, responsive, fast
+  base: 3500, // Base site: up to 5 pages, built for phones, fast
 };
 
+// "popular" is the tab the list opens on; it shows the add-ons marked popular.
 const CATS = {
+  popular: { en: "Popular", es: "Populares" },
   all: { en: "All", es: "Todo" },
   sales: { en: "Sell more", es: "Vender más" },
   reach: { en: "Get found", es: "Que te encuentren" },
   content: { en: "Content & brand", es: "Contenido y marca" },
-  tech: { en: "AI & tech", es: "IA y tecnología" },
+  tech: { en: "AI & apps", es: "IA y apps" },
   ops: { en: "Domain & email", es: "Dominio y correo" },
 };
 
-// price = one-time Bs, monthly = Bs per month, qty = can be added more than once.
+// [name, one line that sells it]. price = one-time Bs, monthly = Bs a month, qty = can be added more than once.
 const ADDONS = [
-  { id: "whatsapp", cat: "sales", price: 900,
-    en: ["WhatsApp ordering & booking", "Buttons and flows that open WhatsApp with the order or booking already written.", "Most sales in Bolivia close on WhatsApp. Your site sends customers straight to the chat."],
-    es: ["Pedidos y reservas por WhatsApp", "Botones y flujos que abren WhatsApp con el pedido o la reserva ya escrita.", "En Bolivia la venta se cierra en WhatsApp. Tu web lleva al cliente directo al chat."] },
-  { id: "qr", cat: "sales", price: 1900,
-    en: ["QR Simple & card payments", "A local payment gateway: interoperable QR, cards and wallets. Gateway fees are separate.", "Your customers pay the way they already pay every day: with a QR."],
-    es: ["Cobros con QR Simple y tarjeta", "Integración con una pasarela local: QR interoperable, tarjeta y billeteras. Las comisiones de la pasarela van aparte.", "Tus clientes pagan como ya pagan todos los días: con QR."] },
-  { id: "shop", cat: "sales", price: 3500,
-    en: ["Online shop / catalog", "Up to 50 products, cart and categories, with checkout by WhatsApp or QR.", "Customers browse on your site and confirm the order in the chat."],
-    es: ["Tienda online / catálogo", "Hasta 50 productos, carrito y categorías, con pedido por WhatsApp o pago QR.", "El cliente mira en tu web y confirma el pedido en el chat."] },
-  { id: "booking", cat: "sales", price: 1800,
-    en: ["Online bookings & calendar", "A calendar for appointments or tables, with confirmations and reminders.", "Made for restaurants, clinics, salons and academies."],
-    es: ["Reservas y agenda online", "Calendario de turnos o mesas con confirmación y recordatorio.", "Ideal para restaurantes, clínicas, salones y academias."] },
+  { id: "whatsapp", cat: "sales", price: 900, popular: true,
+    en: ["WhatsApp orders & bookings", "Customers send their order or booking to your WhatsApp, already written out."],
+    es: ["Pedidos y reservas por WhatsApp", "Tus clientes te mandan el pedido o la reserva por WhatsApp, ya escrito."] },
+  { id: "qr", cat: "sales", price: 1900, popular: true,
+    en: ["QR & card payments", "Get paid online with QR Simple, cards and wallets. Gateway fees apply."],
+    es: ["Cobros con QR y tarjeta", "Cobra online con QR Simple, tarjeta y billeteras. Aplican comisiones de la pasarela."] },
+  { id: "shop", cat: "sales", price: 3500, popular: true,
+    en: ["Online store", "Up to 50 products with a cart. Customers check out by WhatsApp or QR."],
+    es: ["Tienda online", "Hasta 50 productos con carrito. El cliente compra por WhatsApp o QR."] },
+  { id: "booking", cat: "sales", price: 1800, popular: true,
+    en: ["Online booking", "Customers pick a time, you get the booking, and they get a reminder."],
+    es: ["Reservas online", "El cliente elige el horario, tú recibes la reserva y él recibe un recordatorio."] },
   { id: "lang", cat: "reach", price: 700, qty: true,
-    en: ["Extra language", "Per language (English, Portuguese…), with a language switch and SEO for each one.", "Santa Cruz does business with Brazil and the world. Speak to those customers too."],
-    es: ["Idioma adicional", "Por idioma (inglés, portugués…), con selector de idioma y SEO para cada uno.", "Santa Cruz hace negocios con Brasil y el mundo. Háblales también a esos clientes."] },
-  { id: "seo", cat: "reach", price: 1100,
-    en: ["Local SEO + Google Maps", "Google Business Profile, structured data, “in Santa Cruz” keywords and speed.", "Most people search “near me” on their phone. You'll see results within weeks."],
-    es: ["SEO local + Google Maps", "Perfil de Empresa en Google, datos estructurados, palabras clave “en Santa Cruz” y velocidad.", "La mayoría busca “cerca de mí” desde el celular. Verás resultados en semanas."] },
+    en: ["Extra language", "English, Portuguese and more, each fully translated and ready for Google."],
+    es: ["Idioma adicional", "Inglés, portugués y más, cada uno traducido por completo y listo para Google."] },
+  { id: "seo", cat: "reach", price: 1100, popular: true,
+    en: ["Local SEO + Google Maps", "Show up when people nearby search for what you sell."],
+    es: ["SEO local + Google Maps", "Aparece cuando la gente cerca de ti busca lo que vendes."] },
   { id: "seoMo", cat: "reach", price: 0, monthly: 900,
-    en: ["Monthly SEO", "2 articles, on-page tuning and a monthly ranking report.", "Keeps you climbing on Google once local SEO is working."],
-    es: ["SEO mensual", "2 artículos, ajustes en la página y un reporte mensual de posiciones.", "Te mantiene subiendo en Google cuando el SEO local ya funciona."] },
+    en: ["Monthly SEO", "Two articles a month, ongoing tuning and a ranking report."],
+    es: ["SEO mensual", "Dos artículos al mes, ajustes continuos y un reporte de posiciones."] },
   { id: "analytics", cat: "reach", price: 450,
-    en: ["Analytics + Meta Pixel", "GA4, the Meta Pixel and WhatsApp-click tracking, ready for ads.", "A must if you run ads on Facebook or Instagram."],
-    es: ["Analítica + Píxel de Meta", "GA4, el Píxel de Meta y medición de clics a WhatsApp, listos para pautar.", "Imprescindible si haces anuncios en Facebook o Instagram."] },
+    en: ["Analytics + Meta Pixel", "See where visitors come from and which ads bring you chats."],
+    es: ["Analítica + Píxel de Meta", "Ve de dónde llegan tus visitas y qué anuncios te traen chats."] },
   { id: "pages", cat: "content", price: 350, qty: true,
-    en: ["Extra page / section", "Each page beyond the 5 in the base site.", "A small, clear price for every extra page."],
-    es: ["Página o sección extra", "Cada página adicional a las 5 del sitio base.", "Un precio pequeño y claro por cada página extra."] },
+    en: ["Extra page", "Add pages beyond the five in the base site."],
+    es: ["Página extra", "Suma páginas a las cinco del sitio base."] },
   { id: "copy", cat: "content", price: 1200,
-    en: ["Professional copywriting (5 pages)", "Texts that sell, in natural local Spanish, ready for SEO.", "No need to write it yourself, and your site goes live sooner."],
-    es: ["Redacción profesional (5 páginas)", "Textos que venden, en un español cercano para Santa Cruz y listos para SEO.", "No tienes que escribirlos tú, y tu web sale antes."] },
+    en: ["Professional copywriting", "Five pages of copy written to sell and ready for Google. You don't write a word."],
+    es: ["Redacción profesional", "Cinco páginas de textos que venden, listos para Google. Tú no escribes nada."] },
   { id: "blog", cat: "content", price: 800,
-    en: ["Blog / news", "An articles section you can edit, with categories.", "Share news and give Google more reasons to find you."],
-    es: ["Blog / noticias", "Sección de artículos que puedes editar, con categorías.", "Comparte novedades y dale a Google más razones para encontrarte."] },
+    en: ["Blog / news", "Post news and articles yourself, and give Google more to find."],
+    es: ["Blog / noticias", "Publica noticias y artículos tú mismo, y dale a Google más para encontrar."] },
   { id: "story", cat: "content", price: 2400,
-    en: ["Scroll storytelling & motion", "A cinematic experience: transitions, parallax and animated stats.", "The signature style behind Haras La Alhambra and Fabrizio Saunero."],
-    es: ["Scroll storytelling y animaciones", "Una experiencia cinematográfica: transiciones, parallax y cifras animadas.", "El sello de Haras La Alhambra y Fabrizio Saunero."] },
+    en: ["Scroll storytelling & motion", "Cinematic scrolling and animation, like Haras La Alhambra."],
+    es: ["Storytelling y animación", "Scroll cinematográfico y animaciones, como en Haras La Alhambra."] },
   { id: "brand", cat: "content", price: 2800,
-    en: ["Brand identity", "Logo, colors, typography and a short brand guide.", "Start with a clear brand, then design around it."],
-    es: ["Identidad de marca", "Logo, paleta, tipografías y un mini manual de marca.", "Empieza con una marca clara y diseña a partir de ella."] },
+    en: ["Brand identity", "Logo, colors, fonts and a short brand guide."],
+    es: ["Identidad de marca", "Logo, colores, tipografías y un mini manual de marca."] },
   { id: "video", cat: "content", price: 2500,
-    en: ["Hero video / mini film", "A half-day shoot and edit of a 30–60 s video for your homepage.", "Agro, hospitality and food brands sell with visuals."],
-    es: ["Video de portada / mini film", "Medio día de rodaje y edición de un video de 30–60 s para tu portada.", "El agro, la hotelería y la gastronomía venden por lo visual."] },
-  { id: "ai", cat: "tech", price: 2900, monthly: 290,
-    en: ["AI assistant on your site", "A chat trained on your business, like “Spirit”. The monthly fee covers AI usage.", "Answers prices, hours and location 24/7, then hands off to WhatsApp."],
-    es: ["Asistente con IA en tu web", "Un chat entrenado con la información de tu negocio, como “Spirit”. Lo mensual cubre el consumo de IA.", "Responde precios, horarios y ubicación 24/7, y deriva a WhatsApp."] },
+    en: ["Hero video", "A half-day shoot and a 30–60 second film for your homepage."],
+    es: ["Video de portada", "Medio día de rodaje y un video de 30–60 segundos para tu portada."] },
+  { id: "ai", cat: "tech", price: 2900, monthly: 290, popular: true,
+    en: ["AI assistant", "Answers questions about prices, hours and location 24/7, then hands off to WhatsApp."],
+    es: ["Asistente con IA", "Responde precios, horarios y ubicación 24/7, y pasa la conversación a WhatsApp."] },
   { id: "wabot", cat: "tech", price: 3900, monthly: 550,
-    en: ["AI WhatsApp bot", "Answers on the official WhatsApp Business API. Meta's per-message fees are separate.", "For businesses with lots of chats: real estate, delivery, clinics."],
-    es: ["Bot de WhatsApp con IA", "Atiende en la API oficial de WhatsApp Business. Las tarifas de Meta por mensaje van aparte.", "Para negocios con muchos chats: inmobiliarias, delivery, clínicas."] },
+    en: ["AI WhatsApp bot", "Replies to your WhatsApp chats on the official API. Meta's message fees apply."],
+    es: ["Bot de WhatsApp con IA", "Responde tus chats de WhatsApp en la API oficial. Aplican las tarifas de Meta por mensaje."] },
   { id: "pwa", cat: "tech", price: 1600,
-    en: ["Installable app (PWA)", "Installs from the browser, works on a weak signal and sends notifications.", "Have your own app without paying for a native one."],
-    es: ["App instalable (PWA)", "Se instala desde el navegador, funciona con mala señal y envía notificaciones.", "Ten tu propia app sin pagar una app nativa."] },
+    en: ["Installable app", "Customers add your site to their home screen like an app, with notifications."],
+    es: ["App instalable", "Tus clientes agregan tu sitio a su pantalla de inicio como una app, con notificaciones."] },
   { id: "cms", cat: "tech", price: 1500,
-    en: ["Admin panel to edit your site", "Change menus, prices, photos and text yourself.", "When your prices change, update them in minutes."],
-    es: ["Panel autoadministrable", "Cambia menú, precios, fotos y textos tú mismo.", "Cuando cambian tus precios, los actualizas en minutos."] },
+    en: ["Edit-it-yourself panel", "Change prices, menus, photos and text without calling anyone."],
+    es: ["Panel autoadministrable", "Cambia precios, menú, fotos y textos sin llamar a nadie."] },
   { id: "domain", cat: "ops", price: 950,
-    en: ["Domain + email (yearly)", "A .com or .bo domain, SSL and branded email, set up for you. Renews yearly.", "An @yourbusiness email builds trust with banks and clients."],
-    es: ["Dominio + correos (anual)", "Dominio .com o .bo, SSL y correos corporativos configurados. Se renueva cada año.", "Un correo @tuempresa da confianza a bancos y clientes."] },
+    en: ["Domain + business email", "Your own .com or .bo, SSL and @yourbusiness email. Renews yearly."],
+    es: ["Dominio + correos", "Tu propio .com o .bo, SSL y correos @tuempresa. Se renueva cada año."] },
 ];
 
 const CARE = [
-  { id: "none", price: 0, en: ["No plan", "Changes at Bs 150/h"], es: ["Sin plan", "Cambios a Bs 150/h"] },
-  { id: "basic", price: 350, en: ["Basic Care", "Hosting, backups, security and 1 h of changes"], es: ["Cuidado Básico", "Hosting, backups, seguridad y 1 h de cambios"] },
-  { id: "pro", price: 690, en: ["Pro Care", "Everything in Basic, plus 3 h, a monthly report and WhatsApp support"], es: ["Cuidado Pro", "Todo lo de Básico, más 3 h, reporte mensual y soporte por WhatsApp"] },
-  { id: "partner", price: 1290, en: ["Digital Partner", "6 h, ongoing improvements and 1 campaign landing page a month"], es: ["Socio Digital", "6 h, mejoras continuas y 1 landing de campaña al mes"] },
+  { id: "none", price: 0, en: ["No plan", "Changes billed at Bs 150 an hour"], es: ["Sin plan", "Cambios a Bs 150 la hora"] },
+  { id: "basic", price: 350, en: ["Basic Care", "Hosting, backups, security updates and 1 hour of changes a month"], es: ["Cuidado Básico", "Hosting, backups, seguridad y 1 hora de cambios al mes"] },
+  { id: "pro", price: 690, en: ["Pro Care", "Everything in Basic, plus 3 hours of changes, a monthly report and WhatsApp support"], es: ["Cuidado Pro", "Todo lo de Básico, más 3 horas de cambios, reporte mensual y soporte por WhatsApp"] },
+  { id: "partner", price: 1290, en: ["Digital Partner", "6 hours a month, ongoing improvements and a new campaign page every month"], es: ["Socio Digital", "6 horas al mes, mejoras continuas y una página de campaña nueva cada mes"] },
 ];
 
-// items: add-on id → quantity included. careMonths of careId are included; aiMonths of AI usage too.
+// items: add-on id → quantity included (used for the quote and the "value separately" price).
+// en/es: [name, promise, best for, highlights[]]. caseSlug links a case study built at this level.
 const PACKAGES = [
-  { id: "presence", price: 4900, careId: "basic", careMonths: 1, aiMonths: 0, plan: 2,
+  { id: "presence", price: 4900, careId: "basic", careMonths: 1, aiMonths: 0, plan: 2, weeks: "2–3",
     items: { whatsapp: 1, seo: 1, analytics: 1 },
-    en: ["Presence", "For businesses that need to look professional and get messages now.", "50% upfront · 50% at launch · 2–3 weeks"],
-    es: ["Presencia", "Para el negocio que necesita verse profesional y recibir mensajes ya.", "50% anticipo · 50% al publicar · 2–3 semanas"] },
-  { id: "growth", price: 9900, careId: "pro", careMonths: 3, aiMonths: 0, plan: 2, featured: true,
+    en: ["Presence", "Look professional. Get messages.", "New businesses and anyone without a real website yet.",
+      ["A fast site that looks great on any phone", "Customers order or book straight on WhatsApp", "Show up on Google and Google Maps", "See which visitors turn into chats"]],
+    es: ["Presencia", "Verte profesional. Recibir mensajes.", "Negocios nuevos y quien todavía no tiene una web de verdad.",
+      ["Un sitio rápido que se ve increíble en cualquier celular", "Tus clientes piden o reservan directo por WhatsApp", "Aparece en Google y en Google Maps", "Mira qué visitas se convierten en chats"]] },
+  { id: "growth", price: 9900, careId: "pro", careMonths: 3, aiMonths: 0, plan: 2, weeks: "4–5", featured: true, caseSlug: "fogo-de-chao",
     items: { pages: 3, lang: 1, cms: 1, whatsapp: 1, booking: 1, seo: 1, analytics: 1, copy: 1 },
-    en: ["Growth", "For restaurants, clinics and businesses that want to sell and take bookings online.", "50% upfront · 50% at launch · 4–5 weeks"],
-    es: ["Crecimiento", "Para restaurantes, clínicas y PyMEs que quieren vender y recibir reservas online.", "50% anticipo · 50% al publicar · 4–5 semanas"] },
-  { id: "flagship", price: 21900, careId: "pro", careMonths: 6, aiMonths: 3, plan: 3,
+    en: ["Growth", "Sell and take bookings online.", "Restaurants, clinics, salons and growing businesses.",
+      ["Everything in Presence", "Online booking with reminders", "Update prices and menus yourself", "A second language and 3 extra pages", "Copy written for you, ready for Google"]],
+    es: ["Crecimiento", "Vende y recibe reservas online.", "Restaurantes, clínicas, salones y negocios en crecimiento.",
+      ["Todo lo de Presencia", "Reservas online con recordatorios", "Cambia precios y menú tú mismo", "Un segundo idioma y 3 páginas extra", "Textos escritos por mí, listos para Google"]] },
+  { id: "flagship", price: 21900, careId: "pro", careMonths: 6, aiMonths: 3, plan: 3, weeks: "7–9", caseSlug: "haras-la-alhambra",
     items: { pages: 5, lang: 2, cms: 1, shop: 1, qr: 1, whatsapp: 1, story: 1, ai: 1, seo: 1, analytics: 1, copy: 1, brand: 1, pwa: 1 },
-    en: ["Flagship", "For leading brands: a cinematic experience, online shop, payments and AI.", "3 payments 40/30/30 · 7–9 weeks"],
-    es: ["Insignia", "Para marcas líderes: experiencia cinematográfica, tienda, cobros e IA.", "3 cuotas 40/30/30 · 7–9 semanas"] },
+    en: ["Flagship", "Become the brand people talk about.", "Leading brands that want to stand out and sell online.",
+      ["A cinematic, story-driven site", "Online store with QR and card payments", "An AI assistant that answers 24/7", "A full brand identity", "Three languages and an installable app"]],
+    es: ["Insignia", "Sé la marca de la que todos hablan.", "Marcas líderes que quieren destacar y vender online.",
+      ["Un sitio cinematográfico que cuenta tu historia", "Tienda online con cobros por QR y tarjeta", "Un asistente con IA que responde 24/7", "Identidad de marca completa", "Tres idiomas y una app instalable"]] },
 ];
+
+// Clients whose live work is in the portfolio.
+const CLIENTS = ["Fogo de Chão", "Helibol", "SPC Impresores", "Haras La Alhambra", "Santa Cruz Cooperative School", "Don Corte Fino", "ACS Calvert", "FiruWalk"];
 
 const PT = {
   en: {
-    base: "Base site", baseFull: "Base site (up to 5 sections, responsive, fast)", pkgLine: (n) => `${n} package`,
-    included: "Included", add: "Add", added: "Added", each: "each", once: "one-time", mo: "/mo",
-    valueSep: "Value separately", save: "Save", choose: "Choose", chosen: "Chosen", featured: "Most chosen",
-    careIncl: (n, c) => `${n} ${n === 1 ? "month" : "months"} of ${c} included`, monthsIncl: (n) => `${n} ${n === 1 ? "month" : "months"} included`, aiIncl: (n) => `${n} months of AI usage included`,
-    upTo: (n) => `${n}× `, empty: "Just the base site for now. Choose a package or add what you need.",
-    fromMonth: (n) => `from month ${n}`, deposit: "Deposit to start", remove: "Remove",
-    plan2: "50% upfront / 50% at launch", plan3: "40% / 30% / 30%", rush: "Rush delivery", copied: "Quote copied",
-    pkgLoaded: "Package added to your quote", careNone: "No plan",
-    waHead: "Hi Marvz! 👋", waWant: "*I'd like a quote for this project:*", waOne: "One-time", waMo: "Monthly", waPlan: "Payment",
-    waUsd: "approx.",
+    eyebrow: "Pricing",
+    title: "Your next customer is <em>already looking for you.</em>",
+    lead: "Get a website that turns them into WhatsApp messages. One fixed price in bolivianos, and one person who builds it from the first call to launch day.",
+    ctaPkgs: "See the packages", ctaBuild: "Build your own",
+    stats: [["17", "live projects"], ["2–9", "weeks to launch"], ["6", "languages on one site"], ["1", "person, start to finish"]],
+    trusted: "Trusted by",
+    pkgEyebrow: "Packages", pkgTitle: "Pick a package. <em>Launch in weeks.</em>",
+    pkgSub: "Each package costs less than buying its parts one by one.",
+    bestFor: "Best for", featured: "Recommended", save: (p) => `Save ${p}%`, valueWas: "if bought separately",
+    pay2: (v) => `Or 2 payments of ${v}`, pay3: (v) => `Or 3 payments, starting at ${v}`, weeks: (w) => `Live in ${w} weeks`,
+    showAll: (n) => `Show all ${n} add-ons`,
+    careIncl: (n, c) => `${n} ${n === 1 ? "month" : "months"} of ${c} included`, aiIncl: (n) => `${n} months of AI usage included`, monthsIncl: (n) => `${n} ${n === 1 ? "month" : "months"} included`,
+    seeAll: (n) => `See all ${n} things included`, example: "See one I built", choose: (n) => `Choose ${n}`, chosen: "Added to your quote ✓",
+    howEyebrow: "How it works", howTitle: "From first message <em>to launch day.</em>",
+    how: [
+      ["Tell me what you need", "Pick a package or build your own, then send it to me on WhatsApp. It takes two minutes."],
+      ["Get a fixed price", "I reply with a plan and a fixed price in bolivianos. No hourly billing, no surprises."],
+      ["Pay the deposit, we start", "50% to start (40% on Flagship), and the rest at launch or in installments."],
+      ["Launch, then grow", "Your site goes live in 2 to 9 weeks, with months of care included to keep it fast and safe."],
+    ],
+    buildEyebrow: "Build your own", buildTitle: "Need something different? <em>Mix and match.</em>",
+    buildSub: (b) => `Start from a package or from the base site (up to 5 pages, built for phones, ${b}), and add only what you need.`,
+    careTitle: "Monthly care", careSub: "Hosting, updates and support so your site stays fast, safe and current. Every package includes some months for free.",
+    add: "Add", added: "Added", included: "Included", each: "each", once: "one-time", mo: "/mo",
+    quote: "Your quote", base: "Base site", baseFull: "Base site (up to 5 pages, built for phones)", pkgLine: (n) => `${n} package`,
+    upTo: (n) => `${n}× `, empty: "Just the base site so far. Pick a package or add what you need.",
+    oneTime: "One-time", monthly: "Monthly", fromMonth: (n) => `from month ${n}`, rushLabel: "Rush delivery (+25%)", rush: "Rush delivery",
+    payment: "Payment", plan2: "50% upfront / 50% at launch", plan3: "40% / 30% / 30%", total: "Project total", deposit: "Deposit to start",
+    send: "Send my quote on WhatsApp", copy: "Copy quote", copied: "Quote copied", pkgLoaded: "Package added to your quote", remove: "Remove",
+    custom: "<strong>Need a custom system?</strong> Apps, booking engines and systems like RestoBar OS are quoted separately.", customBtn: "Tell me about it",
+    promises: [
+      ["Fixed price in bolivianos", "No hourly billing. Your quote stays fixed for 15 days."],
+      ["Pay in parts", "50/50, or three payments on bigger projects."],
+      ["Straight to the builder", "You talk to the person who designs and codes your site. No middlemen."],
+      ["Made for phones", "Fast on mobile data, built around WhatsApp, ready for Google."],
+    ],
+    faqEyebrow: "Questions", faqTitle: "Good questions, <em>straight answers.</em>",
+    faq: [
+      ["How long does it take?", "Presence takes 2–3 weeks, Growth 4–5 weeks and Flagship 7–9 weeks. Need it sooner? Rush delivery is 25% extra."],
+      ["What do I need to bring?", "Your logo, photos and a few lines about your business. No logo yet? Add Brand identity. No time to write? Add Professional copywriting. It's already included in Growth and Flagship."],
+      ["Is hosting included?", "Yes, for the months of care that come with your package. After that, care plans start at Bs 350 a month. You can also skip the plan and pay Bs 150 an hour for changes."],
+      ["Can I update the site myself?", "Yes, with the edit-it-yourself panel. It's included in Growth and Flagship, and costs Bs 1,500 on its own."],
+      ["Do prices include VAT (factura)?", "No. Prices don't include VAT, payment-gateway fees or Meta's WhatsApp message fees."],
+      ["What if I need something that isn't listed?", "Systems, apps and special integrations are quoted separately. Tell me what you need and I'll put together a plan."],
+    ],
+    finalTitle: "Not sure which one <em>fits?</em>", finalText: "Send me a message. I'll tell you which package makes sense for your business, even if it's the smallest one.",
+    finalBtn: "Help me choose on WhatsApp", finalMsg: "Hi Marvz! 👋 Can you help me choose a package for my business?",
+    fine: "Prices are in bolivianos. They don't include VAT (factura), payment-gateway fees or Meta's WhatsApp message fees. US$ amounts are approximate and follow the exchange rate.",
+    currency: "Currency", view: "View",
+    waHead: "Hi Marvz! 👋", waWant: "*I'd like a quote for this project:*", waUsd: "approx.",
   },
   es: {
-    base: "Sitio base", baseFull: "Sitio base (hasta 5 secciones, responsive, rápido)", pkgLine: (n) => `Paquete ${n}`,
-    included: "Incluido", add: "Añadir", added: "Añadido", each: "c/u", once: "pago único", mo: "/mes",
-    valueSep: "Valor por separado", save: "Ahorras", choose: "Elegir", chosen: "Elegido", featured: "El más elegido",
-    careIncl: (n, c) => `${n} ${n === 1 ? "mes" : "meses"} de ${c} incluido${n === 1 ? "" : "s"}`, monthsIncl: (n) => `${n} ${n === 1 ? "mes incluido" : "meses incluidos"}`, aiIncl: (n) => `${n} meses de uso de IA incluidos`,
+    eyebrow: "Precios",
+    title: "Tu próximo cliente <em>ya te está buscando.</em>",
+    lead: "Ten una web que lo convierta en un mensaje de WhatsApp. Un precio fijo en bolivianos y una sola persona que la construye desde la primera llamada hasta el lanzamiento.",
+    ctaPkgs: "Ver los paquetes", ctaBuild: "Arma el tuyo",
+    stats: [["17", "proyectos en línea"], ["2–9", "semanas al lanzamiento"], ["6", "idiomas en un solo sitio"], ["1", "persona, de principio a fin"]],
+    trusted: "Confían en mí",
+    pkgEyebrow: "Paquetes", pkgTitle: "Elige un paquete. <em>Lanza en semanas.</em>",
+    pkgSub: "Cada paquete cuesta menos que comprar sus partes por separado.",
+    bestFor: "Ideal para", featured: "Recomendado", save: (p) => `Ahorras ${p}%`, valueWas: "comprando por separado",
+    pay2: (v) => `O 2 pagos de ${v}`, pay3: (v) => `O 3 pagos, desde ${v}`, weeks: (w) => `En línea en ${w} semanas`,
+    showAll: (n) => `Ver los ${n} add-ons`,
+    careIncl: (n, c) => `${n} ${n === 1 ? "mes" : "meses"} de ${c} incluido${n === 1 ? "" : "s"}`, aiIncl: (n) => `${n} meses de uso de IA incluidos`, monthsIncl: (n) => `${n} ${n === 1 ? "mes incluido" : "meses incluidos"}`,
+    seeAll: (n) => `Ver las ${n} cosas incluidas`, example: "Mira uno que hice", choose: (n) => `Elegir ${n}`, chosen: "En tu cotización ✓",
+    howEyebrow: "Cómo funciona", howTitle: "Del primer mensaje <em>al lanzamiento.</em>",
+    how: [
+      ["Cuéntame qué necesitas", "Elige un paquete o arma el tuyo y mándamelo por WhatsApp. Te toma dos minutos."],
+      ["Recibe un precio fijo", "Te respondo con un plan y un precio fijo en bolivianos. Sin cobro por hora, sin sorpresas."],
+      ["Pagas el anticipo y empezamos", "50% para empezar (40% en Insignia) y el resto al publicar o en cuotas."],
+      ["Lanzas y creces", "Tu web sale en 2 a 9 semanas, con meses de cuidado incluidos para que siga rápida y segura."],
+    ],
+    buildEyebrow: "Arma el tuyo", buildTitle: "¿Necesitas algo distinto? <em>Combina a tu medida.</em>",
+    buildSub: (b) => `Parte de un paquete o del sitio base (hasta 5 páginas, pensado para el celular, ${b}) y añade solo lo que necesitas.`,
+    careTitle: "Cuidado mensual", careSub: "Hosting, actualizaciones y soporte para que tu web siga rápida, segura y al día. Todo paquete incluye algunos meses gratis.",
+    add: "Añadir", added: "Añadido", included: "Incluido", each: "c/u", once: "pago único", mo: "/mes",
+    quote: "Tu cotización", base: "Sitio base", baseFull: "Sitio base (hasta 5 páginas, pensado para el celular)", pkgLine: (n) => `Paquete ${n}`,
     upTo: (n) => `${n}× `, empty: "Por ahora solo el sitio base. Elige un paquete o añade lo que necesites.",
-    fromMonth: (n) => `desde el mes ${n}`, deposit: "Anticipo para empezar", remove: "Quitar",
-    plan2: "50% anticipo / 50% al publicar", plan3: "40% / 30% / 30%", rush: "Entrega express", copied: "Cotización copiada",
-    pkgLoaded: "Paquete añadido a tu cotización", careNone: "Sin plan",
-    waHead: "¡Hola Marvz! 👋", waWant: "*Quiero cotizar este proyecto:*", waOne: "Pago único", waMo: "Mensual", waPlan: "Forma de pago",
-    waUsd: "aprox.",
+    oneTime: "Pago único", monthly: "Mensual", fromMonth: (n) => `desde el mes ${n}`, rushLabel: "Entrega express (+25%)", rush: "Entrega express",
+    payment: "Forma de pago", plan2: "50% anticipo / 50% al publicar", plan3: "40% / 30% / 30%", total: "Total del proyecto", deposit: "Anticipo para empezar",
+    send: "Enviar mi cotización por WhatsApp", copy: "Copiar cotización", copied: "Cotización copiada", pkgLoaded: "Paquete añadido a tu cotización", remove: "Quitar",
+    custom: "<strong>¿Necesitas un sistema a medida?</strong> Apps, motores de reservas y sistemas como RestoBar OS se cotizan aparte.", customBtn: "Cuéntame",
+    promises: [
+      ["Precio fijo en bolivianos", "Sin cobro por hora. Tu cotización se mantiene fija 15 días."],
+      ["Paga en partes", "50/50, o tres pagos en proyectos grandes."],
+      ["Directo con quien lo hace", "Hablas con la persona que diseña y programa tu web. Sin intermediarios."],
+      ["Pensado para el celular", "Rápido con datos móviles, hecho para WhatsApp y listo para Google."],
+    ],
+    faqEyebrow: "Preguntas", faqTitle: "Buenas preguntas, <em>respuestas claras.</em>",
+    faq: [
+      ["¿Cuánto tarda?", "Presencia tarda 2–3 semanas, Crecimiento 4–5 semanas e Insignia 7–9 semanas. ¿Lo necesitas antes? La entrega express cuesta 25% más."],
+      ["¿Qué necesito traer?", "Tu logo, fotos y unas líneas sobre tu negocio. ¿Aún no tienes logo? Añade Identidad de marca. ¿No tienes tiempo para escribir? Añade Redacción profesional, que ya viene en Crecimiento e Insignia."],
+      ["¿El hosting está incluido?", "Sí, durante los meses de cuidado que trae tu paquete. Después, los planes de cuidado empiezan en Bs 350 al mes. También puedes no tener plan y pagar Bs 150 la hora por cambios."],
+      ["¿Puedo actualizar la web yo mismo?", "Sí, con el panel autoadministrable. Viene en Crecimiento e Insignia, y cuesta Bs 1.500 por separado."],
+      ["¿Los precios incluyen IVA (factura)?", "No. Los precios no incluyen IVA, comisiones de pasarelas de pago ni las tarifas de Meta por mensaje de WhatsApp."],
+      ["¿Y si necesito algo que no está en la lista?", "Sistemas, apps e integraciones especiales se cotizan aparte. Cuéntame qué necesitas y armo un plan."],
+    ],
+    finalTitle: "¿No sabes cuál <em>te conviene?</em>", finalText: "Escríbeme. Te digo qué paquete tiene sentido para tu negocio, aunque sea el más chico.",
+    finalBtn: "Ayúdame a elegir por WhatsApp", finalMsg: "¡Hola Marvz! 👋 ¿Me ayudas a elegir un paquete para mi negocio?",
+    fine: "Precios en bolivianos. No incluyen IVA (factura), comisiones de pasarelas de pago ni las tarifas de Meta por mensaje de WhatsApp. Los montos en US$ son aproximados y siguen el tipo de cambio.",
+    currency: "Moneda", view: "Ver",
+    waHead: "¡Hola Marvz! 👋", waWant: "*Quiero cotizar este proyecto:*", waUsd: "aprox.",
   },
 };
 
 /* ========================================================================== */
 
-const P = { cur: "BOB", cat: "all", sel: {}, pkg: null, care: "none", rush: false, plan: 2 };
+const P = { cur: "BOB", cat: "popular", sel: {}, pkg: null, care: "none", rush: false, plan: 2 };
 const pt = (k) => PT[lang][k];
 const pAddon = (id) => ADDONS.find((a) => a.id === id);
 const pCare = (id) => CARE.find((c) => c.id === id);
 const pPkg = (id) => PACKAGES.find((b) => b.id === id);
+const WA_ICON = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>';
 
 function money(bs, cur = P.cur) {
   if (cur === "USD") return "US$ " + Math.round(bs / PRICING.fx).toLocaleString("en-US");
   return "Bs " + Math.round(bs).toLocaleString(lang === "es" ? "es-BO" : "en-US");
 }
 const otherCur = () => (P.cur === "BOB" ? "USD" : "BOB");
+const wa = (text) => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`;
 
 function packageValue(b) {
   let v = PRICING.base;
@@ -152,23 +247,129 @@ function packageValue(b) {
   return v;
 }
 
-/* ---------- Render ---------- */
+/* ---------- Page shell (rebuilt when the language changes) ---------- */
+function renderShell() {
+  const head = (id, eyebrow, title, sub = "") => `
+    <header class="psec__head reveal"${id ? ` id="${id}"` : ""}>
+      <p class="mono psec__eyebrow"><span class="dot"></span>${eyebrow}</p>
+      <h3 class="psec__title">${title}</h3>
+      ${sub ? `<p class="psec__sub">${sub}</p>` : ""}
+    </header>`;
+  $("#pricingRoot").innerHTML = `
+    <section class="phero">
+      <p class="mono psec__eyebrow"><span class="dot"></span>${pt("eyebrow")}</p>
+      <h2 class="phero__title">${pt("title")}</h2>
+      <p class="phero__lead">${pt("lead")}</p>
+      <div class="phero__ctas">
+        <button class="btn btn--red" type="button" data-pgo="pkgsHead">${pt("ctaPkgs")} ↓</button>
+        <button class="btn btn--line" type="button" data-pgo="buildHead">${pt("ctaBuild")}</button>
+      </div>
+      <dl class="pstats">${pt("stats").map(([n, l]) => `<div><dt>${n}</dt><dd class="mono">${l}</dd></div>`).join("")}</dl>
+      <div class="ptrust">
+        <p class="mono">${pt("trusted")}</p>
+        <div class="ptrust__track" aria-hidden="true"><div>${CLIENTS.concat(CLIENTS).map((c) => `<span>${c}</span>`).join("<i>✦</i>")}</div></div>
+        <p class="sr-only">${CLIENTS.join(", ")}</p>
+      </div>
+    </section>
+
+    ${head("pkgsHead", pt("pkgEyebrow"), pt("pkgTitle"), pt("pkgSub"))}
+    <div class="pkgs__bar">
+      <div class="lang pricing__cur" role="group" aria-label="${pt("currency")}">
+        <button type="button" data-pcur="BOB" aria-pressed="true">Bs</button>
+        <button type="button" data-pcur="USD" aria-pressed="false">US$</button>
+      </div>
+    </div>
+    <div class="pkgs" id="pkgs"></div>
+
+    <ul class="promises">${pt("promises").map(([h, p]) => `<li class="reveal"><strong>${h}</strong><span>${p}</span></li>`).join("")}</ul>
+
+    ${head("", pt("howEyebrow"), pt("howTitle"))}
+    <ol class="how">${pt("how").map(([h, p], i) => `<li class="reveal"><span class="how__n">0${i + 1}</span><strong>${h}</strong><p>${p}</p></li>`).join("")}</ol>
+
+    ${head("buildHead", pt("buildEyebrow"), pt("buildTitle"), pt("buildSub")(money(PRICING.base)))}
+    <div class="pills pricing__filters" id="pFilters"></div>
+    <div class="pricing__build">
+      <div>
+        <div class="addons" id="pGrid"></div>
+        <h4 class="mono cares__title">${pt("careTitle")}</h4>
+        <p class="cares__sub">${pt("careSub")}</p>
+        <div class="cares" id="pCare"></div>
+      </div>
+      <aside class="quote" id="quote" aria-label="${pt("quote")}">
+        <h4 class="mono quote__title">${pt("quote")}</h4>
+        <ul class="quote__lines" id="qLines"></ul>
+        <div class="quote__row"><span>${pt("oneTime")}</span><b id="qOne"></b></div>
+        <div class="quote__row"><span>${pt("monthly")}</span><b id="qMo"></b></div>
+        <div class="quote__row quote__opt">
+          <span>${pt("rushLabel")}</span>
+          <button class="switch" type="button" role="switch" id="qRush" aria-checked="false" aria-label="${pt("rushLabel")}"></button>
+        </div>
+        <div class="quote__row quote__opt">
+          <span>${pt("payment")}</span>
+          <div class="lang" role="group" aria-label="${pt("payment")}">
+            <button type="button" data-pplan="2" aria-pressed="true">50/50</button>
+            <button type="button" data-pplan="3" aria-pressed="false">40/30/30</button>
+          </div>
+        </div>
+        <div class="quote__total">
+          <span class="mono">${pt("total")}</span>
+          <b id="qTotal"></b>
+          <small id="qOneAlt"></small>
+          <small id="qDeposit"></small>
+        </div>
+        <a class="btn btn--wa" id="qWa" href="#" target="_blank" rel="noopener">${WA_ICON}<span>${pt("send")}</span></a>
+        <button class="link mono quote__copy" type="button" id="qCopy">${pt("copy")}</button>
+        <div class="quote__custom">
+          <p>${pt("custom")}</p>
+          <button class="link mono" type="button" data-open="contact">${pt("customBtn")} →</button>
+        </div>
+      </aside>
+    </div>
+
+    ${head("", pt("faqEyebrow"), pt("faqTitle"))}
+    <div class="faq">${pt("faq").map(([q, a]) => `<details class="reveal"><summary>${q}</summary><p>${a}</p></details>`).join("")}</div>
+
+    <section class="pfinal reveal">
+      <div>
+        <h3>${pt("finalTitle")}</h3>
+        <p>${pt("finalText")}</p>
+      </div>
+      <a class="btn btn--wa" id="pHelp" href="${wa(pt("finalMsg"))}" target="_blank" rel="noopener">${WA_ICON}<span>${pt("finalBtn")}</span></a>
+    </section>
+    <p class="pricing__fine">${pt("fine")}</p>
+
+    <div class="quote-dock" aria-hidden="true">
+      <div><small class="mono">${pt("quote")}</small><b id="qDock"></b></div>
+      <button class="btn btn--red" type="button" data-pgo="quote" tabindex="-1">${pt("view")}</button>
+    </div>
+    <div class="ptoast" id="pToast" role="status"></div>`;
+  observeReveal();
+  quoteObs.disconnect();
+  quoteObs.observe($("#quote"));
+}
+
+/* ---------- Dynamic parts ---------- */
 function renderPackages() {
   $("#pkgs").innerHTML = PACKAGES.map((b) => {
-    const [name, forWho, terms] = b[lang];
+    const [name, promise, bestFor, highlights] = b[lang];
     const value = packageValue(b), pct = Math.round((1 - b.price / value) * 100), on = P.pkg === b.id;
-    const items = [pt("base")].concat(Object.entries(b.items).map(([id, q]) => (q > 1 ? pt("upTo")(q) : "") + pAddon(id)[lang][0]));
-    items.push(pt("careIncl")(b.careMonths, pCare(b.careId)[lang][0]));
-    if (b.aiMonths) items.push(pt("aiIncl")(b.aiMonths));
-    return `<article class="pkg${b.featured ? " pkg--featured" : ""}${on ? " is-on" : ""}">
-      ${b.featured ? `<span class="pkg__badge mono">${pt("featured")}</span>` : ""}
-      <h3 class="pkg__name">${name}</h3>
-      <p class="pkg__for">${forWho}</p>
-      <p class="pkg__price">${money(b.price)}<small class="mono">≈ ${money(b.price, otherCur())}</small></p>
-      <p class="pkg__value mono">${pt("valueSep")} <s>${money(value)}</s> <span class="pkg__save">${pt("save")} ${pct}%</span></p>
-      <ul class="pkg__list">${items.map((i) => `<li>${i}</li>`).join("")}</ul>
-      <p class="pkg__terms">${terms}</p>
-      <button class="btn ${on || b.featured ? "btn--red" : "btn--line"}" type="button" data-pkg="${b.id}" aria-pressed="${on}">${on ? "✓ " + pt("chosen") : pt("choose") + " " + name}</button>
+    const all = [pt("baseFull")].concat(Object.entries(b.items).map(([id, q]) => (q > 1 ? pt("upTo")(q) : "") + pAddon(id)[lang][0]));
+    all.push(pt("careIncl")(b.careMonths, pCare(b.careId)[lang][0]));
+    if (b.aiMonths) all.push(pt("aiIncl")(b.aiMonths));
+    const extras = [pt("careIncl")(b.careMonths, pCare(b.careId)[lang][0])].concat(b.aiMonths ? [pt("aiIncl")(b.aiMonths)] : []);
+    return `<article class="pkg reveal${b.featured ? " pkg--featured" : ""}${on ? " is-on" : ""}">
+      ${b.featured ? `<span class="pkg__badge mono">★ ${pt("featured")}</span>` : ""}
+      <h4 class="pkg__name">${name}</h4>
+      <p class="pkg__promise">${promise}</p>
+      <p class="pkg__price"><b>${money(b.price)}</b></p>
+      <p class="pkg__value mono"><span class="pkg__save">${pt("save")(pct)}</span> <s>${money(value)}</s> ${pt("valueWas")}</p>
+      <p class="pkg__terms">${b.plan === 2 ? pt("pay2")(money(b.price / 2)) : pt("pay3")(money(b.price * 0.4))}</p>
+      <p class="pkg__weeks"><span aria-hidden="true">⚡</span> ${pt("weeks")(b.weeks)}</p>
+      <ul class="pkg__list">${highlights.map((i) => `<li>${i}</li>`).join("")}${extras.map((i) => `<li class="is-gift">${i}</li>`).join("")}</ul>
+      <p class="pkg__for"><span class="mono">${pt("bestFor")}</span> ${bestFor}</p>
+      <details class="pkg__all"><summary class="mono">${pt("seeAll")(all.length)}</summary><ul>${all.map((i) => `<li>${i}</li>`).join("")}</ul></details>
+      <button class="btn pkg__cta ${b.featured ? "btn--red" : on ? "btn--cream" : "btn--line"}" type="button" data-pkg="${b.id}" aria-pressed="${on}">${on ? pt("chosen") : pt("choose")(name) + " →"}</button>
+      ${b.caseSlug ? `<a class="pkg__case mono" href="/work/${b.caseSlug}/${lang === "es" ? "es/" : ""}">${pt("example")}: ${PROJECTS.find((p) => p.slug === b.caseSlug).name.replace(" Ventura Sur", "")} ↗</a>` : ""}
     </article>`;
   }).join("");
 }
@@ -180,15 +381,16 @@ function renderFilters() {
 
 function addonPrice(a) {
   let h = "";
-  if (a.price) h += `<b>${money(a.price)}</b><span>${a.qty ? pt("each") : pt("once")}</span>`;
+  if (a.price) h += `<b>${money(a.price)}</b>${a.qty ? `<span>${pt("each")}</span>` : ""}`;
   if (a.monthly) h += `<b>${a.price ? "+ " : ""}${money(a.monthly)}</b><span>${pt("mo")}</span>`;
   return h;
 }
 
 function renderAddons() {
   const inPkg = P.pkg ? pPkg(P.pkg).items : {};
-  $("#pGrid").innerHTML = ADDONS.filter((a) => P.cat === "all" || a.cat === P.cat).map((a) => {
-    const [name, desc, why] = a[lang];
+  const shown = ADDONS.filter((a) => P.cat === "all" || a.cat === P.cat || (P.cat === "popular" && a.popular));
+  $("#pGrid").innerHTML = shown.map((a) => {
+    const [name, line] = a[lang];
     const q = P.sel[a.id] || 0, incl = inPkg[a.id] || 0, on = q + incl > 0;
     let ctl;
     if (a.qty) ctl = `<div class="stepper stepper--sm" role="group" aria-label="${esc(name)}">
@@ -196,15 +398,15 @@ function renderAddons() {
         <output>${q + incl}</output>
         <button type="button" data-pinc="${a.id}" aria-label="+">+</button></div>`;
     else if (incl) ctl = `<span class="addon__incl mono">✓ ${pt("included")}</span>`;
-    else ctl = `<button class="btn ${q ? "btn--cream" : "btn--line"}" type="button" data-ptog="${a.id}" aria-pressed="${!!q}">${q ? "✓ " + pt("added") : "+ " + pt("add")}</button>`;
+    else ctl = `<button class="addon__tog${q ? " is-on" : ""}" type="button" data-ptog="${a.id}" aria-pressed="${!!q}">${q ? "✓ " + pt("added") : "+ " + pt("add")}</button>`;
     return `<article class="addon${on ? " is-on" : ""}">
-      <span class="addon__cat mono">${CATS[a.cat][lang]}</span>
-      <h4 class="addon__name">${name}</h4>
-      <p class="addon__desc">${desc}</p>
-      <p class="addon__why">${why}</p>
+      <div class="addon__main">
+        <h5 class="addon__name">${name}</h5>
+        <p class="addon__line">${line}</p>
+      </div>
       <div class="addon__foot"><p class="addon__price">${addonPrice(a)}</p>${ctl}</div>
     </article>`;
-  }).join("");
+  }).join("") + (P.cat === "popular" ? `<button class="addons__more mono" type="button" data-pcat="all">${pt("showAll")(ADDONS.length)} →</button>` : "");
 }
 
 function renderCare() {
@@ -271,8 +473,9 @@ function renderQuote() {
   $("#qRush").setAttribute("aria-checked", String(P.rush));
   $$("[data-pplan]").forEach((x) => x.setAttribute("aria-pressed", String(+x.dataset.pplan === P.plan)));
   $$("[data-pcur]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.pcur === P.cur)));
-  $("#qWa").href = `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(quoteText())}`;
+  $("#qWa").href = wa(quoteText());
   $("#qDock").textContent = money(one);
+  pricingEl.classList.toggle("has-quote", !!P.pkg || Object.values(P.sel).some(Boolean));
 }
 
 function quoteText() {
@@ -282,22 +485,35 @@ function quoteText() {
     (l.v != null && l.m ? ` + ${money(l.m)}${pt("mo")}` : ""));
   return [
     pt("waHead"), pt("waWant"), "", ...rows, "",
-    `*${pt("waOne")}:* ${money(one)} (${pt("waUsd")} ${money(one, otherCur())})`,
-    mo ? `*${pt("waMo")}:* ${money(mo)}${pt("mo")}${startMo ? ` (${pt("fromMonth")(startMo)})` : ""}` : null,
-    `*${pt("waPlan")}:* ${P.plan === 2 ? pt("plan2") : pt("plan3")}`,
+    `*${pt("oneTime")}:* ${money(one)} (${pt("waUsd")} ${money(one, otherCur())})`,
+    mo ? `*${pt("monthly")}:* ${money(mo)}${pt("mo")}${startMo ? ` (${pt("fromMonth")(startMo)})` : ""}` : null,
+    `*${pt("payment")}:* ${P.plan === 2 ? pt("plan2") : pt("plan3")}`,
   ].filter((x) => x !== null).join("\n");
 }
 
 function renderPricing() {
+  renderShell();
+  renderDynamic();
+}
+function renderDynamic() {
   renderPackages();
   renderFilters();
   renderAddons();
   renderCare();
   renderQuote();
+  observeReveal();
+}
+
+/* ---------- Motion: fade sections in as they scroll into view ---------- */
+const pricingEl = $("#pricing");
+const revealObs = new IntersectionObserver((es) => es.forEach((en) => {
+  if (en.isIntersecting) { en.target.classList.add("is-in"); revealObs.unobserve(en.target); }
+}), { root: pricingEl, threshold: 0.08 });
+function observeReveal() {
+  $$("#pricing .reveal:not(.is-in)").forEach((el) => (reduced ? el.classList.add("is-in") : revealObs.observe(el)));
 }
 
 /* ---------- Events ---------- */
-const pricingEl = $("#pricing");
 function toastP(msg) {
   const el = $("#pToast");
   el.textContent = msg;
@@ -306,12 +522,20 @@ function toastP(msg) {
   el._t = setTimeout(() => el.classList.remove("is-on"), 1800);
 }
 
+function scrollToEl(id) {
+  const el = $("#" + id);
+  if (el) pricingEl.scrollTo({ top: el.getBoundingClientRect().top - pricingEl.getBoundingClientRect().top + pricingEl.scrollTop - 70, behavior: reduced ? "auto" : "smooth" });
+}
+
 pricingEl.addEventListener("click", (e) => {
-  const d = e.target.closest("[data-pcat],[data-ptog],[data-pinc],[data-pdec],[data-pcare],[data-pkg],[data-prm],[data-pplan],[data-pcur],#qRush,#qCopy");
+  const d = e.target.closest("[data-pcat],[data-ptog],[data-pinc],[data-pdec],[data-pcare],[data-pkg],[data-prm],[data-pplan],[data-pcur],[data-pgo],#qRush,#qCopy,#qWa,#pHelp");
   if (!d) return;
   const ds = d.dataset;
+  if (d.id === "qWa") return track("Quote WhatsApp", { package: P.pkg || "custom", total: calc().one });
+  if (d.id === "pHelp") return track("Help Me Choose");
+  if (ds.pgo) return scrollToEl(ds.pgo);
   if (ds.pcat) { P.cat = ds.pcat; renderFilters(); renderAddons(); return; }
-  if (ds.pcur) { P.cur = ds.pcur; renderPricing(); return; }
+  if (ds.pcur) { P.cur = ds.pcur; renderPackages(); renderAddons(); renderCare(); renderQuote(); observeReveal(); return; }
   if (ds.pplan) { P.plan = +ds.pplan; renderQuote(); return; }
   if (d.id === "qRush") { P.rush = !P.rush; renderQuote(); return; }
   if (d.id === "qCopy") { track("Quote Copied", { package: P.pkg || "custom" }); return copyQuote(); }
@@ -320,24 +544,28 @@ pricingEl.addEventListener("click", (e) => {
   if (ds.pdec) P.sel[ds.pdec] = Math.max(0, (P.sel[ds.pdec] || 0) - 1);
   if (ds.prm) P.sel[ds.prm] = 0;
   if (ds.pcare) { P.care = ds.pcare; if (P.pkg && ds.pcare === "none") P.care = pPkg(P.pkg).careId; }
-  if (ds.pkg) choosePackage(ds.pkg);
   if (ds.ptog && P.sel[ds.ptog]) track("Add-on Added", { addon: ds.ptog });
+  const picked = ds.pkg ? choosePackage(ds.pkg) : false;
   renderPackages();
   renderAddons();
   renderCare();
   renderQuote();
+  observeReveal();
+  if (picked) setTimeout(() => scrollToEl("buildHead"), 250);
 });
 
+// Returns true when a package was picked (not un-picked).
 function choosePackage(id) {
   P.pkg = P.pkg === id ? null : id;
   P.care = "none";
-  if (!P.pkg) return;
+  if (!P.pkg) return false;
   track("Package Chosen", { package: id });
   const b = pPkg(id);
   P.plan = b.plan;
   // Single add-ons the package already covers come off the extras list.
   for (const k in b.items) if (!pAddon(k).qty) P.sel[k] = 0;
   toastP(pt("pkgLoaded"));
+  return true;
 }
 
 function copyQuote() {
@@ -352,12 +580,7 @@ function copyQuote() {
   if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
 }
 
-$("#qWa").addEventListener("click", () => track("Quote WhatsApp", { package: P.pkg || "custom", total: calc().one }));
-
-$("[data-scroll-quote]").addEventListener("click", () => $("#quote").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }));
-
 // Phones: a bar with the running total that jumps to the quote, shown while the quote is off screen.
 const quoteObs = new IntersectionObserver(([en]) => pricingEl.classList.toggle("quote-visible", en.isIntersecting), { root: pricingEl, threshold: 0.05 });
-quoteObs.observe($("#quote"));
 
 renderPricing();
