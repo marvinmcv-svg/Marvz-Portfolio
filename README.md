@@ -47,6 +47,43 @@ This rewrites the structured data and the crawlable project list in `index.html`
 - An About overlay, a news ticker, and a List view.
 - Responsive layout. Animations are reduced when the visitor has `prefers-reduced-motion` turned on.
 
+## Case studies
+
+Three projects have a full case study page: Haras La Alhambra, Fogo de Chão Ventura Sur and RestoBar OS. Each page is at `/work/<slug>/`, with a Spanish version at `/work/<slug>/es/`.
+
+- The text for both languages is in the `CASES` list at the top of `scripts/case-studies.js`. Edit it there, then run:
+
+  ```bash
+  node scripts/case-studies.js
+  node scripts/seo.js
+  ```
+
+  The first command rewrites the pages in `work/`, and the second adds them to `sitemap.xml`.
+- Extra screenshots are in `assets/case/`, and the share images are `assets/case/<slug>-og.jpg`.
+- On the main site, the case studies appear at the top of the List view, and as a "Read the case study" button in the project drawer. That button shows for the projects listed in `CASE_STUDIES` at the top of `app.js`.
+- To add a case study, add an entry to `CASES` and its slug to `CASE_STUDIES`, then run both commands.
+
+## Analytics
+
+The site loads Vercel Web Analytics on the live site (not on localhost). For data to show up, open the project in the Vercel dashboard, go to **Analytics** and click **Enable**.
+
+Page views (including each case study page) are counted on every Vercel plan. The site also sends these custom events, which show up under Analytics → Events on plans that include custom events:
+
+| Event | When | Extra data |
+| --- | --- | --- |
+| Project Open | A project drawer opens | project |
+| Live Site Click / Case Study Click | A link to the live site or a case study is clicked | project |
+| Pricing Open | The Pricing overlay opens | from (header, hero, list, link, case-study) |
+| Package Chosen / Add-on Added | A package or add-on is picked | package / addon |
+| Quote WhatsApp / Quote Copied | The pricing quote is sent or copied | package, total |
+| Funnel Open | "Start a project" opens | from |
+| Funnel Step | The visitor reaches step 2, 3 or 4 | step |
+| Funnel WhatsApp | The funnel's "Send on WhatsApp" is clicked | service, budget |
+| Language Switch | EN/ES is switched | to |
+| Case Live Site / Case Pricing / Case Start Project | Buttons on a case study page | project |
+
+To see how many visitors open the funnel compared with how many send it, compare **Funnel Open** with **Funnel WhatsApp**.
+
 ## English and Spanish
 
 The whole site, including the WhatsApp message, is in English and Spanish. Visitors whose browser is set to Spanish get Spanish automatically. Anyone can switch with the EN/ES button in the header, and the site remembers their choice.
@@ -66,7 +103,7 @@ The whole site, including the WhatsApp message, is in English and Spanish. Visit
 
 ## Test
 
-An end-to-end Playwright check runs the canvas, drawer, index, list view, About, Pricing and the whole WhatsApp funnel on desktop, laptop, tablet and three phones. It then repeats the key flows in Spanish and switches between the two languages:
+An end-to-end Playwright check runs the canvas, drawer, index, list view, About, Pricing, the case studies, the analytics events and the whole WhatsApp funnel on desktop, laptop, tablet and three phones. It then repeats the key flows in Spanish and switches between the two languages:
 
 ```bash
 python3 -m http.server 4173 &

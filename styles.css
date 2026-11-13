@@ -348,7 +348,9 @@ body.is-list .stage { visibility: hidden; }
   .drawer__tagline { font-size: 21px; }
   .drawer__desc { font-size: 16px; }
   .drawer__meta { grid-template-columns: 1fr 1fr; gap: 0 16px; }
-  #dLink { width: 100%; height: 48px; }
+  #dLink, #dCase { width: 100%; height: 48px; }
+  .cases { margin-bottom: 64px; }
+  .cases__grid { grid-template-columns: 1fr; gap: 36px; }
 
   .overlay__inner { padding: calc(72px + var(--safe-t)) var(--gutter) calc(56px + var(--safe-b)); }
   .about__cols { grid-template-columns: 1fr; gap: 18px; margin-top: 32px; font-size: 17px; }
@@ -639,6 +641,19 @@ body:has(.overlay.is-open) .wa-float, body:has(.drawer.is-open) .wa-float { opac
 }
 .ptoast.is-on { opacity: 1; transform: translate(-50%, 0); }
 
+/* Drawer buttons and case studies (list view) */
+.drawer__btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.cases { margin-bottom: 96px; }
+.cases > .mono { margin: 0; color: var(--cream-60); }
+.cases h2 { margin: 8px 0 32px; font-size: clamp(32px, 4.4vw, 64px); line-height: .95; letter-spacing: -.045em; font-weight: 600; }
+.cases__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.case-card { display: flex; flex-direction: column; gap: 6px; text-decoration: none; }
+.case-card .tile__img { margin-bottom: 10px; transition: transform .6s var(--ease); }
+.case-card:hover .tile__img { transform: translateY(-4px); }
+.case-card > .mono { color: var(--cream-60); }
+.case-card strong { font-size: 26px; font-weight: 600; letter-spacing: -.03em; line-height: 1.1; }
+.case-card p { margin: 0; color: var(--cream-60); font-size: 15px; }
+.case-card__go { margin-top: 6px; color: var(--red); }
 .cta__btns { display: flex; flex-wrap: wrap; gap: 10px; }
 @media (max-width: 860px) {
   /* Phones: Pricing lives in the hero card and the list view, not the crowded top bar. */

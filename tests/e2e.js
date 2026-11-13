@@ -241,6 +241,11 @@ async function run(browser, [dev, opts]) {
   await page.waitForTimeout(250);
   check(dev, "funnel closes", !(await isOpen("#contact")));
 
+  // Analytics: events are queued for Vercel Web Analytics (the script itself only loads in production).
+  const events = await page.evaluate(() => (window.vaq || []).filter((a) => a[0] === "event").map((a) => a[1].name));
+  const want = ["Pricing Open", "Package Chosen", "Funnel Open", "Funnel Step", "Funnel WhatsApp", "Project Open"];
+  check(dev, "analytics events queued", want.every((w) => events.includes(w)), want.filter((w) => !events.includes(w)).join(", "));
+
   // Deep links: on a fresh load and when the hash changes.
   await page.goto("about:blank");
   await page.goto(BASE + "#helibol", { waitUntil: "networkidle" });
@@ -249,6 +254,34 @@ async function run(browser, [dev, opts]) {
   await page.evaluate(() => { location.hash = "#bloom"; });
   await page.waitForTimeout(1600);
   check(dev, "hash change opens project", (await isOpen("#drawer")) && (await page.locator("#dTitle").textContent()) === "Bloom");
+  check(dev, "no case-study button without a case study", await page.locator("#dCase").isHidden());
+  await page.evaluate(() => { location.hash = "#fogo-de-chao"; });
+  await page.waitForTimeout(1600);
+  check(dev, "case-study button in the drawer", (await page.locator("#dCase").isVisible()) && (await page.locator("#dCase").getAttribute("href")) === "/work/fogo-de-chao/");
+
+  // ---- Case studies ----
+  for (const slug of ["haras-la-alhambra", "fogo-de-chao", "restobar-os"]) {
+    const res = await page.goto(`${BASE}work/${slug}/`, { waitUntil: "networkidle" });
+    await page.evaluate(async () => { for (let y = 0; y < document.body.scrollHeight; y += 600) { scrollTo(0, y); await new Promise((r) => setTimeout(r, 40)); } });
+    await page.waitForLoadState("networkidle");
+    const info = await page.evaluate(() => ({
+      h1: document.querySelector("h1")?.textContent || "",
+      broken: [...document.images].filter((i) => !i.complete || !i.naturalWidth).map((i) => i.src),
+      ox: document.documentElement.scrollWidth - innerWidth,
+    }));
+    check(dev, `case study ${slug} loads`, res.status() === 200 && info.h1.length > 10 && info.broken.length === 0 && info.ox <= 0, `${res.status()} ${info.broken.join(" ")} ${info.ox}px`);
+    if (slug === "haras-la-alhambra") await page.screenshot({ path: `${SHOTS}/${dev}-11-case.png` });
+  }
+  await Promise.all([page.waitForURL(/#start$/), tap(page.locator(".case__cta .btn--red"))]);
+  await page.waitForFunction(() => document.body && document.body.classList.contains("is-ready"), null, { timeout: 5000 });
+  await page.waitForTimeout(400);
+  check(dev, "case study CTA opens the funnel", await isOpen("#contact"));
+  await page.goto(`${BASE}work/haras-la-alhambra/`, { waitUntil: "networkidle" });
+  await page.locator(".pkgnote .btn").scrollIntoViewIfNeeded();
+  await Promise.all([page.waitForURL(/#pricing$/), tap(page.locator(".pkgnote .btn"))]);
+  await page.waitForFunction(() => document.body && document.body.classList.contains("is-ready"), null, { timeout: 5000 });
+  await page.waitForTimeout(400);
+  check(dev, "case study links to pricing", await isOpen("#pricing"));
 
   check(dev, "no console errors or failed requests", errors.length === 0, errors.slice(0, 3).join(" | "));
   await ctx.close();
@@ -327,6 +360,18 @@ async function runSpanish(browser, [dev, opts]) {
   await page.screenshot({ path: `${SHOTS}/${dev}-es-3-pricing.png` });
   await tap(page.locator("#pricing .overlay__close"));
   await page.waitForTimeout(250);
+
+  // Case studies in Spanish: the English URL follows the saved language.
+  await page.goto(`${BASE}work/fogo-de-chao/`, { waitUntil: "networkidle" });
+  check(d, "case study follows the saved language", new URL(page.url()).pathname === "/work/fogo-de-chao/es/" && /seis idiomas/.test(await page.locator("h1").textContent()));
+  const caseLeft = await page.evaluate(() => ["The brief", "What I built", "Next case study", "Start a project"].filter((w) => document.body.innerText.toLowerCase().includes(w.toLowerCase())));
+  check(d, "no English left in the case study", caseLeft.length === 0, caseLeft.join(", "));
+  await Promise.all([page.waitForURL(/lang=en/), tap(page.locator(".top .lang"))]);
+  await page.waitForLoadState("networkidle");
+  check(d, "case study switches to English", new URL(page.url()).pathname === "/work/fogo-de-chao/" && /six languages/.test(await page.locator("h1").textContent()));
+  await page.screenshot({ path: `${SHOTS}/${dev}-es-4-case.png` });
+  await Promise.all([page.waitForURL(/\/es\/$/), tap(page.locator(".top .lang"))]);
+  await page.waitForLoadState("networkidle");
 
   check(d, "no console errors", errors.length === 0, errors.slice(0, 3).join(" | "));
   await ctx.close();

@@ -314,13 +314,14 @@ pricingEl.addEventListener("click", (e) => {
   if (ds.pcur) { P.cur = ds.pcur; renderPricing(); return; }
   if (ds.pplan) { P.plan = +ds.pplan; renderQuote(); return; }
   if (d.id === "qRush") { P.rush = !P.rush; renderQuote(); return; }
-  if (d.id === "qCopy") return copyQuote();
+  if (d.id === "qCopy") { track("Quote Copied", { package: P.pkg || "custom" }); return copyQuote(); }
   if (ds.ptog) P.sel[ds.ptog] = P.sel[ds.ptog] ? 0 : 1;
   if (ds.pinc) P.sel[ds.pinc] = (P.sel[ds.pinc] || 0) + 1;
   if (ds.pdec) P.sel[ds.pdec] = Math.max(0, (P.sel[ds.pdec] || 0) - 1);
   if (ds.prm) P.sel[ds.prm] = 0;
   if (ds.pcare) { P.care = ds.pcare; if (P.pkg && ds.pcare === "none") P.care = pPkg(P.pkg).careId; }
   if (ds.pkg) choosePackage(ds.pkg);
+  if (ds.ptog && P.sel[ds.ptog]) track("Add-on Added", { addon: ds.ptog });
   renderPackages();
   renderAddons();
   renderCare();
@@ -331,6 +332,7 @@ function choosePackage(id) {
   P.pkg = P.pkg === id ? null : id;
   P.care = "none";
   if (!P.pkg) return;
+  track("Package Chosen", { package: id });
   const b = pPkg(id);
   P.plan = b.plan;
   // Single add-ons the package already covers come off the extras list.
@@ -349,6 +351,8 @@ function copyQuote() {
   };
   if (navigator.clipboard) navigator.clipboard.writeText(txt).then(done, fallback); else fallback();
 }
+
+$("#qWa").addEventListener("click", () => track("Quote WhatsApp", { package: P.pkg || "custom", total: calc().one }));
 
 $("[data-scroll-quote]").addEventListener("click", () => $("#quote").scrollIntoView({ behavior: reduced ? "auto" : "smooth", block: "start" }));
 

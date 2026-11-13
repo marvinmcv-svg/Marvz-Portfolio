@@ -12,6 +12,9 @@ const CONFIG = {
   github: "https://github.com/marvinmcv-svg",
 };
 
+// Projects with a case study page at /work/<slug>/ (built by scripts/case-studies.js).
+const CASE_STUDIES = ["haras-la-alhambra", "fogo-de-chao", "restobar-os"];
+
 const PROJECTS = [
   {
     slug: "haras-la-alhambra", name: "Haras La Alhambra", sector: "Equestrian", type: "Website",
@@ -276,7 +279,7 @@ const UI = {
     ctaTile: "Your project<br><em>could be here.</em>", start: "Start a project", open: "Open",
     cardAlt: (n) => `${n} website`, shotAlt: (n) => `Screenshot of the ${n} website`,
     type: "Type", sector: "Sector", languages: "Languages", liveAt: "Live at",
-    canvasView: ["Canvas view", "Canvas"], listView: ["List view", "List"],
+    canvasView: ["Canvas view", "Canvas"], listView: ["List view", "List"], readCase: "Read the case study →",
     drag: "Drag to explore ↔", swipe: "Swipe to explore",
     opening: "Opening WhatsApp…", needService: "Pick a service to continue.", needName: "Add your name so I know who's writing.",
     hi: "Hi Marvz! 👋", want: "*I'd like to start a project*", service: "Service", extras: "Extras", timeline: "Timeline",
@@ -287,7 +290,7 @@ const UI = {
     ctaTile: "Tu proyecto<br><em>podría estar aquí.</em>", start: "Empezar un proyecto", open: "Abierto",
     cardAlt: (n) => `Sitio web de ${n}`, shotAlt: (n) => `Captura del sitio web de ${n}`,
     type: "Tipo", sector: "Sector", languages: "Idiomas", liveAt: "En línea en",
-    canvasView: ["Vista lienzo", "Lienzo"], listView: ["Vista lista", "Lista"],
+    canvasView: ["Vista lienzo", "Lienzo"], listView: ["Vista lista", "Lista"], readCase: "Leer el caso de estudio →",
     drag: "Arrastra para explorar ↔", swipe: "Desliza para explorar",
     opening: "Abriendo WhatsApp…", needService: "Elige un servicio para continuar.", needName: "Agrega tu nombre para saber quién escribe.",
     hi: "¡Hola Marvz! 👋", want: "*Quiero empezar un proyecto*", service: "Servicio", extras: "Extras", timeline: "Plazo",
@@ -303,6 +306,10 @@ const pad = (n) => String(n).padStart(2, "0");
 const mod = (a, n) => ((a % n) + n) % n;
 const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
 const img = (p, size = "sm") => `/assets/work/${p.slug}${size === "lg" ? "" : "-" + size}.webp`;
+
+// Vercel Web Analytics custom event (queued until the script loads; a no-op locally).
+const track = (name, data) => { try { window.va && window.va("event", data ? { name, data } : { name }); } catch (e) {} };
+const caseUrl = (slug) => `/work/${slug}/${lang === "es" ? "es/" : ""}`;
 
 // Language: "en" or "es". t() reads interface text, loc() a project in the current language.
 let lang = "en";
@@ -354,6 +361,14 @@ function buildList() {
       <p>${p.tagline}</p>
     </button>`).join("");
   $$("#listGrid .card").forEach((c) => c.addEventListener("click", () => openProject(+c.dataset.i)));
+  $("#casesGrid").innerHTML = CASE_STUDIES.map((s) => loc(PROJECTS.find((p) => p.slug === s))).map((p) => `
+    <a class="case-card" href="${caseUrl(p.slug)}" data-case="${p.slug}">
+      <div class="tile__img"><img src="${img(p)}" alt="${t("cardAlt")(p.name)}" loading="lazy" width="800" height="500"></div>
+      <span class="mono">${p.sector}</span>
+      <strong>${p.name}</strong>
+      <p>${p.tagline}</p>
+      <span class="case-card__go mono">${t("readCase")}</span>
+    </a>`).join("");
 }
 
 /* ---------- Ticker ---------- */
@@ -581,7 +596,11 @@ function openProject(i) {
   ].map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join("");
   $("#dTags").innerHTML = p.tags.map((t) => `<li>${t}</li>`).join("");
   $("#dLink").href = p.url;
+  const dc = $("#dCase");
+  dc.hidden = !CASE_STUDIES.includes(p.slug);
+  dc.href = caseUrl(p.slug);
   $(".drawer__scroll").scrollTop = 0;
+  track("Project Open", { project: p.slug });
   drawer.classList.add("is-open");
   drawer.setAttribute("aria-hidden", "false");
   scrim.hidden = false;
@@ -601,7 +620,9 @@ drawer.querySelector("[data-close]").addEventListener("click", closeProject);
 scrim.addEventListener("click", closeProject);
 
 /* ---------- Overlays (About / Pricing / Contact) ---------- */
-function openOverlay(id) {
+function openOverlay(id, from) {
+  if (id === "contact") track("Funnel Open", { from: from || "link" });
+  if (id === "pricing") track("Pricing Open", { from: from || "link" });
   closeProject();
   document.body.classList.remove("index-open");
   $$(".overlay.is-open").forEach((o) => o.id !== id && closeOverlay(o));
@@ -611,13 +632,26 @@ function openOverlay(id) {
   o.scrollTop = 0;
   setTimeout(() => (id === "contact" && $(".step.is-on input") || o.querySelector(".close")).focus({ preventScroll: true }), 300);
 }
+// Where an overlay was opened from, for analytics.
+function openerName(el) {
+  if (el.id === "waFloat") return "whatsapp-button";
+  if (el.closest(".top")) return "header";
+  if (el.closest(".hero")) return "hero";
+  if (el.closest(".list")) return "list";
+  const o = el.closest(".overlay");
+  return o ? o.id : "page";
+}
 function closeOverlay(o) {
   o.classList.remove("is-open");
   o.setAttribute("aria-hidden", "true");
 }
 document.addEventListener("click", (e) => {
   const opener = e.target.closest("[data-open]");
-  if (opener) return openOverlay(opener.dataset.open);
+  if (opener) return openOverlay(opener.dataset.open, openerName(opener));
+  const out = e.target.closest("#dLink, #dShot, #dCase");
+  if (out && drawerOpen()) track(out.id === "dCase" ? "Case Study Click" : "Live Site Click", { project: PROJECTS[current].slug });
+  const cc = e.target.closest("[data-case]");
+  if (cc) track("Case Study Click", { project: cc.dataset.case, from: "list" });
   const closer = e.target.closest(".overlay [data-close]");
   if (closer) closeOverlay(closer.closest(".overlay"));
 });
@@ -659,7 +693,10 @@ function buildFunnel() {
   $$("[data-goto]").forEach((b) => b.addEventListener("click", () => goStep(+b.dataset.goto)));
   $("#fBack").addEventListener("click", () => goStep(F.step - 1));
   funnel.addEventListener("submit", (e) => { e.preventDefault(); if (F.step < 3) goStep(F.step + 1); });
-  $("#waSend").addEventListener("click", () => { $("#fStatus").textContent = t("opening"); });
+  $("#waSend").addEventListener("click", () => {
+    $("#fStatus").textContent = t("opening");
+    track("Funnel WhatsApp", { service: F.service ? F.service.id : "none", budget: new FormData(funnel).get("budget") || "" });
+  });
   goStep(0);
 }
 
@@ -697,6 +734,7 @@ function goStep(n) {
     $("#fStatus").textContent = err[1];
     if (err[0] === 2) nameEl.setAttribute("aria-invalid", "true");
   } else $("#fStatus").textContent = "";
+  if (n > F.step) track("Funnel Step", { step: n + 1 });
   F.step = n;
   $$("[data-step-panel]").forEach((p) => p.classList.toggle("is-on", +p.dataset.stepPanel === n));
   syncSteps();
@@ -799,6 +837,7 @@ function setLang(next, { boot = false } = {}) {
   if (boot) return;
 
   try { localStorage.setItem("lang", lang); } catch (e) {}
+  track("Language Switch", { to: lang });
   const u = new URL(location.href);
   if (lang === "es") u.searchParams.set("lang", "es"); else u.searchParams.delete("lang");
   history.replaceState(null, "", u);
@@ -830,7 +869,8 @@ requestAnimationFrame(loop);
 
 // Open a project when the hash changes (e.g. a shared /#helibol link on the open page).
 addEventListener("hashchange", () => {
-  if (location.hash === "#pricing") return openOverlay("pricing");
+  if (location.hash === "#pricing") return openOverlay("pricing", "link");
+  if (location.hash === "#start") return openOverlay("contact", "link");
   const p = PROJECTS.find((x) => x.slug === location.hash.slice(1));
   if (p && !(drawerOpen() && current === p.i)) focusTile(p.i);
 });
@@ -857,7 +897,8 @@ addEventListener("resize", () => {
     else {
       document.body.classList.add("is-ready");
       const slug = location.hash.slice(1);
-      if (slug === "pricing") return openOverlay("pricing");
+      if (slug === "pricing") return openOverlay("pricing", document.referrer.includes("/work/") ? "case-study" : "link");
+      if (slug === "start") return openOverlay("contact", document.referrer.includes("/work/") ? "case-study" : "link");
       const p = PROJECTS.find((x) => x.slug === slug);
       if (p) setTimeout(() => focusTile(p.i), 300);
     }

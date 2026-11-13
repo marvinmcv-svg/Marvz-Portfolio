@@ -13,6 +13,8 @@ const app = fs.readFileSync(path.join(ROOT, "app.js"), "utf8");
 const src = app.slice(app.indexOf("const PROJECTS"), app.indexOf("\n];", app.indexOf("const PROJECTS")) + 3);
 const PROJECTS = new Function(`${src}; return PROJECTS;`)();
 
+const { CASES } = require("./case-studies.js");
+
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 
 const ld = {
@@ -58,6 +60,10 @@ const noscript = `<noscript>
   <ul>
 ${PROJECTS.map((p) => `    <li><a href="${esc(p.url)}">${esc(p.name)}</a> · ${esc(p.sector.includes(p.type) ? p.sector : `${p.type} · ${p.sector}`)}. ${esc(p.desc)}</li>`).join("\n")}
   </ul>
+  <h2>Case studies</h2>
+  <ul>
+${CASES.map((c) => `    <li><a href="/work/${c.slug}/">${esc(c.name)}</a> · ${esc(c.en.plain)}</li>`).join("\n")}
+  </ul>
 </section>
 </noscript>`;
 
@@ -77,6 +83,7 @@ const today = new Date().toISOString().slice(0, 10);
 fs.writeFileSync(path.join(ROOT, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>${SITE}/</loc><lastmod>${today}</lastmod><changefreq>monthly</changefreq><priority>1.0</priority></url>
+${CASES.flatMap((c) => ["", "es/"].map((l) => `  <url><loc>${SITE}/work/${c.slug}/${l}</loc><lastmod>${today}</lastmod><changefreq>yearly</changefreq><priority>0.8</priority></url>`)).join("\n")}
 </urlset>
 `);
-console.log(`Wrote JSON-LD and <noscript> for ${PROJECTS.length} projects, and sitemap.xml`);
+console.log(`Wrote JSON-LD and <noscript> for ${PROJECTS.length} projects, and sitemap.xml with ${CASES.length * 2} case-study pages`);

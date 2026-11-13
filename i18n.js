@@ -43,6 +43,9 @@ const STATIC_ES = {
   close: "Cerrar",
   visitLive: "Ver en vivo ↗",
   visitSite: "Visitar el sitio en vivo ↗",
+  readCase: "Leer el caso de estudio →",
+  casesEyebrow: '<span class="dot"></span>Casos de estudio',
+  casesTitle: "Cómo se hicieron <em>algunos de ellos.</em>",
 
   // About
   aboutLabel: "Sobre mí",
