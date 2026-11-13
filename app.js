@@ -600,7 +600,7 @@ $$("[data-step]").forEach((b) => b.addEventListener("click", () => openProject(c
 drawer.querySelector("[data-close]").addEventListener("click", closeProject);
 scrim.addEventListener("click", closeProject);
 
-/* ---------- Overlays (About / Contact) ---------- */
+/* ---------- Overlays (About / Pricing / Contact) ---------- */
 function openOverlay(id) {
   closeProject();
   document.body.classList.remove("index-open");
@@ -810,6 +810,7 @@ function setLang(next, { boot = false } = {}) {
   $("#fStatus").textContent = "";
   renderMessage();
   syncSteps();
+  if (typeof renderPricing === "function") renderPricing();
   layout();
   if (drawerOpen()) openProject(current);
 }
@@ -829,6 +830,7 @@ requestAnimationFrame(loop);
 
 // Open a project when the hash changes (e.g. a shared /#helibol link on the open page).
 addEventListener("hashchange", () => {
+  if (location.hash === "#pricing") return openOverlay("pricing");
   const p = PROJECTS.find((x) => x.slug === location.hash.slice(1));
   if (p && !(drawerOpen() && current === p.i)) focusTile(p.i);
 });
@@ -855,6 +857,7 @@ addEventListener("resize", () => {
     else {
       document.body.classList.add("is-ready");
       const slug = location.hash.slice(1);
+      if (slug === "pricing") return openOverlay("pricing");
       const p = PROJECTS.find((x) => x.slug === slug);
       if (p) setTimeout(() => focusTile(p.i), 300);
     }

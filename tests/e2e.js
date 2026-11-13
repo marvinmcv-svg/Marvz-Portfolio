@@ -123,8 +123,53 @@ async function run(browser, [dev, opts]) {
   await page.waitForTimeout(250);
   check(dev, "about closes", !(await isOpen("#about")));
 
+  // ---- Pricing: packages, build your own, quote ----
+  const headerOverflow = await page.evaluate(() => { const n = document.querySelector(".top"); return n.scrollWidth - n.clientWidth; });
+  check(dev, "header fits", headerOverflow <= 0, `${headerOverflow}px`);
+  if (vw > 860) check(dev, "Pricing link in the header", await page.locator(".top__nav [data-open='pricing']").isVisible());
+  await tap(page.locator(".hero [data-open='pricing']"));
+  await page.waitForTimeout(350);
+  check(dev, "pricing opens from hero", await isOpen("#pricing"));
+  const total = () => page.locator("#qTotal").textContent();
+  check(dev, "quote starts at the base site", (await total()) === "Bs 3,500");
+  check(dev, "three packages with savings", (await page.locator(".pkg").count()) === 3 && /Save 31%/.test(await page.locator(".pkg--featured").textContent()));
+  await page.screenshot({ path: `${SHOTS}/${dev}-9-pricing.png` });
+  await tap(page.locator("[data-pkg='growth']"));
+  check(dev, "choosing Growth loads it into the quote", (await total()) === "Bs 9,900" && (await page.locator("[data-ptog='booking']").count()) === 0);
+  await page.locator("[data-ptog='qr']").scrollIntoViewIfNeeded();
+  await tap(page.locator("[data-ptog='qr']"));
+  await tap(page.locator("[data-pinc='lang']"));
+  check(dev, "add-ons add to the total", (await total()) === "Bs 12,500");
+  await page.locator("#qRush").scrollIntoViewIfNeeded();
+  await tap(page.locator("#qRush"));
+  check(dev, "rush adds 25%", (await total()) === "Bs 15,625");
+  await tap(page.locator("[data-pcare='partner']"));
+  check(dev, "care plan sets the monthly", /Bs 1,290/.test(await page.locator("#qMo").textContent()));
+  const qtext = new URL(await page.locator("#qWa").getAttribute("href")).searchParams.get("text") || "";
+  check(dev, "quote goes to WhatsApp with every line",
+    ["Growth package", "Online bookings & calendar", "QR Simple & card payments — Bs 1,900", "Extra language — Bs 700", "Rush delivery +25%", "Digital Partner", "*One-time:* Bs 15,625", "50% upfront"].every((x) => qtext.includes(x)) &&
+    (await page.locator("#qWa").getAttribute("href")).startsWith(`https://wa.me/${PHONE}?`), qtext.slice(0, 60));
+  await tap(page.locator("[data-pcur='USD']"));
+  check(dev, "US$ view", (await total()) === "US$ 1,341" && /US\$ 850/.test(await page.locator(".pkg--featured .pkg__price").textContent()));
+  await tap(page.locator("[data-pcur='BOB']"));
+  if (vw <= 860) {
+    await page.locator("#pricing").evaluate((e) => e.scrollTo(0, 0));
+    await page.waitForTimeout(200);
+    check(dev, "quote bar shows on phones", await page.locator(".quote-dock").isVisible());
+    await page.screenshot({ path: `${SHOTS}/${dev}-9b-pricing-dock.png` });
+  }
+  await page.locator("#quote").scrollIntoViewIfNeeded();
+  await page.screenshot({ path: `${SHOTS}/${dev}-10-quote.png` });
+  const overflowP = await page.evaluate(() => document.querySelector("#pricing").scrollWidth - innerWidth);
+  check(dev, "pricing has no horizontal overflow", overflowP <= 0, `${overflowP}px`);
+  await tap(page.locator("#pricing .quote__custom [data-open='contact']"));
+  await page.waitForTimeout(350);
+  check(dev, "custom link opens the funnel", (await isOpen("#contact")) && !(await isOpen("#pricing")));
+  await tap(page.locator("#contact .overlay__close"));
+  await page.waitForTimeout(250);
+
   // ---- Start a project funnel ----
-  const cta = vw > 860 ? page.locator(".hero .btn") : page.locator(".hero .btn");
+  const cta = page.locator(".hero .btn--red");
   await tap(cta);
   await page.waitForTimeout(350);
   check(dev, "funnel opens from hero CTA", await isOpen("#contact"));
@@ -241,7 +286,7 @@ async function runSpanish(browser, [dev, opts]) {
   await page.waitForTimeout(200);
 
   // Funnel builds a Spanish WhatsApp message.
-  await tap(page.locator(".hero .btn"));
+  await tap(page.locator(".hero .btn--red"));
   await page.waitForTimeout(350);
   await tap(page.locator(".choice", { hasText: "Tienda online" }));
   await tap(page.locator("#fNext"));
@@ -268,6 +313,20 @@ async function runSpanish(browser, [dev, opts]) {
   check(d, "?lang=es link for sharing", new URL(page.url()).searchParams.get("lang") === "es");
   const overflowEn = await page.evaluate(() => document.documentElement.scrollWidth - innerWidth);
   check(d, "header fits in both languages", overflowEn <= 0 && vw > 0, `${overflowEn}px`);
+
+  // Pricing in Spanish.
+  await tap(page.locator(".hero [data-open='pricing']"));
+  await page.waitForTimeout(350);
+  await tap(page.locator("[data-pkg='presence']"));
+  const pes = new URL(await page.locator("#qWa").getAttribute("href")).searchParams.get("text") || "";
+  check(d, "pricing in Spanish", /Precios claros/.test(await page.locator("#pricing h2").textContent()) &&
+    ["*Quiero cotizar este proyecto:*", "Paquete Presencia — Bs 4.900", "*Pago único:* Bs 4.900"].every((x) => pes.includes(x)), pes.slice(0, 80));
+  const pBody = await page.locator("#pricing").evaluate((e) => e.innerText);
+  const pLeft = ["Your quote", "Build your own", "Packages", "One-time", "Add"].filter((w) => new RegExp(`\\b${w}\\b`).test(pBody));
+  check(d, "no English left in pricing", pLeft.length === 0, pLeft.join(", "));
+  await page.screenshot({ path: `${SHOTS}/${dev}-es-3-pricing.png` });
+  await tap(page.locator("#pricing .overlay__close"));
+  await page.waitForTimeout(250);
 
   check(d, "no console errors", errors.length === 0, errors.slice(0, 3).join(" | "));
   await ctx.close();
