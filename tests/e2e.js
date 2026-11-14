@@ -59,7 +59,7 @@ async function run(browser, [dev, opts]) {
   // Canvas tiles render with loaded images.
   const tileImgs = await page.evaluate(() => [...document.querySelectorAll(".tile img")].slice(0, 18)
     .every((i) => i.complete && i.naturalWidth > 0 || i.loading === "lazy"));
-  check(dev, "canvas tiles render", (await page.locator(".tile").count()) > 17 && tileImgs);
+  check(dev, "canvas tiles render", (await page.locator(".tile").count()) > 29 && tileImgs);
 
   // Drag the canvas and confirm it moves.
   const before = await page.locator(".tile").first().getAttribute("style");
@@ -105,10 +105,12 @@ async function run(browser, [dev, opts]) {
 
   // List view.
   await tap(page.locator("[data-view-toggle]"));
-  check(dev, "list view shows all projects", (await page.locator("#listGrid .card").count()) === 17);
+  check(dev, "list view shows all projects", (await page.locator("#listGrid .card").count()) === 29);
+  const idx = await page.evaluate(() => ({ groups: document.querySelectorAll(".index__group").length, items: document.querySelectorAll(".index__item").length }));
+  check(dev, "index lists every project in its category", idx.groups === 9 && idx.items === 29, `${idx.groups} groups, ${idx.items} items`);
   await page.screenshot({ path: `${SHOTS}/${dev}-3-list.png` });
-  await page.locator("#listGrid .card").nth(16).scrollIntoViewIfNeeded();
-  await tap(page.locator("#listGrid .card").nth(16));
+  await page.locator("#listGrid .card").nth(28).scrollIntoViewIfNeeded();
+  await tap(page.locator("#listGrid .card").nth(28));
   await page.waitForTimeout(200);
   check(dev, "list card opens project", await isOpen("#drawer"));
   await page.keyboard.press("Escape");
@@ -134,6 +136,20 @@ async function run(browser, [dev, opts]) {
   check(dev, "quote starts at the base site", (await total()) === "Bs 3,500");
   check(dev, "three packages with savings", (await page.locator(".pkg").count()) === 3 && /Save 31%/.test(await page.locator(".pkg--featured").textContent()));
   await page.screenshot({ path: `${SHOTS}/${dev}-9-pricing.png` });
+  // Savings calculator: defaults, a slider, a package switch, and the CTA.
+  await page.locator("#calc").scrollIntoViewIfNeeded();
+  check(dev, "calculator shows a payback time", (await page.locator("#co-payback").textContent()) === "17 weeks" && /3\.2×/.test(await page.locator("#co-year").textContent()));
+  await page.locator("[data-calc='cust']").fill("40");
+  check(dev, "calculator updates from a slider", (await page.locator("#co-sales").textContent()) === "Bs 6,000" && /days|weeks/.test(await page.locator("#co-payback").textContent()));
+  await tap(page.locator("[data-cpkg='presence']"));
+  const fast = await page.locator("#co-payback").textContent();
+  check(dev, "calculator follows the package", /days/.test(fast), fast);
+  const calcBox = await page.locator("#calc").boundingBox();
+  check(dev, "calculator fits the screen", calcBox && calcBox.x >= 0 && calcBox.x + calcBox.width <= vw + 1, calcBox && `${Math.round(calcBox.width)}px`);
+  await page.screenshot({ path: `${SHOTS}/${dev}-9c-calc.png` });
+  await page.locator("[data-calc='cust']").fill("10");
+  await tap(page.locator("[data-cpkg='growth']"));
+  await page.locator("[data-pkg='growth']").scrollIntoViewIfNeeded();
   await tap(page.locator("[data-pkg='growth']"));
   check(dev, "choosing Growth loads it into the quote", (await total()) === "Bs 9,900" && (await page.locator("[data-ptog='booking']").count()) === 0);
   await page.locator("[data-ptog='qr']").scrollIntoViewIfNeeded();
@@ -246,7 +262,7 @@ async function run(browser, [dev, opts]) {
 
   // Analytics: events are queued for Vercel Web Analytics (the script itself only loads in production).
   const events = await page.evaluate(() => (window.vaq || []).filter((a) => a[0] === "event").map((a) => a[1].name));
-  const want = ["Pricing Open", "Package Chosen", "Funnel Open", "Funnel Step", "Funnel WhatsApp", "Project Open"];
+  const want = ["Pricing Open", "Calculator Used", "Package Chosen", "Funnel Open", "Funnel Step", "Funnel WhatsApp", "Project Open"];
   check(dev, "analytics events queued", want.every((w) => events.includes(w)), want.filter((w) => !events.includes(w)).join(", "));
 
   // Deep links: on a fresh load and when the hash changes.
@@ -355,7 +371,7 @@ async function runSpanish(browser, [dev, opts]) {
   await page.waitForTimeout(350);
   await tap(page.locator("[data-pkg='presence']"));
   const pes = new URL(await page.locator("#qWa").getAttribute("href")).searchParams.get("text") || "";
-  check(d, "pricing in Spanish", /ya te está buscando/.test(await page.locator("#pricing h2").textContent()) &&
+  check(d, "pricing in Spanish", /se paga sola/.test(await page.locator("#pricing h2").textContent()) &&
     ["*Quiero cotizar este proyecto:*", "Paquete Presencia — Bs 4.900", "*Pago único:* Bs 4.900"].every((x) => pes.includes(x)), pes.slice(0, 80));
   const pBody = await page.locator("#pricing").evaluate((e) => e.innerText);
   const pLeft = ["Your quote", "Build your own", "Packages", "One-time", "Add"].filter((w) => new RegExp(`\\b${w}\\b`).test(pBody));

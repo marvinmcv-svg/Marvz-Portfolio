@@ -17,7 +17,7 @@ const CASE_STUDIES = ["haras-la-alhambra", "fogo-de-chao", "restobar-os"];
 
 const PROJECTS = [
   {
-    slug: "haras-la-alhambra", name: "Haras La Alhambra", sector: "Equestrian", type: "Website",
+    slug: "haras-la-alhambra", group: "Industry & Agro", name: "Haras La Alhambra", sector: "Equestrian", type: "Website",
     url: "https://haras-la-alhambra.vercel.app/",
     tagline: "Raised with patience. Selected with rigor.",
     desc: "A cinematic, bilingual site for a breeder of Purebred Arabian and Pura Raza Española horses in Santa Cruz, founded in 1993. The film plays through the cut-out letters of ALHAMBRA, then the site moves through bloodlines, the estate, evening events, the riding school and services, with “Spirit”, an AI assistant that answers visitors' questions.",
@@ -30,7 +30,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "fuerzaflow", name: "FuerzaFlow", sector: "Fitness · AI", type: "Web app · PWA",
+    slug: "fuerzaflow", group: "Health & Fitness", name: "FuerzaFlow", sector: "Fitness · AI", type: "Web app · PWA",
     url: "https://fuerzaflow.vercel.app/",
     tagline: "Strength that flows with you.",
     desc: "An AI strength coach that builds your training program around your days and equipment, adjusts every workout to how you feel, and tracks macros from a photo. It installs from the browser, works offline and runs in six languages.",
@@ -43,7 +43,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "restobar-os", name: "RestoBar OS", sector: "Restaurants · SaaS", type: "SaaS",
+    slug: "restobar-os", group: "Apps & SaaS", name: "RestoBar OS", sector: "Restaurants · SaaS", type: "SaaS",
     url: "https://restobar-os.vercel.app/",
     tagline: "Your restaurant, under control. From your phone.",
     desc: "A restaurant operating system for bars and restaurants in Bolivia. Waiters take orders on their own phones, each ticket goes to its kitchen station with a timer, staff get role-based permissions, invoicing is built in, and the day's close is sent to the owner on WhatsApp.",
@@ -56,7 +56,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "fogo-de-chao", name: "Fogo de Chão Ventura Sur", sector: "Hospitality", type: "Website",
+    slug: "fogo-de-chao", group: "Food & Hospitality", name: "Fogo de Chão Ventura Sur", sector: "Hospitality", type: "Website",
     url: "https://fogo-de-chao-ventura-sur.vercel.app/es",
     tagline: "From the fire to your table.",
     desc: "A warm, editorial site for a gaúcho churrascaria in Mall Ventura Sur, Santa Cruz: menu, cuts, the Market Table, weekly specials and events, with WhatsApp reservations, in six languages.",
@@ -69,7 +69,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "don-corte-fino", name: "Don Corte Fino", sector: "Food · E-commerce", type: "Website + Shop",
+    slug: "don-corte-fino", group: "Food & Hospitality", name: "Don Corte Fino", sector: "Food · E-commerce", type: "Website + Shop",
     url: "https://new-don-corte-fino.vercel.app/en",
     tagline: "It's not just beef… it's Wangus.",
     desc: "Brand site and online shop for Wangus beef (Wagyu × Angus), finished in a Santa Cruz feedlot and cut by hand. It includes an interactive cut guide, signature boxes, and WhatsApp ordering with delivery across Santa Cruz de la Sierra.",
@@ -82,7 +82,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "helibol", name: "Helibol", sector: "Aviation", type: "Website",
+    slug: "helibol", group: "Brands & Business", name: "Helibol", sector: "Aviation", type: "Website",
     url: "https://helibol.vercel.app/es",
     tagline: "Where the roads end, we begin.",
     desc: "A site for a family-run helicopter operator flying in Bolivia since 1988: energy and mining, rescue and MEDEVAC, firefighting, cargo, VIP and scenic flights. It presents the fleet and safety culture and gives a 24/7 emergency line.",
@@ -95,7 +95,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "spc", name: "SPC Impresores", sector: "Manufacturing", type: "Website",
+    slug: "spc", group: "Industry & Agro", name: "SPC Impresores", sector: "Manufacturing", type: "Website",
     url: "https://spc-3-0.vercel.app/",
     tagline: "Printing the best of Bolivia.",
     desc: "A site for a leader in Bolivia's printing industry since 2001: food and pharmaceutical packaging, commercial printing, books, magazines and on-demand digital print. It has a services catalog, a step-by-step process and WhatsApp quotes with an on-site assistant.",
@@ -108,7 +108,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "firuwalk", name: "FiruWalk", sector: "Pets · Marketplace", type: "Web app",
+    slug: "firuwalk", group: "Apps & SaaS", name: "FiruWalk", sector: "Pets · Marketplace", type: "Web app",
     url: "https://firu-walk.vercel.app/",
     tagline: "Happy walks, calm owners.",
     desc: "A family dog-walking service in Santa Cruz. Owners book recurring walks with verified walkers, follow each walk on live GPS, get photo reports when it ends and pay by QR. Walkers get their own sign-up and dashboard.",
@@ -121,7 +121,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "bloom", name: "Bloom", sector: "Wellness", type: "App",
+    slug: "bloom", group: "Health & Fitness", name: "Bloom", sector: "Wellness", type: "App",
     url: "https://bloom-habits-two.vercel.app/",
     tagline: "Small habits. Big change.",
     desc: "A friendly habit tracker. You build routines in a few minutes a day, and a little companion grows every time you show up. It's built as a cross-platform app with Expo and React Native and runs in the browser.",
@@ -134,20 +134,20 @@ const PROJECTS = [
     },
   },
   {
-    slug: "sccs-website", name: "Santa Cruz Cooperative School", sector: "Education", type: "Website",
-    url: "https://sccs-website-eight.vercel.app/",
+    slug: "sccs-website", group: "Education", name: "Santa Cruz Cooperative School", sector: "Education", type: "Website",
+    url: "https://sccs-new.vercel.app/",
     tagline: "Two diplomas. One unrivaled future.",
-    desc: "The main website for a PK–12 American international school in Bolivia, home of the Jaguars. It covers admissions, the dual U.S. and Bolivian diploma, campus and facilities, safety and student life, with site-wide search and a full navigation system.",
+    desc: "The new website for Bolivia's PK–12 American international school, home of the Jaguars since 1959. It sells the dual U.S. and Bolivian diploma, Cognia accreditation and a 99% university matriculation rate, then walks families through admissions, campus, safety and student life.",
     langs: "English · Spanish", tags: ["Education", "Information architecture", "Search", "Admissions"],
     es: {
       sector: "Educación", type: "Sitio web",
       tagline: "Dos diplomas. Un futuro sin igual.",
-      desc: "El sitio principal de un colegio internacional americano de PK a 12.º grado en Bolivia, hogar de los Jaguars. Cubre admisiones, el doble diploma estadounidense y boliviano, el campus, la seguridad y la vida estudiantil, con buscador en todo el sitio y un sistema de navegación completo.",
+      desc: "El nuevo sitio del colegio internacional americano de PK a 12.º grado de Bolivia, hogar de los Jaguars desde 1959. Vende el doble diploma estadounidense y boliviano, la acreditación Cognia y un 99% de ingreso a la universidad, y guía a las familias por admisiones, campus, seguridad y vida estudiantil.",
       langs: "Inglés · Español", tags: ["Educación", "Arquitectura de información", "Buscador", "Admisiones"],
     },
   },
   {
-    slug: "sccs-sis", name: "SCCS SIS", sector: "Education · SaaS", type: "Web app · PWA",
+    slug: "sccs-sis", group: "Education", name: "SCCS SIS", sector: "Education · SaaS", type: "Web app · PWA",
     url: "https://sccs-sis.vercel.app/?source=pwa",
     tagline: "Every student. One place.",
     desc: "A student information system that holds records, grades, Google Classroom and family communication for both the U.S. diploma and the Bolivian Bachillerato. It works in English and Spanish, installs on any phone, and search returns in under 72 ms.",
@@ -160,7 +160,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "sccs-student-os", name: "SCCS Student OS", sector: "Education · SaaS", type: "Web app",
+    slug: "sccs-student-os", group: "Education", name: "SCCS Student OS", sector: "Education · SaaS", type: "Web app",
     url: "https://sccs-student-os.vercel.app/welcome",
     tagline: "Every student, seen clearly.",
     desc: "One calm, bilingual workspace for school staff covering discipline, learning support and positive behavior. Accommodations travel with the student, and a referral can go from the morning dashboard to a compliant record in under a minute.",
@@ -173,7 +173,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "sccs-store", name: "SCCS Store", sector: "Education · E-commerce", type: "E-commerce",
+    slug: "sccs-store", group: "Education", name: "SCCS Store", sector: "Education · E-commerce", type: "E-commerce",
     url: "https://sccs-store-app.vercel.app/",
     tagline: "Back to school, Jaguars.",
     desc: "The official school store for uniforms, sportswear, backpacks and keepsakes. Families shop by grade level, buy discounted kits, and pick up their orders at school.",
@@ -186,7 +186,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "acs-calvert", name: "ACS Calvert", sector: "Education", type: "Website",
+    slug: "acs-calvert", group: "Education", name: "ACS Calvert", sector: "Education", type: "Website",
     url: "https://acs-calvert.vercel.app/en",
     tagline: "Bolivia's American school since 1955.",
     desc: "A website for a U.S.-accredited, English-language school in La Paz that teaches from KG3 to Grade 12 and awards both U.S. and Bolivian diplomas. It covers admissions, learning, student life and community, with quick links to the school's own tools.",
@@ -199,7 +199,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "fabrizio-saunero", name: "Fabrizio Saunero · No. 19", sector: "Personal brand", type: "Portfolio",
+    slug: "fabrizio-saunero", group: "Portfolios", name: "Fabrizio Saunero · No. 19", sector: "Personal brand", type: "Portfolio",
     url: "https://fabrizio-saunero-2.vercel.app/",
     tagline: "Built by experience. Driven by purpose.",
     desc: "A cinematic college-application portfolio told in four chapters: athletics, service, work and independence. It uses match footage, animated stats, a division-climb ladder, horizontal galleries and scroll-driven storytelling.",
@@ -212,7 +212,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "fabrizios", name: "Fabrizio Saunero", sector: "Personal brand", type: "Portfolio",
+    slug: "fabrizios", group: "Portfolios", name: "Fabrizio Saunero", sector: "Personal brand", type: "Portfolio",
     url: "https://fabrizios.vercel.app/",
     tagline: "A life built on chances taken.",
     desc: "A second, editorial edition of a student-athlete's portfolio, built around highlights and a gallery: from Bolivia's 4th Division to Primera A, state titles, varsity captaincy and fundraising for Operation Smile.",
@@ -225,7 +225,7 @@ const PROJECTS = [
     },
   },
   {
-    slug: "iker-torrico", name: "Iker Torrico", sector: "Personal brand", type: "Portfolio",
+    slug: "iker-torrico", group: "Portfolios", name: "Iker Torrico", sector: "Personal brand", type: "Portfolio",
     url: "https://ikertorrico-portfolio.vercel.app/",
     tagline: "Athlete. Performer. Builder.",
     desc: "A college portfolio for a competitive athlete, stage performer and young entrepreneur from La Paz: three sports, community projects, commercial sales work, and music with a live band.",
@@ -235,6 +235,162 @@ const PROJECTS = [
       tagline: "Deportista. Artista. Emprendedor.",
       desc: "Un portafolio universitario para un deportista competitivo, artista de escenario y joven emprendedor de La Paz: tres deportes, proyectos comunitarios, ventas comerciales y música con una banda en vivo.",
       langs: "Inglés", tags: ["Portafolio", "Marca personal", "Biblioteca de medios", "Postulación universitaria"],
+    },
+  },
+  {
+    slug: "dyes-grill", group: "Food & Hospitality", name: "D'Yes Grill", sector: "Restaurant", type: "Website",
+    url: "https://dyes-grill.vercel.app/",
+    tagline: "Real fire. Flavor that stays.",
+    desc: "A bold, smoky site for a Santa Cruz grill: craft burgers, BBQ ribs smoked for hours, wings, lomitos and matambre on wooden boards. The full menu is one tap away, and customers build their order for delivery or pickup and send it straight to WhatsApp.",
+    langs: "Spanish", tags: ["Restaurant", "Full menu", "WhatsApp ordering", "Delivery & pickup"],
+    es: {
+      sector: "Restaurante", type: "Sitio web",
+      tagline: "Fuego de verdad. Sabor que se queda.",
+      desc: "Un sitio intenso y ahumado para una parrilla cruceña: hamburguesas artesanales, costillas BBQ ahumadas por horas, alitas, lomitos y matambre en tabla. La carta completa está a un toque, y el cliente arma su pedido para delivery o para recoger y lo manda directo a WhatsApp.",
+      langs: "Español", tags: ["Restaurante", "Carta completa", "Pedidos por WhatsApp", "Delivery y recojo"],
+    },
+  },
+  {
+    slug: "ame-coffee", group: "Food & Hospitality", name: "AMÉ Specialty Coffee", sector: "Café & bar", type: "Website",
+    url: "https://ame-coffee-2.vercel.app/",
+    tagline: "Love, laugh, live.",
+    desc: "A warm site for a specialty coffee shop and bar with two branches in Santa Cruz, open from 07:00 to 23:00. It shows Bolivian specialty coffee from bean to latte art, signature cocktails, a menu with local flavor and acoustic nights every Friday.",
+    langs: "Spanish", tags: ["Café", "Menu", "Two branches", "Events"],
+    es: {
+      sector: "Café y bar", type: "Sitio web",
+      tagline: "¡Ama, ríe y vive!",
+      desc: "Un sitio cálido para una cafetería de especialidad y bar con dos sucursales en Santa Cruz, abierta de 07:00 a 23:00. Muestra el café boliviano de especialidad del grano al latte art, coctelería de autor, una carta con sabor cruceño y noches acústicas cada viernes.",
+      langs: "Español", tags: ["Cafetería", "Carta", "Dos sucursales", "Eventos"],
+    },
+  },
+  {
+    slug: "rosario-travels", group: "Travel & Hotels", name: "Rosario Travels", sector: "Travel", type: "Website",
+    url: "https://rosario-travel.vercel.app/",
+    tagline: "Journeys designed by people who were born there.",
+    desc: "A cinematic site for a travel agency with 17 years in the Andes: private journeys to the Uyuni Salt Flat, Lake Titicaca, Machu Picchu and Patagonia. Full-screen destinations, signature itineraries, and Rosario AI, an assistant that helps plan the trip. In six languages.",
+    langs: "EN · ES · PT · FR · DE · ZH", tags: ["Travel", "Itineraries", "AI assistant", "6 languages"],
+    es: {
+      sector: "Turismo", type: "Sitio web",
+      tagline: "Viajes diseñados por quienes nacieron ahí.",
+      desc: "Un sitio cinematográfico para una agencia con 17 años en los Andes: viajes privados al Salar de Uyuni, el Lago Titicaca, Machu Picchu y la Patagonia. Destinos a pantalla completa, itinerarios de autor y Rosario AI, un asistente que ayuda a planear el viaje. En seis idiomas.",
+      langs: "EN · ES · PT · FR · DE · ZH", tags: ["Turismo", "Itinerarios", "Asistente con IA", "6 idiomas"],
+    },
+  },
+  {
+    slug: "rosario-hotels", group: "Travel & Hotels", name: "Hoteles Rosario", sector: "Hotels", type: "Website",
+    url: "https://rosario-hotels.vercel.app/",
+    tagline: "Four houses on the roof of the Andes.",
+    desc: "A booking-first site for four eco-friendly, four-star hotels in Copacabana, Uyuni and La Paz. Each house has its own story, handcrafted Andean rooms and dining, and guests check availability right from the first screen to book direct.",
+    langs: "English", tags: ["Hotels", "Direct booking", "Multi-property", "Storytelling"],
+    es: {
+      sector: "Hoteles", type: "Sitio web",
+      tagline: "Cuatro casas en el techo de los Andes.",
+      desc: "Un sitio pensado para reservar, de cuatro hoteles ecológicos de cuatro estrellas en Copacabana, Uyuni y La Paz. Cada casa tiene su propia historia, habitaciones andinas hechas a mano y gastronomía, y el huésped consulta disponibilidad desde la primera pantalla para reservar directo.",
+      langs: "Inglés", tags: ["Hoteles", "Reserva directa", "Varias sedes", "Storytelling"],
+    },
+  },
+  {
+    slug: "ventura-mall", group: "Retail & Shopping", name: "Ventura Mall", sector: "Shopping mall", type: "Website",
+    url: "https://ventura-mall.vercel.app/",
+    tagline: "The mall Bolivia prefers.",
+    desc: "The website for one of Bolivia's biggest malls: 110,000 m², 200+ stores, the Boulevard food court and 13 cinema screens including IMAX. Visitors browse stores and brands, restaurants, events and live music, with hours and directions always at hand.",
+    langs: "Spanish", tags: ["Retail", "Store directory", "Events", "Cinema"],
+    es: {
+      sector: "Centro comercial", type: "Sitio web",
+      tagline: "Somos el mall que Bolivia prefiere.",
+      desc: "El sitio de uno de los malls más grandes de Bolivia: 110.000 m², más de 200 tiendas, el Boulevard gastronómico y 13 salas de cine con IMAX. El visitante recorre tiendas y marcas, restaurantes, eventos y música en vivo, con horarios y cómo llegar siempre a mano.",
+      langs: "Español", tags: ["Retail", "Directorio de tiendas", "Eventos", "Cine"],
+    },
+  },
+  {
+    slug: "sarumadi", group: "Retail & Shopping", name: "Sarumadi SRL", sector: "Hardware & tools", type: "E-commerce",
+    url: "https://sarumadi-srl.vercel.app/",
+    tagline: "A world of solutions.",
+    desc: "An online store and catalog for a Santa Cruz distributor of Truper, Pretul, Foset and more: 500+ products across tools, plumbing, electrical and industrial safety. Customers search, add to cart and confirm stock and delivery on WhatsApp, or visit the showroom.",
+    langs: "Spanish", tags: ["E-commerce", "500+ products", "WhatsApp orders", "Showroom"],
+    es: {
+      sector: "Ferretería y herramientas", type: "E-commerce",
+      tagline: "Un mundo de soluciones.",
+      desc: "Una tienda online y catálogo para un distribuidor cruceño de Truper, Pretul, Foset y más: más de 500 productos en herramientas, grifería, electricidad y seguridad industrial. El cliente busca, agrega al carrito y confirma stock y entrega por WhatsApp, o visita el showroom.",
+      langs: "Español", tags: ["E-commerce", "+500 productos", "Pedidos por WhatsApp", "Showroom"],
+    },
+  },
+  {
+    slug: "bencar", group: "Retail & Shopping", name: "BenCar", sector: "Consumer tech", type: "E-commerce",
+    url: "https://bencar-store.vercel.app/",
+    tagline: "The latest from Apple, at the price you're looking for.",
+    desc: "An Apple-style store for a reseller of iPhone, Mac, iPad, Apple Watch, AirPods and Dyson. Product pages with specs and prices, trade-in of your old device, certified pre-owned from US$ 200, and door-to-door tech support.",
+    langs: "Spanish", tags: ["E-commerce", "Product pages", "Trade-in", "Tech support"],
+    es: {
+      sector: "Tecnología", type: "E-commerce",
+      tagline: "Lo último de Apple al precio que estás buscando.",
+      desc: "Una tienda al estilo Apple para un revendedor de iPhone, Mac, iPad, Apple Watch, AirPods y Dyson. Fichas de producto con especificaciones y precios, tu equipo usado como parte de pago, seminuevos desde US$ 200 y servicio técnico puerta a puerta.",
+      langs: "Español", tags: ["E-commerce", "Fichas de producto", "Parte de pago", "Servicio técnico"],
+    },
+  },
+  {
+    slug: "isotek", group: "Industry & Agro", name: "ISOTEK LATAM", sector: "Industrial engineering", type: "Website",
+    url: "https://isotek-amber.vercel.app/",
+    tagline: "One supplier, from engineering to commissioning.",
+    desc: "A corporate site for an ISO 9001 industrial EPC company working in five countries: turnkey projects, switchboards and motor control centres built to IEC 61439, instrumentation and an Endress+Hauser calibration lab. Built to win tenders from oil, gas and food plants.",
+    langs: "English", tags: ["B2B", "Industrial", "Case studies", "Lead generation"],
+    es: {
+      sector: "Ingeniería industrial", type: "Sitio web",
+      tagline: "Un solo proveedor, de la ingeniería a la puesta en marcha.",
+      desc: "Un sitio corporativo para una empresa EPC industrial con ISO 9001 que trabaja en cinco países: proyectos llave en mano, tableros y centros de control de motores bajo IEC 61439, instrumentación y un laboratorio de calibración Endress+Hauser. Hecho para ganar licitaciones de plantas de petróleo, gas y alimentos.",
+      langs: "Inglés", tags: ["B2B", "Industrial", "Casos de éxito", "Captación de clientes"],
+    },
+  },
+  {
+    slug: "haciendas-urucu", group: "Industry & Agro", name: "Haciendas Urucú", sector: "Cattle genetics", type: "Website",
+    url: "https://haciendas-urucu.vercel.app/",
+    tagline: "Bolivia's productive Zebu.",
+    desc: "A site for a breeder of Nelore, Polled Nelore and Sindi cattle raised in open fields in Santa Cruz. It proves the genetics with numbers and awards, from heifers pregnant at 14 months to 7 prizes at FexpoSIV 2026, and sells bulls, heifers and IVF embryos over WhatsApp.",
+    langs: "Spanish", tags: ["Agro", "Genetics", "Awards", "WhatsApp sales"],
+    es: {
+      sector: "Genética bovina", type: "Sitio web",
+      tagline: "El Cebú Productivo de Bolivia.",
+      desc: "Un sitio para un criador de ganado Nelore, Nelore Mocho y Sindi seleccionado a campo en Santa Cruz. Demuestra la genética con números y premios, desde vaquillas preñadas a los 14 meses hasta 7 premios en FexpoSIV 2026, y vende toros, vaquillas y embriones FIV por WhatsApp.",
+      langs: "Español", tags: ["Agro", "Genética", "Premios", "Ventas por WhatsApp"],
+    },
+  },
+  {
+    slug: "coded", group: "Education", name: "Coded", sector: "STEAM education", type: "Website",
+    url: "https://coded-five.vercel.app/",
+    tagline: "The world is the classroom.",
+    desc: "A vibrant site for international STEAM programs for students aged 11 to 17 in Orlando, the UK and Tokyo. Each league leads to a hands-on final project, and parents see exactly how safety works: guardians, medical support and insurance.",
+    langs: "Spanish", tags: ["Education", "Programs", "Parents", "Enrollment"],
+    es: {
+      sector: "Educación STEAM", type: "Sitio web",
+      tagline: "El mundo es el aula.",
+      desc: "Un sitio vibrante para programas STEAM internacionales para estudiantes de 11 a 17 años en Orlando, Reino Unido y Tokio. Cada liga termina en un proyecto final práctico, y los padres ven exactamente cómo funciona la seguridad: acompañantes, soporte médico y seguro.",
+      langs: "Español", tags: ["Educación", "Programas", "Padres", "Inscripciones"],
+    },
+  },
+  {
+    slug: "chao-architecture", group: "Brands & Business", name: "Chao Architecture Studio", sector: "Architecture", type: "Website",
+    url: "https://chao-architecture-studio.vercel.app/",
+    tagline: "Award-winning architecture from Santa Cruz.",
+    desc: "A quiet, image-led site for an architecture firm with 15+ years and 50+ projects, led by Sky Moon, the tower redefining the Santa Cruz skyline. Residential, commercial and sustainable work, the studio's philosophy, and a clear path to start a project.",
+    langs: "English · Spanish", tags: ["Architecture", "Portfolio", "Art direction", "Bilingual"],
+    es: {
+      sector: "Arquitectura", type: "Sitio web",
+      tagline: "Arquitectura premiada desde Santa Cruz.",
+      desc: "Un sitio sereno y guiado por la imagen para un estudio de arquitectura con más de 15 años y 50 proyectos, encabezado por Sky Moon, la torre que redefine el horizonte de Santa Cruz. Obra residencial, comercial y sostenible, la filosofía del estudio y un camino claro para empezar un proyecto.",
+      langs: "Inglés · Español", tags: ["Arquitectura", "Portafolio", "Dirección de arte", "Bilingüe"],
+    },
+  },
+  {
+    slug: "aussie-fitness", group: "Health & Fitness", name: "Aussie Fitness", sector: "Fitness · Recipes", type: "Website",
+    url: "https://aussiefit.vercel.app/",
+    tagline: "Eat the food you crave.",
+    desc: "A site for a fitness creator's high-protein \"fakeaway\" recipes: burgers, pizza and kebabs rebuilt with fewer calories and full macros. Real results lead the story, like Dez, who lost 60 kg, and readers move on to meal plans and ebooks.",
+    langs: "English", tags: ["Fitness", "Recipes", "Macros", "Ebooks"],
+    es: {
+      sector: "Fitness · Recetas", type: "Sitio web",
+      tagline: "Come lo que se te antoja.",
+      desc: "Un sitio para las recetas \"fakeaway\" altas en proteína de un creador fitness: hamburguesas, pizza y kebabs rehechos con menos calorías y macros completos. Los resultados reales abren la historia, como Dez, que bajó 60 kg, y el lector pasa a planes de comida y ebooks.",
+      langs: "Inglés", tags: ["Fitness", "Recetas", "Macros", "Ebooks"],
     },
   },
 ];
@@ -275,7 +431,7 @@ const TICKER = [
 // Interface text generated by this script. Static page text is in i18n.js.
 const UI = {
   en: {
-    groups: { "Apps & SaaS": "Apps & SaaS", Education: "Education", "Food & Hospitality": "Food & Hospitality", "Brands & Business": "Brands & Business", Portfolios: "Portfolios" },
+    groups: { "Food & Hospitality": "Food & Hospitality", "Travel & Hotels": "Travel & Hotels", "Retail & Shopping": "Retail & Shopping", "Industry & Agro": "Industry & Agro", Education: "Education", "Apps & SaaS": "Apps & SaaS", "Health & Fitness": "Health & Fitness", "Brands & Business": "Brands & Business", Portfolios: "Portfolios" },
     ctaTile: "Your project<br><em>could be here.</em>", start: "Start a project", open: "Open",
     cardAlt: (n) => `${n} website`, shotAlt: (n) => `Screenshot of the ${n} website`,
     type: "Type", sector: "Sector", languages: "Languages", liveAt: "Live at",
@@ -286,7 +442,7 @@ const UI = {
     budget: "Budget", name: "Name", business: "Business", thanks: "Thanks!", from: "From", none: "None",
   },
   es: {
-    groups: { "Apps & SaaS": "Apps y SaaS", Education: "Educación", "Food & Hospitality": "Gastronomía", "Brands & Business": "Marcas y empresas", Portfolios: "Portafolios" },
+    groups: { "Food & Hospitality": "Gastronomía", "Travel & Hotels": "Viajes y hoteles", "Retail & Shopping": "Comercio y retail", "Industry & Agro": "Industria y agro", Education: "Educación", "Apps & SaaS": "Apps y SaaS", "Health & Fitness": "Salud y fitness", "Brands & Business": "Marcas y empresas", Portfolios: "Portafolios" },
     ctaTile: "Tu proyecto<br><em>podría estar aquí.</em>", start: "Empezar un proyecto", open: "Abierto",
     cardAlt: (n) => `Sitio web de ${n}`, shotAlt: (n) => `Captura del sitio web de ${n}`,
     type: "Tipo", sector: "Sector", languages: "Idiomas", liveAt: "En línea en",
@@ -318,19 +474,21 @@ const loc = (p) => (lang === "es" && p.es ? { ...p, ...p.es } : p);
 
 
 /* ---------- Index (grouped by sector) ---------- */
-function groupKey(p) {
-  const s = p.sector.toLowerCase();
-  if (s.includes("education")) return "Education";
-  if (s.includes("saas") || s.includes("ai") || s.includes("marketplace") || s.includes("wellness")) return "Apps & SaaS";
-  if (s.includes("hospitality") || s.includes("food")) return "Food & Hospitality";
-  if (s.includes("personal")) return "Portfolios";
-  return "Brands & Business";
-}
-const GROUP_ORDER = ["Apps & SaaS", "Education", "Food & Hospitality", "Brands & Business", "Portfolios"];
-// Number projects in index order so 01–17 reads top to bottom.
+// Each project sets its group; anything unknown lands in "Brands & Business".
+const groupKey = (p) => (GROUP_ORDER.includes(p.group) ? p.group : "Brands & Business");
+const GROUP_ORDER = ["Food & Hospitality", "Travel & Hotels", "Retail & Shopping", "Industry & Agro", "Education", "Apps & SaaS", "Health & Fitness", "Brands & Business", "Portfolios"];
+// Number projects in index order so 01, 02, 03… reads top to bottom.
 PROJECTS.map((p, k) => [GROUP_ORDER.indexOf(groupKey(p)), k, p]).sort((a, b) => a[0] - b[0] || a[1] - b[1])
   .forEach(([, , p], i) => (p.i = i));
 PROJECTS.sort((a, b) => a.i - b.i);
+
+// Canvas order: round-robin across categories (a restaurant, then a hotel, then a store…).
+const CANVAS_ORDER = (() => {
+  const queues = GROUP_ORDER.map((g) => PROJECTS.filter((p) => groupKey(p) === g)).filter((q) => q.length);
+  const out = [];
+  while (queues.some((q) => q.length)) queues.forEach((q) => q.length && out.push(q.shift()));
+  return out;
+})();
 
 function buildIndex() {
   const body = $("#indexBody");
@@ -380,7 +538,8 @@ function buildTicker() {
 /* ---------- Infinite canvas ---------- */
 const stage = $("#stage");
 const world = $("#world");
-const COLS = 6, ROWS = 3;
+// Three rows, and as many columns as the projects need (plus one "your project" tile).
+const ROWS = 3, COLS = Math.ceil((PROJECTS.length + 1) / ROWS);
 let slots = [];      // [{p|null, x, y}]
 let tiles = [];      // [{el, slot, ci, cj}]
 let L = {};          // layout metrics
@@ -401,9 +560,8 @@ function layout() {
   slots = [];
   for (let c = 0; c < COLS; c++)
     for (let r = 0; r < ROWS; r++) slots.push({ x: c * cw, y: r * rh + (c % 2 ? rh / 2 : 0) });
-  // Spread projects so neighbours vary; the spare slot becomes a "your project" tile.
-  const order = [0, 9, 3, 1, 10, 4, 7, 13, 5, 2, 11, 6, 14, 8, 12, 16, 15];
-  slots.forEach((s, k) => (s.p = k < order.length ? PROJECTS[order[k]] : null));
+  // Deal projects out one category at a time so neighbours vary; spare slots become "your project" tiles.
+  slots.forEach((s, k) => (s.p = CANVAS_ORDER[k] || null));
 
   world.innerHTML = "";
   tiles = [];

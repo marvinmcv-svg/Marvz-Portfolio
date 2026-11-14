@@ -18,7 +18,7 @@ Everything lives at the top of `app.js`:
 
 - `CONFIG`: the WhatsApp number the "Start a project" funnel sends to (currently +591 77165787), plus optional email, Instagram, LinkedIn and GitHub links.
 - `SERVICES` and `EXTRAS`: the choices in steps 01 and 02 of the funnel, in English and Spanish.
-- `PROJECTS`: one entry per project (name, sector, type, url, tagline, description, languages, tags), with the Spanish version of the text in its `es` block.
+- `PROJECTS`: one entry per project (name, category, sector, type, url, tagline, description, languages, tags), with the Spanish version of the text in its `es` block. `group` is the category it's listed under in the index: Food & Hospitality, Travel & Hotels, Retail & Shopping, Industry & Agro, Education, Apps & SaaS, Health & Fitness, Brands & Business or Portfolios (`GROUP_ORDER` sets the order, `UI.groups` the Spanish names). The canvas grows to fit however many projects there are and mixes categories so neighbouring tiles differ.
 - `TICKER`: the scrolling news line at the bottom, in English and Spanish.
 - `UI`: other interface text that the script writes, including the WhatsApp message wording.
 
@@ -28,6 +28,7 @@ The Pricing page is built by `pricing.js` (styles in `pricing.css`). Everything 
 - `PACKAGES`: the three packages (Presence, Growth, Flagship): price, delivery time, what's included, the four or five highlights shown on each card, and which case study each one links to.
 - `ADDONS`: every build-your-own add-on, with its price in bolivianos (`monthly` for recurring fees, `qty` for ones that can be added more than once) and one line that sells it. `popular: true` puts it on the "Popular" tab the list opens on.
 - `CARE`: the monthly care plans.
+- `C` and `CALC_FIELDS`: the savings calculator's starting values and slider ranges (average sale, extra customers a month, hours a week spent on repeat questions, value of an hour). It shows extra sales, time saved, how fast the chosen package pays for itself and the first-year return.
 - `CLIENTS`: the names in the "Trusted by" strip.
 - `PT`: every other line of text on the page (headline, how it works, promises, FAQ), in English and Spanish.
 

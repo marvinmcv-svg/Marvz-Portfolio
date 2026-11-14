@@ -114,33 +114,46 @@ const PACKAGES = [
 ];
 
 // Clients whose live work is in the portfolio.
-const CLIENTS = ["Fogo de Chão", "Helibol", "SPC Impresores", "Haras La Alhambra", "Santa Cruz Cooperative School", "Don Corte Fino", "ACS Calvert", "FiruWalk"];
+const CLIENTS = ["Ventura Mall", "Fogo de Chão", "Hoteles Rosario", "ISOTEK", "Helibol", "Santa Cruz Cooperative School", "SPC Impresores", "Haras La Alhambra", "Sarumadi", "Haciendas Urucú", "D'Yes Grill", "AMÉ Coffee", "Don Corte Fino", "ACS Calvert"];
 
 const PT = {
   en: {
     eyebrow: "Pricing",
-    title: "Your next customer is <em>already looking for you.</em>",
-    lead: "Get a website that turns them into WhatsApp messages. One fixed price in bolivianos, and one person who builds it from the first call to launch day.",
-    ctaPkgs: "See the packages", ctaBuild: "Build your own",
-    stats: [["17", "live projects"], ["2–9", "weeks to launch"], ["6", "languages on one site"], ["1", "person, start to finish"]],
+    title: "A website that pays for itself. <em>Then keeps paying.</em>",
+    lead: "Most websites are expensive brochures. Mine do one job: turn strangers into WhatsApp messages, and messages into money. One fixed price in bolivianos. Half now, the other half when it's live.",
+    ctaPkgs: "Show me the packages", ctaBuild: "Run my numbers",
+    stats: (n) => [[String(n), "live projects"], ["2–9", "weeks to launch"], ["6", "languages on one site"], ["1", "person, start to finish"]],
     trusted: "Trusted by",
-    pkgEyebrow: "Packages", pkgTitle: "Pick a package. <em>Launch in weeks.</em>",
-    pkgSub: "Each package costs less than buying its parts one by one.",
+    pkgEyebrow: "Packages", pkgTitle: "Three ways to win. <em>Pick one.</em>",
+    pkgSub: "Every package costs less than its parts. Buy the same things one by one and you pay up to 31% more.",
     bestFor: "Best for", featured: "Recommended", save: (p) => `Save ${p}%`, valueWas: "if bought separately",
     pay2: (v) => `Or 2 payments of ${v}`, pay3: (v) => `Or 3 payments, starting at ${v}`, weeks: (w) => `Live in ${w} weeks`,
     showAll: (n) => `Show all ${n} add-ons`,
     careIncl: (n, c) => `${n} ${n === 1 ? "month" : "months"} of ${c} included`, aiIncl: (n) => `${n} months of AI usage included`, monthsIncl: (n) => `${n} ${n === 1 ? "month" : "months"} included`,
     seeAll: (n) => `See all ${n} things included`, example: "See one I built", choose: (n) => `Choose ${n}`, chosen: "Added to your quote ✓",
+
+    calcEyebrow: "Run the numbers", calcTitle: "What's one more customer <em>worth to you?</em>",
+    calcSub: "Move the sliders. Use honest numbers. Watch how fast a website pays for itself.",
+    calcTicket: "Your average sale", calcCust: "Extra customers a month from your website", calcHrs: "Hours a week answering the same questions",
+    calcRate: "What one hour of your time is worth", calcPkg: "Package", calcMine: "My quote",
+    calcSales: "Extra sales a month", calcTime: "Your time back a month", calcHours: (h) => `${h} hours`, calcTotal: "Total value a month",
+    calcPayback: "Pays for itself in", calcDays: (n) => `${n} ${n === 1 ? "day" : "days"}`, calcWeeks: (n) => `${n} weeks`, calcMonths: (n) => `${n} months`,
+    calcYear: (x, net) => `First year: <b>${x}×</b> your money back. That's <b>${net}</b> in your pocket after paying for the site.`,
+    calcYearLow: "At these numbers it takes more than a year. Try Presence, or tell me about your business and I'll find a smaller start.",
+    calcZero: "Move a slider to see your number.",
+    calcPunch: "If the math says yes, the only question left is how many more months you wait.",
+    calcCta: "Lock in this package", calcNote: "An estimate from your own numbers, not a promise of results.",
+
     howEyebrow: "How it works", howTitle: "From first message <em>to launch day.</em>",
     how: [
-      ["Tell me what you need", "Pick a package or build your own, then send it to me on WhatsApp. It takes two minutes."],
-      ["Get a fixed price", "I reply with a plan and a fixed price in bolivianos. No hourly billing, no surprises."],
-      ["Pay the deposit, we start", "50% to start (40% on Flagship), and the rest at launch or in installments."],
-      ["Launch, then grow", "Your site goes live in 2 to 9 weeks, with months of care included to keep it fast and safe."],
+      ["Tell me what you need", "Pick a package or build your own and send it on WhatsApp. Two minutes, tops."],
+      ["Get a fixed price", "I reply with a plan and one price in bolivianos. No hourly billing. No surprise invoices."],
+      ["Pay half, we start", "50% to start (40% on Flagship). You pay the rest when your site is live, not before."],
+      ["Go live, then grow", "Live in 2 to 9 weeks, with months of care included so it stays fast, safe and selling."],
     ],
-    buildEyebrow: "Build your own", buildTitle: "Need something different? <em>Mix and match.</em>",
-    buildSub: (b) => `Start from a package or from the base site (up to 5 pages, built for phones, ${b}), and add only what you need.`,
-    careTitle: "Monthly care", careSub: "Hosting, updates and support so your site stays fast, safe and current. Every package includes some months for free.",
+    buildEyebrow: "Build your own", buildTitle: "Only want what you need? <em>Build it.</em>",
+    buildSub: (b) => `Start from a package or from the base site (up to 5 pages, built for phones, ${b}). Add only what makes you money.`,
+    careTitle: "Monthly care", careSub: "Hosting, updates and support, so your site stays fast, safe and selling. Every package includes months of care for free.",
     add: "Add", added: "Added", included: "Included", each: "each", once: "one-time", mo: "/mo",
     quote: "Your quote", base: "Base site", baseFull: "Base site (up to 5 pages, built for phones)", pkgLine: (n) => `${n} package`,
     upTo: (n) => `${n}× `, empty: "Just the base site so far. Pick a package or add what you need.",
@@ -149,21 +162,24 @@ const PT = {
     send: "Send my quote on WhatsApp", copy: "Copy quote", copied: "Quote copied", pkgLoaded: "Package added to your quote", remove: "Remove",
     custom: "<strong>Need a custom system?</strong> Apps, booking engines and systems like RestoBar OS are quoted separately.", customBtn: "Tell me about it",
     promises: [
-      ["Fixed price in bolivianos", "No hourly billing. Your quote stays fixed for 15 days."],
-      ["Pay in parts", "50/50, or three payments on bigger projects."],
-      ["Straight to the builder", "You talk to the person who designs and codes your site. No middlemen."],
-      ["Made for phones", "Fast on mobile data, built around WhatsApp, ready for Google."],
+      ["Half now. Half when it's live.", "You pay the second half when you see your site working. Not before."],
+      ["One fixed price", "In bolivianos, with no hourly billing. Your quote holds for 15 days."],
+      ["You talk to the builder", "The person on the call designs and codes your site. No middlemen, no telephone game."],
+      ["Built to sell on phones", "Fast on mobile data, wired to WhatsApp, ready for Google."],
     ],
     faqEyebrow: "Questions", faqTitle: "Good questions, <em>straight answers.</em>",
     faq: [
-      ["How long does it take?", "Presence takes 2–3 weeks, Growth 4–5 weeks and Flagship 7–9 weeks. Need it sooner? Rush delivery is 25% extra."],
-      ["What do I need to bring?", "Your logo, photos and a few lines about your business. No logo yet? Add Brand identity. No time to write? Add Professional copywriting. It's already included in Growth and Flagship."],
-      ["Is hosting included?", "Yes, for the months of care that come with your package. After that, care plans start at Bs 350 a month. You can also skip the plan and pay Bs 150 an hour for changes."],
+      ["Isn't a website expensive?", "Run the calculator above with your own numbers. If a few extra customers a month pay it back in weeks, the expensive thing is not having one."],
+      ["Why not just use Instagram?", "Instagram is rented land. Your website is yours: Google finds it, it answers at 3 a.m., and every visitor lands on your offer instead of a competitor's ad."],
+      ["How long does it take?", "Presence: 2–3 weeks. Growth: 4–5 weeks. Flagship: 7–9 weeks. Need it sooner? Rush delivery is 25% extra."],
+      ["What do I need to bring?", "Your logo, photos and a few lines about your business. No logo yet? Add Brand identity. No time to write? Add Professional copywriting. It's already in Growth and Flagship."],
+      ["Is hosting included?", "Yes, for the months of care that come with your package. After that, care starts at Bs 350 a month, or skip it and pay Bs 150 an hour for changes."],
       ["Can I update the site myself?", "Yes, with the edit-it-yourself panel. It's included in Growth and Flagship, and costs Bs 1,500 on its own."],
       ["Do prices include VAT (factura)?", "No. Prices don't include VAT, payment-gateway fees or Meta's WhatsApp message fees."],
       ["What if I need something that isn't listed?", "Systems, apps and special integrations are quoted separately. Tell me what you need and I'll put together a plan."],
     ],
-    finalTitle: "Not sure which one <em>fits?</em>", finalText: "Send me a message. I'll tell you which package makes sense for your business, even if it's the smallest one.",
+    finalTitle: "Still deciding? <em>Let me make it easy.</em>",
+    finalText: "Send me one message. I'll tell you straight which package makes sense for your business, even if it's the smallest one. Every month without a site that sells is customers you never hear from.",
     finalBtn: "Help me choose on WhatsApp", finalMsg: "Hi Marvz! 👋 Can you help me choose a package for my business?",
     fine: "Prices are in bolivianos. They don't include VAT (factura), payment-gateway fees or Meta's WhatsApp message fees. US$ amounts are approximate and follow the exchange rate.",
     currency: "Currency", view: "View",
@@ -171,28 +187,41 @@ const PT = {
   },
   es: {
     eyebrow: "Precios",
-    title: "Tu próximo cliente <em>ya te está buscando.</em>",
-    lead: "Ten una web que lo convierta en un mensaje de WhatsApp. Un precio fijo en bolivianos y una sola persona que la construye desde la primera llamada hasta el lanzamiento.",
-    ctaPkgs: "Ver los paquetes", ctaBuild: "Arma el tuyo",
-    stats: [["17", "proyectos en línea"], ["2–9", "semanas al lanzamiento"], ["6", "idiomas en un solo sitio"], ["1", "persona, de principio a fin"]],
+    title: "Una web que se paga sola. <em>Y sigue pagando.</em>",
+    lead: "La mayoría de las webs son folletos caros. Las mías hacen un solo trabajo: convertir desconocidos en mensajes de WhatsApp, y mensajes en plata. Un precio fijo en bolivianos. La mitad ahora, la otra mitad cuando está en línea.",
+    ctaPkgs: "Ver los paquetes", ctaBuild: "Calcular mis números",
+    stats: (n) => [[String(n), "proyectos en línea"], ["2–9", "semanas al lanzamiento"], ["6", "idiomas en un solo sitio"], ["1", "persona, de principio a fin"]],
     trusted: "Confían en mí",
-    pkgEyebrow: "Paquetes", pkgTitle: "Elige un paquete. <em>Lanza en semanas.</em>",
-    pkgSub: "Cada paquete cuesta menos que comprar sus partes por separado.",
+    pkgEyebrow: "Paquetes", pkgTitle: "Tres formas de ganar. <em>Elige una.</em>",
+    pkgSub: "Cada paquete cuesta menos que sus partes. Si compras lo mismo por separado, pagas hasta 31% más.",
     bestFor: "Ideal para", featured: "Recomendado", save: (p) => `Ahorras ${p}%`, valueWas: "comprando por separado",
     pay2: (v) => `O 2 pagos de ${v}`, pay3: (v) => `O 3 pagos, desde ${v}`, weeks: (w) => `En línea en ${w} semanas`,
     showAll: (n) => `Ver los ${n} add-ons`,
     careIncl: (n, c) => `${n} ${n === 1 ? "mes" : "meses"} de ${c} incluido${n === 1 ? "" : "s"}`, aiIncl: (n) => `${n} meses de uso de IA incluidos`, monthsIncl: (n) => `${n} ${n === 1 ? "mes incluido" : "meses incluidos"}`,
     seeAll: (n) => `Ver las ${n} cosas incluidas`, example: "Mira uno que hice", choose: (n) => `Elegir ${n}`, chosen: "En tu cotización ✓",
+
+    calcEyebrow: "Haz los números", calcTitle: "¿Cuánto vale para ti <em>un cliente más?</em>",
+    calcSub: "Mueve los controles. Usa números honestos. Mira qué tan rápido una web se paga sola.",
+    calcTicket: "Tu venta promedio", calcCust: "Clientes extra al mes gracias a tu web", calcHrs: "Horas a la semana respondiendo lo mismo",
+    calcRate: "Cuánto vale una hora de tu tiempo", calcPkg: "Paquete", calcMine: "Mi cotización",
+    calcSales: "Ventas extra al mes", calcTime: "Tiempo que recuperas al mes", calcHours: (h) => `${h} horas`, calcTotal: "Valor total al mes",
+    calcPayback: "Se paga sola en", calcDays: (n) => `${n} ${n === 1 ? "día" : "días"}`, calcWeeks: (n) => `${n} semanas`, calcMonths: (n) => `${n} meses`,
+    calcYear: (x, net) => `Primer año: recuperas <b>${x}×</b> tu inversión. Son <b>${net}</b> en tu bolsillo después de pagar la web.`,
+    calcYearLow: "Con estos números tarda más de un año. Prueba Presencia, o cuéntame de tu negocio y busco un comienzo más chico.",
+    calcZero: "Mueve un control para ver tu número.",
+    calcPunch: "Si los números dicen que sí, la única pregunta es cuántos meses más vas a esperar.",
+    calcCta: "Quiero este paquete", calcNote: "Una estimación con tus propios números, no una promesa de resultados.",
+
     howEyebrow: "Cómo funciona", howTitle: "Del primer mensaje <em>al lanzamiento.</em>",
     how: [
-      ["Cuéntame qué necesitas", "Elige un paquete o arma el tuyo y mándamelo por WhatsApp. Te toma dos minutos."],
-      ["Recibe un precio fijo", "Te respondo con un plan y un precio fijo en bolivianos. Sin cobro por hora, sin sorpresas."],
-      ["Pagas el anticipo y empezamos", "50% para empezar (40% en Insignia) y el resto al publicar o en cuotas."],
-      ["Lanzas y creces", "Tu web sale en 2 a 9 semanas, con meses de cuidado incluidos para que siga rápida y segura."],
+      ["Cuéntame qué necesitas", "Elige un paquete o arma el tuyo y mándalo por WhatsApp. Dos minutos, máximo."],
+      ["Recibe un precio fijo", "Te respondo con un plan y un solo precio en bolivianos. Sin cobro por hora. Sin facturas sorpresa."],
+      ["Pagas la mitad y empezamos", "50% para empezar (40% en Insignia). El resto lo pagas cuando tu web está en línea, no antes."],
+      ["Lanzas y creces", "En línea en 2 a 9 semanas, con meses de cuidado incluidos para que siga rápida, segura y vendiendo."],
     ],
-    buildEyebrow: "Arma el tuyo", buildTitle: "¿Necesitas algo distinto? <em>Combina a tu medida.</em>",
-    buildSub: (b) => `Parte de un paquete o del sitio base (hasta 5 páginas, pensado para el celular, ${b}) y añade solo lo que necesitas.`,
-    careTitle: "Cuidado mensual", careSub: "Hosting, actualizaciones y soporte para que tu web siga rápida, segura y al día. Todo paquete incluye algunos meses gratis.",
+    buildEyebrow: "Arma el tuyo", buildTitle: "¿Solo quieres lo que necesitas? <em>Ármalo.</em>",
+    buildSub: (b) => `Parte de un paquete o del sitio base (hasta 5 páginas, pensado para el celular, ${b}). Añade solo lo que te hace ganar plata.`,
+    careTitle: "Cuidado mensual", careSub: "Hosting, actualizaciones y soporte para que tu web siga rápida, segura y vendiendo. Todo paquete incluye meses de cuidado gratis.",
     add: "Añadir", added: "Añadido", included: "Incluido", each: "c/u", once: "pago único", mo: "/mes",
     quote: "Tu cotización", base: "Sitio base", baseFull: "Sitio base (hasta 5 páginas, pensado para el celular)", pkgLine: (n) => `Paquete ${n}`,
     upTo: (n) => `${n}× `, empty: "Por ahora solo el sitio base. Elige un paquete o añade lo que necesites.",
@@ -201,21 +230,24 @@ const PT = {
     send: "Enviar mi cotización por WhatsApp", copy: "Copiar cotización", copied: "Cotización copiada", pkgLoaded: "Paquete añadido a tu cotización", remove: "Quitar",
     custom: "<strong>¿Necesitas un sistema a medida?</strong> Apps, motores de reservas y sistemas como RestoBar OS se cotizan aparte.", customBtn: "Cuéntame",
     promises: [
-      ["Precio fijo en bolivianos", "Sin cobro por hora. Tu cotización se mantiene fija 15 días."],
-      ["Paga en partes", "50/50, o tres pagos en proyectos grandes."],
-      ["Directo con quien lo hace", "Hablas con la persona que diseña y programa tu web. Sin intermediarios."],
-      ["Pensado para el celular", "Rápido con datos móviles, hecho para WhatsApp y listo para Google."],
+      ["La mitad ahora. La otra al publicar.", "Pagas la segunda mitad cuando ves tu web funcionando. No antes."],
+      ["Un precio fijo", "En bolivianos y sin cobro por hora. Tu cotización se mantiene 15 días."],
+      ["Hablas con quien la construye", "La persona de la llamada diseña y programa tu web. Sin intermediarios, sin teléfono descompuesto."],
+      ["Hecha para vender en el celular", "Rápida con datos móviles, conectada a WhatsApp y lista para Google."],
     ],
     faqEyebrow: "Preguntas", faqTitle: "Buenas preguntas, <em>respuestas claras.</em>",
     faq: [
-      ["¿Cuánto tarda?", "Presencia tarda 2–3 semanas, Crecimiento 4–5 semanas e Insignia 7–9 semanas. ¿Lo necesitas antes? La entrega express cuesta 25% más."],
+      ["¿Una web no es cara?", "Usa la calculadora de arriba con tus propios números. Si unos pocos clientes extra al mes la pagan en semanas, lo caro es no tenerla."],
+      ["¿Por qué no solo Instagram?", "Instagram es un terreno alquilado. Tu web es tuya: Google la encuentra, responde a las 3 a.m. y cada visita llega a tu oferta, no al anuncio de tu competencia."],
+      ["¿Cuánto tarda?", "Presencia: 2–3 semanas. Crecimiento: 4–5 semanas. Insignia: 7–9 semanas. ¿Lo necesitas antes? La entrega express cuesta 25% más."],
       ["¿Qué necesito traer?", "Tu logo, fotos y unas líneas sobre tu negocio. ¿Aún no tienes logo? Añade Identidad de marca. ¿No tienes tiempo para escribir? Añade Redacción profesional, que ya viene en Crecimiento e Insignia."],
-      ["¿El hosting está incluido?", "Sí, durante los meses de cuidado que trae tu paquete. Después, los planes de cuidado empiezan en Bs 350 al mes. También puedes no tener plan y pagar Bs 150 la hora por cambios."],
+      ["¿El hosting está incluido?", "Sí, durante los meses de cuidado que trae tu paquete. Después, el cuidado empieza en Bs 350 al mes, o puedes no tener plan y pagar Bs 150 la hora por cambios."],
       ["¿Puedo actualizar la web yo mismo?", "Sí, con el panel autoadministrable. Viene en Crecimiento e Insignia, y cuesta Bs 1.500 por separado."],
       ["¿Los precios incluyen IVA (factura)?", "No. Los precios no incluyen IVA, comisiones de pasarelas de pago ni las tarifas de Meta por mensaje de WhatsApp."],
       ["¿Y si necesito algo que no está en la lista?", "Sistemas, apps e integraciones especiales se cotizan aparte. Cuéntame qué necesitas y armo un plan."],
     ],
-    finalTitle: "¿No sabes cuál <em>te conviene?</em>", finalText: "Escríbeme. Te digo qué paquete tiene sentido para tu negocio, aunque sea el más chico.",
+    finalTitle: "¿Todavía lo piensas? <em>Te lo hago fácil.</em>",
+    finalText: "Mándame un mensaje. Te digo directo qué paquete tiene sentido para tu negocio, aunque sea el más chico. Cada mes sin una web que vende son clientes que nunca te escriben.",
     finalBtn: "Ayúdame a elegir por WhatsApp", finalMsg: "¡Hola Marvz! 👋 ¿Me ayudas a elegir un paquete para mi negocio?",
     fine: "Precios en bolivianos. No incluyen IVA (factura), comisiones de pasarelas de pago ni las tarifas de Meta por mensaje de WhatsApp. Los montos en US$ son aproximados y siguen el tipo de cambio.",
     currency: "Moneda", view: "Ver",
@@ -226,6 +258,14 @@ const PT = {
 /* ========================================================================== */
 
 const P = { cur: "BOB", cat: "popular", sel: {}, pkg: null, care: "none", rush: false, plan: 2 };
+// Savings calculator: average sale (Bs), extra customers a month, hours a week on repeat questions, Bs per hour, package.
+const C = { ticket: 150, cust: 10, hrs: 5, rate: 50, pkg: "growth", used: false };
+const CALC_FIELDS = [
+  ["ticket", "calcTicket", 20, 3000, 10, "money"],
+  ["cust", "calcCust", 0, 100, 1, "n"],
+  ["hrs", "calcHrs", 0, 30, 1, "n"],
+  ["rate", "calcRate", 0, 300, 10, "money"],
+];
 const pt = (k) => PT[lang][k];
 const pAddon = (id) => ADDONS.find((a) => a.id === id);
 const pCare = (id) => CARE.find((c) => c.id === id);
@@ -262,9 +302,9 @@ function renderShell() {
       <p class="phero__lead">${pt("lead")}</p>
       <div class="phero__ctas">
         <button class="btn btn--red" type="button" data-pgo="pkgsHead">${pt("ctaPkgs")} ↓</button>
-        <button class="btn btn--line" type="button" data-pgo="buildHead">${pt("ctaBuild")}</button>
+        <button class="btn btn--line" type="button" data-pgo="calcHead">${pt("ctaBuild")}</button>
       </div>
-      <dl class="pstats">${pt("stats").map(([n, l]) => `<div><dt>${n}</dt><dd class="mono">${l}</dd></div>`).join("")}</dl>
+      <dl class="pstats">${pt("stats")(PROJECTS.length).map(([n, l]) => `<div><dt>${n}</dt><dd class="mono">${l}</dd></div>`).join("")}</dl>
       <div class="ptrust">
         <p class="mono">${pt("trusted")}</p>
         <div class="ptrust__track" aria-hidden="true"><div>${CLIENTS.concat(CLIENTS).map((c) => `<span>${c}</span>`).join("<i>✦</i>")}</div></div>
@@ -280,6 +320,37 @@ function renderShell() {
       </div>
     </div>
     <div class="pkgs" id="pkgs"></div>
+
+    ${head("calcHead", pt("calcEyebrow"), pt("calcTitle"), pt("calcSub"))}
+    <section class="calc reveal" id="calc" aria-labelledby="calcHead">
+      <div class="calc__inputs">
+        ${CALC_FIELDS.map(([k, label, min, max, step]) => `
+        <label class="calc__field">
+          <span class="calc__label">${pt(label)}</span>
+          <output class="calc__val" id="cv-${k}"></output>
+          <input type="range" min="${min}" max="${max}" step="${step}" value="${C[k]}" data-calc="${k}" aria-label="${pt(label)}">
+        </label>`).join("")}
+        <div class="calc__field">
+          <span class="calc__label">${pt("calcPkg")}</span>
+          <div class="pills calc__pkgs" role="group" aria-label="${pt("calcPkg")}">
+            ${PACKAGES.map((b) => `<button class="pill pill--btn" type="button" data-cpkg="${b.id}">${b[lang][0]}</button>`).join("")}
+            <button class="pill pill--btn" type="button" data-cpkg="mine">${pt("calcMine")}</button>
+          </div>
+        </div>
+      </div>
+      <div class="calc__out" aria-live="polite">
+        <dl class="calc__rows">
+          <div><dt>${pt("calcSales")}</dt><dd id="co-sales"></dd></div>
+          <div><dt>${pt("calcTime")}</dt><dd id="co-time"></dd></div>
+          <div class="is-total"><dt>${pt("calcTotal")}</dt><dd id="co-total"></dd></div>
+        </dl>
+        <p class="calc__payback"><span class="mono">${pt("calcPayback")}</span><b id="co-payback"></b></p>
+        <p class="calc__year" id="co-year"></p>
+        <p class="calc__punch">${pt("calcPunch")}</p>
+        <button class="btn btn--red calc__cta" type="button" id="calcCta">${pt("calcCta")} →</button>
+        <p class="calc__note">${pt("calcNote")}</p>
+      </div>
+    </section>
 
     <ul class="promises">${pt("promises").map(([h, p]) => `<li class="reveal"><strong>${h}</strong><span>${p}</span></li>`).join("")}</ul>
 
@@ -475,6 +546,7 @@ function renderQuote() {
   $$("[data-pcur]").forEach((x) => x.setAttribute("aria-pressed", String(x.dataset.pcur === P.cur)));
   $("#qWa").href = wa(quoteText());
   $("#qDock").textContent = money(one);
+  if (C.pkg === "mine") renderCalc();
   pricingEl.classList.toggle("has-quote", !!P.pkg || Object.values(P.sel).some(Boolean));
 }
 
@@ -495,12 +567,39 @@ function renderPricing() {
   renderShell();
   renderDynamic();
 }
+/* ---------- Savings calculator ---------- */
+const WEEKS_PER_MONTH = 4.33;
+function calcPrice() {
+  return C.pkg === "mine" ? calc().one : pPkg(C.pkg).price;
+}
+function renderCalc() {
+  if (!$("#calc")) return;
+  const fmtN = (k, v) => (CALC_FIELDS.find((f) => f[0] === k)[5] === "money" ? money(v) : String(v));
+  CALC_FIELDS.forEach(([k]) => { $("#cv-" + k).textContent = fmtN(k, C[k]); });
+  $$("[data-cpkg]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.cpkg === C.pkg)));
+  const sales = C.ticket * C.cust;
+  const hours = Math.round(C.hrs * WEEKS_PER_MONTH);
+  const timeVal = hours * C.rate;
+  const total = sales + timeVal;
+  const price = calcPrice();
+  $("#co-sales").textContent = money(sales);
+  $("#co-time").textContent = `${pt("calcHours")(hours)} · ${money(timeVal)}`;
+  $("#co-total").textContent = money(total);
+  const pay = $("#co-payback"), year = $("#co-year");
+  if (!total) { pay.textContent = "—"; year.textContent = pt("calcZero"); return; }
+  const days = Math.ceil(price / (total / 30));
+  pay.textContent = days <= 60 ? pt("calcDays")(days) : days <= 120 ? pt("calcWeeks")(Math.ceil(days / 7)) : pt("calcMonths")(Math.ceil(days / 30));
+  const back = (total * 12) / price, net = total * 12 - price;
+  year.innerHTML = net > 0 ? pt("calcYear")(back.toFixed(1).replace(".", lang === "es" ? "," : "."), money(net)) : pt("calcYearLow");
+}
+
 function renderDynamic() {
   renderPackages();
   renderFilters();
   renderAddons();
   renderCare();
   renderQuote();
+  renderCalc();
   observeReveal();
 }
 
@@ -528,14 +627,22 @@ function scrollToEl(id) {
 }
 
 pricingEl.addEventListener("click", (e) => {
-  const d = e.target.closest("[data-pcat],[data-ptog],[data-pinc],[data-pdec],[data-pcare],[data-pkg],[data-prm],[data-pplan],[data-pcur],[data-pgo],#qRush,#qCopy,#qWa,#pHelp");
+  const d = e.target.closest("[data-pcat],[data-ptog],[data-pinc],[data-pdec],[data-pcare],[data-pkg],[data-prm],[data-pplan],[data-pcur],[data-pgo],[data-cpkg],#calcCta,#qRush,#qCopy,#qWa,#pHelp");
   if (!d) return;
   const ds = d.dataset;
   if (d.id === "qWa") return track("Quote WhatsApp", { package: P.pkg || "custom", total: calc().one });
   if (d.id === "pHelp") return track("Help Me Choose");
   if (ds.pgo) return scrollToEl(ds.pgo);
   if (ds.pcat) { P.cat = ds.pcat; renderFilters(); renderAddons(); return; }
-  if (ds.pcur) { P.cur = ds.pcur; renderPackages(); renderAddons(); renderCare(); renderQuote(); observeReveal(); return; }
+  if (ds.pcur) { P.cur = ds.pcur; renderPackages(); renderAddons(); renderCare(); renderQuote(); renderCalc(); observeReveal(); return; }
+  if (ds.cpkg) { C.pkg = ds.cpkg; renderCalc(); return; }
+  if (d.id === "calcCta") {
+    if (C.pkg === "mine") return scrollToEl("buildHead");
+    if (P.pkg !== C.pkg) choosePackage(C.pkg);
+    renderPackages(); renderAddons(); renderCare(); renderQuote(); observeReveal();
+    track("Calculator CTA", { package: C.pkg });
+    return setTimeout(() => scrollToEl("buildHead"), 250);
+  }
   if (ds.pplan) { P.plan = +ds.pplan; renderQuote(); return; }
   if (d.id === "qRush") { P.rush = !P.rush; renderQuote(); return; }
   if (d.id === "qCopy") { track("Quote Copied", { package: P.pkg || "custom" }); return copyQuote(); }
@@ -582,5 +689,13 @@ function copyQuote() {
 
 // Phones: a bar with the running total that jumps to the quote, shown while the quote is off screen.
 const quoteObs = new IntersectionObserver(([en]) => pricingEl.classList.toggle("quote-visible", en.isIntersecting), { root: pricingEl, threshold: 0.05 });
+
+pricingEl.addEventListener("input", (e) => {
+  const k = e.target.dataset.calc;
+  if (!k) return;
+  C[k] = +e.target.value;
+  renderCalc();
+  if (!C.used) { C.used = true; track("Calculator Used"); }
+});
 
 renderPricing();
